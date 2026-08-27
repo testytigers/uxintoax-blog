@@ -3,6 +3,18 @@ title: "7 UX Processes That AI Can Automate (And Which Ones It Can't)"
 description: "Not all UX processes are created equal. Learn which ones AI can speed up and which still require a human designer."
 date: 2025-02-10
 draft: false
+tags:
+  - AI automation
+  - UX workflows
+  - design tools
+  - productivity
+faq:
+  - q: "Can AI replace UX designers?"
+    a: "No. AI can automate certain repetitive or data-heavy tasks like design system maintenance, content generation, and research synthesis. However, AI cannot replace human empathy, strategic judgment, ethical reasoning, or the ability to read between the lines of user behavior. The most effective teams combine AI for scale with human judgment for decision-making."
+  - q: "Which UX processes should I automate with AI first?"
+    a: "Start with content generation and variation — it's the lowest risk, highest reward. Then move to research synthesis once you have experience with the output quality. Keep human judgment central in strategic and ethical decisions, and build AI skills incrementally alongside your design practice."
+  - q: "What are the limitations of AI in UX design?"
+    a: "AI struggles with empathy-driven insight generation, strategic product vision, and ethical judgment. It can summarize what users said but can't feel what it means to struggle with a product. AI can flag accessibility issues but can't make ethical decisions about user autonomy or cultural appropriateness."
 ---
 
 The promise of AI in UX design is huge — but it's also full of hype. The reality is more nuanced. Some parts of the UX process can be meaningfully accelerated by AI, while others actually require human judgment and intuition.

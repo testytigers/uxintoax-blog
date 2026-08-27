@@ -3,6 +3,20 @@ title: "The AI UX Design Process: How to Design for AI-Powered Features"
 description: "AI features change everything about the UX design process. Here's the new framework that every UX designer needs to understand."
 date: 2025-01-15
 draft: false
+tags:
+  - AI design
+  - UX frameworks
+  - AI-powered features
+  - design process
+faq:
+  - q: "What is the difference between traditional UX and AI UX?"
+    a: "Traditional UX assumes predictable, deterministic behavior where the same input always produces the same output. AI UX must account for probabilistic behavior — the system learns, adapts, and may produce different outputs from the same input. This requires designing for uncertainty, trust, and transparency rather than just predictability."
+  - q: "How do I design for AI uncertainty in user interfaces?"
+    a: "Design for uncertainty by showing confidence levels when available, providing easy correction mechanisms, and creating progressive disclosure of AI reasoning. Users should understand when the AI is uncertain, what happens next, and how they can influence the outcome."
+  - q: "What are the key stages of the AI UX design framework?"
+    a: "The framework has four key stages: (1) Define the Decision Boundary — map what AI handles vs. human input, (2) Design for Uncertainty — show confidence levels and provide override mechanisms, (3) Create Meaningful Mental Models — build accurate understanding of how the AI works, and (4) Build Feedback Loops — give users clear ways to influence and improve AI behavior."
+  - q: "How do I build trust in AI-powered UX features?"
+    a: "Trust in AI comes from transparency, consistency, and user control. Make AI behavior visible, show when the system is uncertain, explain reasoning when useful, let users see what the AI is learning, and always give users the ability to override or correct AI decisions."
 ---
 
 When AI enters the UX design process, every stage of your workflow needs to adapt. Traditional UX frameworks assume predictable user behavior and deterministic systems. AI-powered features introduce probabilistic behavior — the system makes decisions that aren't fully predetermined.

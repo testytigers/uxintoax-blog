@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://uxarchitect.co/sitemap-index.xml
+
+# Block AI crawlers that don't respect robots.txt
+User-agent: CCBot
+User-agent: anthropic
+Disallow: /

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://uxarchitect.co/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://uxarchitect.co/blog</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uxarchitect.co/blog/ai-ux-design-process</loc>
+    <priority>0.7</priority>
+    <lastmod>2025-01-15</lastmod>
+  </url>
+  <url>
+    <loc>https://uxarchitect.co/blog/ux-processes-ai-automate</loc>
+    <priority>0.7</priority>
+    <lastmod>2025-02-10</lastmod>
+  </url>
+  <url>
+    <loc>https://uxarchitect.co/blog/ai-tools-ux-designers-2025</loc>
+    <priority>0.7</priority>
+    <lastmod>2025-03-20</lastmod>
+  </url>
+</urlset>
