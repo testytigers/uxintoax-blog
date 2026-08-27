@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../../layouts/Base.astro';
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "7 UX Processes That AI Can Automate (And Which Ones It Can't)",
+  "description": "Not all UX processes are created equal. Learn which ones AI can speed up and which still require a human designer to get the best results.",
+  "author": {
+    "@type": "Person",
+    "name": "UX Architect"
+  },
+  "datePublished": "2025-08-26",
+  "dateModified": "2025-08-26",
+  "mainEntityOfPage": "https://uxarchitect.co/blog/ux-processes-ai-automate"
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which UX processes can AI automate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI can effectively automate: user research synthesis, generating design variations, usability testing analysis, content generation, and creating design system documentation. The key is choosing tasks where AI handles the volume and humans handle the judgment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which UX processes should NOT be automated by AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Strategic design decisions, empathy-driven research, creative problem-solving, and stakeholder alignment should not be fully automated. AI can support these areas, but the core judgment and human connection elements require human designers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I know which tasks to give AI vs keep for humans?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Give AI tasks that involve pattern recognition at scale, repetitive work, or data synthesis. Keep for humans: tasks requiring empathy, strategic thinking, creative innovation, and stakeholder relationships. The rule of thumb: if it requires understanding context and emotion, humans lead. If it requires processing volume, AI leads."
+      }
+    }
+  ]
+};
+---
+
+<BaseLayout title="7 UX Processes That AI Can Automate — UX Architect" description="Not all UX processes are created equal. Learn which ones AI can speed up and which still require a human designer to get the best results.">
+
+<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<section class="prose">
+  <h1>7 UX Processes That AI Can Automate (And Which Ones It Can't)</h1>
+
+  <p><strong>TL;DR:</strong> AI can handle the volume-heavy, pattern-driven parts of UX design. It can synthesize research data, generate design variations, analyze usability testing, create content, and document design systems. But strategic decisions, empathy work, creative problem-solving, and stakeholder alignment still need human designers at the wheel.</p>
+
+  <div class="article-meta">
+    <span>Aug 26, 2025</span>
+    <span class="dot"></span>
+    <span>4 min read</span>
+    <span class="dot"></span>
+    <span>Process</span>
+  </div>
+
+  <p>Every UX designer I talk to has the same fear: AI will replace me. But that's not what's happening. What's happening is more nuanced — and more exciting. AI isn't replacing designers. It's replacing the parts of design that nobody actually wanted to do anyway.</p>
+
+  <p>Here's the truth: most of us spend more time on repetitive, volume-heavy tasks than on the creative and strategic work that actually matters. AI flips that equation. It handles the volume. You handle the judgment.</p>
+
+  <h2>The Rule of Thumb: Volume vs Judgment</h2>
+
+  <p>Before I break down each process, here's the framework I use to decide what AI should handle:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Give to AI</th>
+        <th>Keep for Humans</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Pattern recognition at scale</td>
+        <td>Contextual understanding</td>
+      </tr>
+      <tr>
+        <td>Repetitive work</td>
+        <td>Empathy and emotional insight</td>
+      </tr>
+      <tr>
+        <td>Data synthesis</td>
+        <td>Strategic decision-making</td>
+      </tr>
+      <tr>
+        <td>Generating variations</td>
+        <td>Creative innovation</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>If a task involves processing large volumes of data, finding patterns, or creating many variations — AI is your best friend. If it requires understanding nuance, making judgment calls, or connecting with people — that's your superpower as a designer.</p>
+
+  <h2>7 UX Processes AI Handles Well</h2>
+
+  <h3>1. Research Synthesis</h3>
+
+  <p><strong>What it is:</strong> Reading through dozens of user interview transcripts, survey responses, and feedback threads to identify patterns and themes.</p>
+
+  <p><strong>How AI helps:</strong> AI can read 100 interview transcripts in minutes, extract key themes, identify recurring pain points, and synthesize findings into structured reports. What used to take a week now takes an afternoon.</p>
+
+  <p><strong>Where humans still lead:</strong> The interpretation. AI can identify patterns, but you decide which patterns matter, which are outliers, and what they mean for your product strategy.</p>
+
+  <h3>2. Generating Design Variations</h3>
+
+  <p><strong>What it is:</strong> Creating multiple layout options, color schemes, or component variations for stakeholders to review.</p>
+
+  <p><strong>How AI helps:</strong> AI tools can generate dozens of layout variations from a single wireframe. This isn't about replacing your design decisions — it's about giving you and your team more options to evaluate faster.</p>
+
+  <p><strong>Where humans still lead:</strong> Choosing which variations to pursue, refining the best ones, and making the judgment calls about brand fit and user experience.</p>
+
+  <h3>3. Usability Testing Analysis</h3>
+
+  <p><strong>What it is:</strong> Watching hours of usability test recordings, noting where users struggle, and compiling findings.</p>
+
+  <p><strong>How AI helps:</strong> AI can analyze recordings automatically, flag key moments (confusion, errors, success), tag interaction patterns, and generate summaries of what worked and what didn't across all test sessions.</p>
+
+  <p><strong>Where humans still lead:</strong> Understanding why users made certain decisions, noticing the body language and emotional responses that video alone doesn't capture, and prioritizing which issues to fix first.</p>
+
+  <h3>4. Content Generation</h3>
+
+  <p><strong>What it is:</strong> Writing microcopy, error messages, empty states, tooltips, and onboarding copy.</p>
+
+  <p><strong>How AI helps:</strong> AI is exceptionally good at generating content at scale. It can create hundreds of copy variations, adapt tone for different contexts, and ensure consistency across your product.</p>
+
+  <p><strong>Where humans still lead:</strong> Voice and brand personality. AI can generate copy, but only you know what sounds right for your product. The final polish is always a human job.</p>
+
+  <h3>5. Design System Documentation</h3>
+
+  <p><strong>What it is:</strong> Writing and maintaining documentation for your design system — component descriptions, usage guidelines, do's and don'ts.</p>
+
+  <p><strong>How AI helps:</strong> AI can auto-generate documentation from your design files, maintain consistency across component descriptions, and keep documentation updated as components evolve.</p>
+
+  <p><strong>Where humans still lead:</strong> Deciding the rules. AI can document your design system, but you decide what the right patterns are and why they work.</p>
+
+  <h3>6. Accessibility Auditing</h3>
+
+  <p><strong>What it is:</strong> Checking designs against accessibility standards, identifying contrast issues, missing alt text, and navigation problems.</p>
+
+  <p><strong>How AI helps:</strong> AI can automatically scan designs and code for accessibility issues at scale. It can identify color contrast problems, suggest WCAG-compliant alternatives, and flag potential issues before they reach development.</p>
+
+  <p><strong>Where humans still lead:</strong> Understanding the user context. AI can check contrast ratios, but it can't tell you whether a navigation pattern actually makes sense for your specific user base.</p>
+
+  <h3>7. Competitive Analysis</h3>
+
+  <p><strong>What it is:</strong> Researching competitor products, documenting their features, and identifying patterns in the market.</p>
+
+  <p><strong>How AI helps:</strong> AI can scan competitor websites, extract feature sets, compare pricing models, and synthesize competitive landscapes into structured reports. What used to take days of manual research now takes hours.</p>
+
+  <p><strong>Where humans still lead:</strong> Strategic interpretation. AI can compile data, but you decide what it means for your product direction and competitive positioning.</p>
+
+  <h2>Processes AI Struggles With</h2>
+
+  <p>Now let's be clear about where AI falls short. These are areas where human designers are irreplaceable:</p>
+
+  <ul>
+    <li><strong>Strategic design decisions</strong> — AI can analyze data, but it can't make strategic calls about product direction</li>
+    <li><strong>Empathy-driven research</strong> — AI can process survey data, but it can't conduct an empathetic user interview</li>
+    <li><strong>Creative problem-solving</strong> — AI can generate variations, but it can't have a genuine creative breakthrough</li>
+    <li><strong>Stakeholder alignment</strong> — AI can present data, but it can't navigate office politics or build consensus</li>
+    <li><strong>Brand intuition</strong> — AI can match colors, but it can't feel when a design "isn't quite right"</li>
+  </ul>
+
+  <blockquote>
+    The designers who thrive in the AI era aren't the ones who try to do everything faster. They're the ones who use AI to handle the volume and focus their energy on the judgment calls that matter.
+  </blockquote>
+
+  <h2>How to Implement This in Your Workflow</h2>
+
+  <p>Here's a practical framework for integrating AI into your design process:</p>
+
+  <ol>
+    <li><strong>Identify the volume-heavy tasks</strong> — What takes up most of your time?</li>
+    <li><strong>Pick one process to automate first</strong> — Start with research synthesis or content generation</li>
+    <li><strong>Set up the AI tool</strong> — Choose the right AI tool for that specific task</li>
+    <li><strong>Test with real projects</strong> — Use AI on an actual project, not just as a side exercise</li>
+    <li><strong>Evaluate and iterate</strong> — What worked? What didn't? Adjust accordingly</li>
+    <li><strong>Repeat for the next process</strong> — Move to the next volume-heavy task</li>
+  </ol>
+
+  <h2>FAQ</h2>
+
+  <div class="faq-section">
+    <div class="faq-item">
+      <h3>Which UX processes can AI automate?</h3>
+      <p>AI can effectively automate: user research synthesis, generating design variations, usability testing analysis, content generation, and creating design system documentation. The key is choosing tasks where AI handles the volume and humans handle the judgment.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Which UX processes should NOT be automated by AI?</h3>
+      <p>Strategic design decisions, empathy-driven research, creative problem-solving, and stakeholder alignment should not be fully automated. AI can support these areas, but the core judgment and human connection elements require human designers.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How do I know which tasks to give AI vs keep for humans?</h3>
+      <p>Give AI tasks that involve pattern recognition at scale, repetitive work, or data synthesis. Keep for humans: tasks requiring empathy, strategic thinking, creative innovation, and stakeholder relationships. The rule of thumb: if it requires understanding context and emotion, humans lead. If it requires processing volume, AI leads.</p>
+    </div>
+  </div>
+
+  <h2>Final Takeaway</h2>
+
+  <p>AI isn't here to replace you. It's here to handle the grunt work so you can focus on what actually matters: making intelligent design decisions, understanding your users deeply, and creating experiences that feel genuinely human. The designers who embrace this shift won't just survive the AI era — they'll lead it.</p>
+</section>
+
+</BaseLayout>
