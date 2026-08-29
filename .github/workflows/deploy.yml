@@ -27,10 +27,4 @@ jobs:
         run: npm run build
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: uxarchitect-blog
-          directory: dist
-          branch: main
+        run: npx wrangler pages deploy dist --project-name=uxarchitect-blog --api-token=${{ secrets.CF_API_TOKEN }} --account-id=${{ secrets.CF_ACCOUNT_ID }}
