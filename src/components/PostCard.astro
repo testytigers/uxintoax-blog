@@ -1,0 +1,53 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Cover from "@components/Cover.astro";
+import PostMeta from "@components/PostMeta.astro";
+
+type Props = {
+  entry: CollectionEntry<"blog">;
+  variant?: "featured" | "grid" | "row";
+};
+
+const { entry, variant = "grid" } = Astro.props;
+const featured = variant === "featured";
+const tag = entry.data.tags?.[0];
+
+// The featured cover grows to absorb any extra column height,
+// so the card never ends up with a dead gap under its text.
+const coverClass = {
+  featured: "aspect-[16/9] min-h-[220px] flex-1",
+  grid: "aspect-[3/2]",
+  row: "aspect-[16/9]",
+}[variant];
+
+const titleSize = {
+  featured: "text-2xl sm:text-3xl lg:text-[2.05rem] leading-[1.12]",
+  grid: "text-xl leading-snug",
+  row: "text-lg leading-snug",
+}[variant];
+---
+
+<article class="group h-full">
+  <a
+    href={`/blog/${entry.slug}`}
+    class="flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-colors duration-300 hover:border-line-strong hover:bg-surface-hover"
+  >
+    <Cover seed={entry.slug} class={`w-full ${coverClass}`} />
+
+    <div class={`flex flex-col gap-3 p-5 sm:p-6 ${featured ? "shrink-0" : "flex-1"}`}>
+      {tag && <span class="pill w-fit">{tag}</span>}
+
+      <h3 class={`font-bold tracking-tight text-content transition-colors duration-300 group-hover:text-brand ${titleSize}`}>
+        {entry.data.title}
+      </h3>
+
+      {featured && (
+        <p class="max-w-2xl font-serif text-base leading-relaxed text-content-muted">
+          {entry.data.description}
+        </p>
+      )}
+
+      <PostMeta date={entry.data.date} body={entry.body} class={featured ? "pt-1" : "mt-auto pt-2"} />
+    </div>
+  </a>
+</article>

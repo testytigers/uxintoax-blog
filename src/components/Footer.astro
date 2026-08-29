@@ -1,92 +1,74 @@
 ---
 import Container from "@components/Container.astro";
-import { SITE } from "@consts";
+import SocialIcon from "@components/SocialIcon.astro";
 import BackToTop from "@components/BackToTop.astro";
+import { SITE, SOCIALS } from "@consts";
+
+const year = new Date().getFullYear();
+const labels: Record<string, string> = {
+  "twitter-x": "X",
+  github: "GitHub",
+  linkedin: "LinkedIn",
+  dribbble: "Dribbble",
+};
 ---
 
-<footer class="animate">
+<footer class="border-t border-line bg-ink-2">
   <Container>
-    <div class="relative">
-      <div class="absolute right-0 -top-20">
-        <BackToTop />
+    <div class="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
+      <div class="space-y-4">
+        <div class="flex items-center gap-2.5">
+          <svg viewBox="0 0 32 32" class="size-7" aria-hidden="true">
+            <rect x="1.5" y="1.5" width="29" height="29" rx="8" fill="none" stroke="#55b48e" stroke-width="2" />
+            <path d="M9 9 L16 22 L23 9" fill="none" stroke="#55b48e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="text-base font-bold tracking-tight text-content">UX Architect</span>
+        </div>
+        <p class="max-w-sm font-serif leading-relaxed text-content-muted">
+          Practical strategies, processes and tools for UX designers navigating the AI revolution.
+        </p>
+        <div class="flex gap-2 pt-1">
+          {SOCIALS.map(social => (
+            <a
+              href={social.HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={labels[social.NAME] ?? social.NAME}
+              class="flex size-10 items-center justify-center rounded-full border border-line text-content-muted transition-colors duration-200 hover:border-brand hover:text-brand"
+            >
+              <SocialIcon name={social.NAME} />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <nav class="space-y-3" aria-label="Site">
+        <h2 class="eyebrow">Explore</h2>
+        <ul class="space-y-2.5 text-content-muted">
+          <li><a href="/" class="transition-colors hover:text-brand">Home</a></li>
+          <li><a href="/blog" class="transition-colors hover:text-brand">All articles</a></li>
+          <li><a href="/rss.xml" class="transition-colors hover:text-brand">RSS feed</a></li>
+        </ul>
+      </nav>
+
+      <div class="space-y-3">
+        <h2 class="eyebrow">Contact</h2>
+        <ul class="space-y-2.5 text-content-muted">
+          <li>
+            <a href={`mailto:${SITE.EMAIL}`} class="transition-colors hover:text-brand">
+              {SITE.EMAIL}
+            </a>
+          </li>
+        </ul>
+        <div class="pt-2">
+          <BackToTop />
+        </div>
       </div>
     </div>
-    <div class="flex justify-between items-center">
-      <div>
-        &copy; 2024 {`|`} {SITE.NAME}
-      </div>
-      <div class="flex flex-wrap gap-1 items-center">
-        <button
-          id="light-theme-button"
-          aria-label="Light theme"
-          class="group size-8 flex items-center justify-center rounded-full"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"
-          >
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-        </button>
-        <button
-          id="dark-theme-button"
-          aria-label="Dark theme"
-          class="group size-8 flex items-center justify-center rounded-full"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"
-          >
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
-        <button
-          id="system-theme-button"
-          aria-label="System theme"
-          class="group size-8 flex items-center justify-center rounded-full"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"
-          >
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-            <line x1="8" y1="21" x2="16" y2="21"></line>
-            <line x1="12" y1="17" x2="12" y2="21"></line>
-          </svg>
-        </button>
-      </div>
+
+    <div class="flex flex-wrap items-center justify-between gap-3 border-t border-line py-6 text-sm text-content-faint">
+      <span>&copy; {year} {SITE.NAME}</span>
+      <span>Built with Astro</span>
     </div>
   </Container>
 </footer>

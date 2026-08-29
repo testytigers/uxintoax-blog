@@ -1,7 +1,18 @@
 ---
+type Props = {
+  size?: "default" | "narrow" | "wide";
+  class?: string;
+};
 
+const { size = "default", class: className = "" } = Astro.props;
+
+const widths = {
+  narrow: "max-w-[44rem]",
+  default: "max-w-6xl",
+  wide: "max-w-7xl",
+};
 ---
 
-<div class="mx-auto max-w-screen-sm px-5">
+<div class={`mx-auto w-full ${widths[size]} px-5 sm:px-8 ${className}`}>
   <slot />
 </div>

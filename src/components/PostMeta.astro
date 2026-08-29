@@ -1,0 +1,24 @@
+---
+import FormattedDate from "@components/FormattedDate.astro";
+import { readingTime } from "@lib/utils";
+
+type Props = {
+  date: Date;
+  body: string;
+  class?: string;
+};
+
+const { date, body, class: className = "" } = Astro.props;
+---
+
+<div class={`flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-content-faint ${className}`}>
+  <FormattedDate date={date} />
+  <span class="size-1 rounded-full bg-line-strong"></span>
+  <span class="inline-flex items-center gap-1.5">
+    <svg viewBox="0 0 24 24" class="size-3.5 fill-none stroke-current stroke-2">
+      <circle cx="12" cy="12" r="9" />
+      <polyline points="12 7 12 12 15 14" />
+    </svg>
+    {readingTime(body)}
+  </span>
+</div>

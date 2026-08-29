@@ -1,33 +1,47 @@
 ---
 import Container from "@components/Container.astro";
-import Link from "@components/Link.astro";
 import { SITE } from "@consts";
+
+const path = Astro.url.pathname;
+const nav = [
+  { href: "/", label: "Home" },
+  { href: "/blog", label: "Articles" },
+  { href: "/rss.xml", label: "RSS" },
+];
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
 ---
 
-<header>
+<header class="sticky top-0 z-50 border-b border-line/70 bg-ink/80 backdrop-blur-md">
   <Container>
-    <div class="flex flex-wrap gap-y-2 justify-between">
-      <Link href="/" underline={false}>
-        <div class="font-semibold">
-          {SITE.NAME}
-        </div>
-      </Link>
-      <nav class="flex gap-1">
-        <Link href="/blog">
-          blog
-        </Link>
-        <span>
-          {`/`}
+    <div class="flex h-16 items-center justify-between gap-4 sm:h-[4.5rem]">
+      <a href="/" class="group flex items-center gap-2.5" aria-label={`${SITE.NAME} home`}>
+        <svg viewBox="0 0 32 32" class="size-7 shrink-0" aria-hidden="true">
+          <rect x="1.5" y="1.5" width="29" height="29" rx="8" fill="none" stroke="#55b48e" stroke-width="2" />
+          <path d="M9 9 L16 22 L23 9" fill="none" stroke="#55b48e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="text-base font-bold tracking-tight text-content transition-colors group-hover:text-brand">
+          UX Architect
         </span>
-        <Link href="/work">
-          work
-        </Link>
-        <span>
-          {`/`}
-        </span>
-        <Link href="/projects">
-          projects
-        </Link>
+      </a>
+
+      <nav class="flex items-center gap-1 sm:gap-2" aria-label="Main">
+        {nav.map(item => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? "page" : undefined}
+            class={`rounded-full px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+              isActive(item.href)
+                ? "bg-brand/15 text-brand"
+                : "text-content-muted hover:bg-surface hover:text-content"
+            }`}
+          >
+            {item.label}
+          </a>
+        ))}
+        <a href={`mailto:${SITE.EMAIL}`} class="btn btn-primary ml-1 hidden !px-5 !py-2.5 sm:inline-flex">
+          Get in touch
+        </a>
       </nav>
     </div>
   </Container>

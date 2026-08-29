@@ -2,71 +2,123 @@
 import { getCollection } from "astro:content";
 import Container from "@components/Container.astro";
 import PageLayout from "@layouts/PageLayout.astro";
-import ArrowCard from "@components/ArrowCard.astro";
+import PostCard from "@components/PostCard.astro";
+import Marquee from "@components/Marquee.astro";
 import { SITE, HOME } from "@consts";
+
+const posts = (await getCollection("blog"))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const [lead, ...rest] = posts;
+const featured = rest.slice(0, 2);
+
+// Only fill complete rows of three so the grid never ends on an orphan card.
+const pool = rest.slice(2);
+const latest =
+  pool.length >= 3 ? pool.slice(0, Math.min(6, Math.floor(pool.length / 3) * 3)) : pool;
+
+const topics = [...new Set(posts.flatMap(p => p.data.tags ?? []))].slice(0, 8);
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
-  <Container>
-    <div class="space-y-16">
-      <section>
-        <h4 class="animate font-semibold text-black dark:text-white">
-          UX Architect <span class="text-xl">👋🏻</span>
-        </h4>
-        <article class="animate space-y-4">
-          <p class="text-lg">
-            Practical strategies, processes &amp; tools for UX designers navigating the AI revolution.
-            We cover how to design for AI-powered features, use AI in your design process, and build
-            products that feel both intelligent and human.
-          </p>
-          <p class="opacity-75">
-            Every article is grounded in real experience. No fluff, no theory. Just actionable
-            strategies for the intersection of UX and AI.
-          </p>
-        </article>
-      </section>
-
-      <section class="animate space-y-6">
-        <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold text-black dark:text-white">
-            Latest articles
-          </h5>
-          <a href="/blog" class="underline">
-            See all posts
+  <!-- Hero -->
+  <section>
+    <Container>
+      <div class="max-w-4xl py-16 sm:py-24">
+        <p class="animate eyebrow">Thoughts on UX &amp; AI</p>
+        <h1 class="animate mt-5 text-display text-content">
+          Designing for a world
+          <span class="text-brand">that thinks back.</span>
+        </h1>
+        <p class="animate mt-7 max-w-2xl font-serif text-lg leading-relaxed text-content-muted sm:text-xl">
+          Practical strategies, processes and tools for UX designers navigating the AI revolution.
+          How to design AI-powered features, use AI in your process, and build products that feel
+          both intelligent and human.
+        </p>
+        <div class="animate mt-9 flex flex-wrap items-center gap-3">
+          <a href="/blog" class="btn btn-primary">
+            Read the articles
+            <svg viewBox="0 0 24 24" class="size-4 fill-none stroke-current stroke-2">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
           </a>
+          <a href={`mailto:${SITE.EMAIL}`} class="btn btn-ghost">Get in touch</a>
         </div>
-        <ul class="flex flex-col gap-4">
-          {
-            (await getCollection("blog"))
-              .filter(post => !post.data.draft)
-              .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-              .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE)
-              .map(post => (
-                <li>
-                  <ArrowCard entry={post} />
-                </li>
-              ))
-          }
-        </ul>
-      </section>
+      </div>
+    </Container>
+  </section>
 
-      <section class="animate space-y-4">
-        <h5 class="font-semibold text-black dark:text-white">
-          Let's Connect
-        </h5>
-        <article>
-          <p>
-            If you want to get in touch about something or just to say hi, reach out on social media.
-          </p>
-        </article>
-        <ul class="flex flex-wrap gap-2">
-          <li class="flex gap-x-2 text-nowrap">
-            <a href="mailto:{SITE.EMAIL}" class="underline">
+  <Marquee text="Featured Articles" />
+
+  <!-- Lead + featured -->
+  <section class="py-14 sm:py-20">
+    <Container>
+      <div class="grid gap-6 lg:grid-cols-[1.35fr_1fr]">
+        {lead && (
+          <div class="animate">
+            <PostCard entry={lead} variant="featured" />
+          </div>
+        )}
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
+          {featured.map(post => (
+            <div class="animate">
+              <PostCard entry={post} variant="row" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <Marquee text="Latest Posts" />
+
+  <!-- Latest grid -->
+  <section class="py-14 sm:py-20">
+    <Container>
+      <div class="animate mb-10 flex flex-wrap items-end justify-between gap-4">
+        <h2 class="text-heading text-content">Latest posts</h2>
+        <a href="/blog" class="text-sm font-semibold text-brand underline-offset-4 hover:underline">
+          See all articles &rarr;
+        </a>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {latest.map(post => (
+          <div class="animate">
+            <PostCard entry={post} />
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Topics + contact -->
+  <section class="pb-16 sm:pb-24">
+    <Container>
+      <div class="animate overflow-hidden rounded-card border border-line bg-surface p-8 sm:p-12">
+        <div class="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+          <div>
+            <h2 class="text-heading text-content">No fluff, no theory.</h2>
+            <p class="mt-4 max-w-xl font-serif text-lg leading-relaxed text-content-muted">
+              Every article is grounded in real project work. If you want to talk about something,
+              or just say hi, reach out.
+            </p>
+            <a href={`mailto:${SITE.EMAIL}`} class="btn btn-primary mt-7">
               {SITE.EMAIL}
             </a>
-          </li>
-        </ul>
-      </section>
-    </div>
-  </Container>
+          </div>
+          <div>
+            <h3 class="eyebrow">Topics covered</h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {topics.map(topic => (
+                <li class="pill">{topic}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
 </PageLayout>

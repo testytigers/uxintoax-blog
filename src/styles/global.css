@@ -2,13 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  overflow-y: scroll;
-  color-scheme: light;
+:root {
+  color-scheme: dark;
+
+  --ink: #06251f;
+  --ink-2: #082e27;
+  --surface: #0c3a31;
+  --surface-hover: #0e4036;
+  --line: #1b4f44;
+  --line-strong: #2a6b58;
+  --content: #f1f7f4;
+  --content-muted: #c3d8d1;
+  --content-faint: #9bb4ac;
+  --brand: #55b48e;
+  --brand-bright: #7acfac;
 }
 
-html.dark {
-  color-scheme: dark;
+html {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 html,
@@ -19,55 +45,220 @@ body {
 body {
   @apply font-sans antialiased;
   @apply flex flex-col;
-  @apply bg-stone-100 dark:bg-stone-900;
-  @apply text-black/50 dark:text-white/75;
-}
-
-header {
-  @apply fixed top-0 left-0 right-0 z-50 py-5;
-  @apply bg-stone-100/75 dark:bg-stone-900/25;
-  @apply backdrop-blur-sm saturate-200;
+  @apply bg-ink text-content-muted;
+  font-feature-settings: "cv05" 1, "ss03" 1;
 }
 
 main {
-  @apply flex-1 py-32;
+  @apply flex-1;
 }
 
-footer {
-  @apply py-5 text-sm;
+::selection {
+  background: var(--brand);
+  color: var(--ink);
 }
 
-article {
-  @apply max-w-full prose dark:prose-invert prose-img:mx-auto prose-img:my-auto;
-  @apply prose-headings:font-semibold prose-p:font-serif;
-  @apply prose-headings:text-black prose-headings:dark:text-white;
+:focus-visible {
+  outline: 2px solid var(--brand-bright);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
-@layer utilities {
-  article a {
-    @apply font-sans text-current underline underline-offset-2;
-    @apply decoration-black/15 dark:decoration-white/30;
-    @apply transition-colors duration-300 ease-in-out;
+/* ---------- Reusable pieces ---------- */
+
+@layer components {
+  .pill {
+    @apply inline-flex items-center rounded-full border border-line-strong px-3 py-1;
+    @apply text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-brand;
+    @apply transition-colors duration-200;
   }
-  article a:hover {
-    @apply text-black dark:text-white;
-    @apply decoration-black/25 dark:decoration-white/50;
+
+  a.pill:hover {
+    @apply border-brand bg-brand text-ink;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3;
+    @apply text-sm font-semibold transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-brand text-ink hover:bg-brand-bright;
+  }
+
+  .btn-ghost {
+    @apply border border-line-strong text-content hover:border-brand hover:text-brand;
+  }
+
+  .rule {
+    @apply h-px w-full bg-line;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-brand;
   }
 }
+
+/* ---------- Long-form article typography ---------- */
+
+article.prose {
+  --tw-prose-body: var(--content-muted);
+  --tw-prose-headings: var(--content);
+  --tw-prose-lead: var(--content-muted);
+  --tw-prose-links: var(--brand-bright);
+  --tw-prose-bold: var(--content);
+  --tw-prose-counters: var(--brand);
+  --tw-prose-bullets: var(--brand-deep, #3c8e6e);
+  --tw-prose-hr: var(--line);
+  --tw-prose-quotes: var(--content);
+  --tw-prose-quote-borders: var(--brand);
+  --tw-prose-captions: var(--content-faint);
+  --tw-prose-code: var(--content);
+  --tw-prose-pre-code: var(--content-muted);
+  --tw-prose-pre-bg: var(--ink-2);
+  --tw-prose-th-borders: var(--line-strong);
+  --tw-prose-td-borders: var(--line);
+}
+
+article.prose {
+  @apply max-w-none;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+@media (min-width: 640px) {
+  article.prose {
+    font-size: 1.1875rem;
+    line-height: 1.78;
+  }
+}
+
+article.prose p,
+article.prose li {
+  @apply font-serif;
+}
+
+article.prose h2 {
+  @apply font-sans font-bold tracking-tight text-content;
+  font-size: clamp(1.6rem, 2.6vw, 2.05rem);
+  line-height: 1.2;
+  margin-top: 2.75em;
+  margin-bottom: 0.85em;
+  scroll-margin-top: 7rem;
+}
+
+article.prose h2::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--brand);
+  margin-bottom: 1rem;
+}
+
+article.prose h3 {
+  @apply font-sans font-semibold tracking-tight text-content;
+  font-size: clamp(1.25rem, 1.9vw, 1.45rem);
+  line-height: 1.3;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+  scroll-margin-top: 7rem;
+}
+
+article.prose h4 {
+  @apply font-sans font-semibold text-content;
+}
+
+article.prose strong {
+  @apply font-semibold;
+}
+
+article.prose a {
+  @apply font-medium underline decoration-brand/40 underline-offset-4;
+  @apply transition-colors duration-200;
+}
+
+article.prose a:hover {
+  @apply text-brand decoration-brand;
+}
+
+article.prose blockquote {
+  @apply rounded-r-xl border-l-4 bg-ink-2 py-1 pr-6 not-italic;
+}
+
+article.prose blockquote p {
+  @apply font-sans text-content;
+}
+
+article.prose ul > li::marker,
+article.prose ol > li::marker {
+  color: var(--brand);
+}
+
+article.prose code {
+  @apply rounded-md bg-ink-2 px-1.5 py-0.5 font-sans text-[0.875em] font-medium;
+  border: 1px solid var(--line);
+}
+
+article.prose code::before,
+article.prose code::after {
+  content: "";
+}
+
+article.prose pre {
+  @apply rounded-xl border border-line;
+}
+
+article.prose img {
+  @apply mx-auto rounded-card border border-line;
+}
+
+article.prose hr {
+  @apply my-14;
+}
+
+article.prose table {
+  @apply text-base;
+}
+
+article.prose thead th {
+  @apply font-sans text-content;
+}
+
+/* ---------- Marquee strip ---------- */
+
+.marquee {
+  @apply relative flex overflow-hidden border-y border-line py-3;
+  --mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: var(--mask);
+  mask-image: var(--mask);
+}
+
+.marquee__track {
+  @apply flex w-max shrink-0 animate-marquee items-center gap-6 pr-6;
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+/* ---------- Entrance animation ---------- */
 
 .animate {
-  @apply opacity-0 translate-y-3;
+  @apply translate-y-3 opacity-0;
   @apply transition-all duration-700 ease-out;
 }
 
 .animate.show {
-  @apply opacity-100 translate-y-0;
+  @apply translate-y-0 opacity-100;
 }
 
-html #back-to-top {
-  @apply opacity-0 pointer-events-none;
-}
 
-html.scrolled #back-to-top {
-  @apply opacity-100 pointer-events-auto;
+
+/* ---------- Reading progress ---------- */
+
+#read-progress {
+  @apply fixed left-0 top-0 z-[60] h-[3px] w-full origin-left bg-brand;
+  transform: scaleX(0);
 }
