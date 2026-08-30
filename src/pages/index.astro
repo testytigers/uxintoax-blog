@@ -18,33 +18,40 @@ const pool = rest.slice(2);
 const latest =
   pool.length >= 3 ? pool.slice(0, Math.min(6, Math.floor(pool.length / 3) * 3)) : pool;
 
-const topics = [...new Set(posts.flatMap(p => p.data.tags ?? []))].slice(0, 8);
+const topics = [...new Set(posts.flatMap(p => p.data.tags ?? []))].slice(0, 10);
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
-  <!-- Hero -->
-  <section>
+  <!-- Hero, built like the black label on a coffee tin -->
+  <section class="py-10 sm:py-16">
     <Container>
-      <div class="max-w-4xl py-16 sm:py-24">
-        <p class="animate eyebrow">Thoughts on UX &amp; AI</p>
-        <h1 class="animate mt-5 text-display text-content">
-          Designing for a world
-          <span class="text-brand">that thinks back.</span>
-        </h1>
-        <p class="animate mt-7 max-w-2xl font-serif text-lg leading-relaxed text-content-muted sm:text-xl">
-          Practical strategies, processes and tools for UX designers navigating the AI revolution.
-          How to design AI-powered features, use AI in your process, and build products that feel
-          both intelligent and human.
-        </p>
-        <div class="animate mt-9 flex flex-wrap items-center gap-3">
-          <a href="/blog" class="btn btn-primary">
-            Read the articles
-            <svg viewBox="0 0 24 24" class="size-4 fill-none stroke-current stroke-2">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </a>
-          <a href={`mailto:${SITE.EMAIL}`} class="btn btn-ghost">Get in touch</a>
+      <div class="plate plate-inset deco-corners animate overflow-hidden px-6 py-14 sm:px-14 sm:py-20">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="eyebrow">Est. 2025 &middot; Maison of UX</p>
+
+          <div class="deco-rule mx-auto mt-5 max-w-[14rem]">
+            <span class="diamond"></span>
+          </div>
+
+          <h1 class="mt-6 font-serif text-display text-content">
+            The craft of <span class="text-brand">user experience</span>, served strong.
+          </h1>
+
+          <p class="mx-auto mt-7 max-w-2xl font-serif text-lg leading-relaxed text-content-muted">
+            Practical UX design strategies and AI integration guides for modern designers.
+            Frameworks, process, and tooling, written to be used rather than admired.
+          </p>
+
+          <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <a href="/blog" class="btn btn-primary">
+              Read the articles
+              <svg viewBox="0 0 24 24" class="size-3.5 fill-none stroke-current stroke-[2.5]">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+            <a href={`mailto:${SITE.EMAIL}`} class="btn btn-ghost">Get in touch</a>
+          </div>
         </div>
       </div>
     </Container>
@@ -77,11 +84,17 @@ const topics = [...new Set(posts.flatMap(p => p.data.tags ?? []))].slice(0, 8);
   <!-- Latest grid -->
   <section class="py-14 sm:py-20">
     <Container>
-      <div class="animate mb-10 flex flex-wrap items-end justify-between gap-4">
-        <h2 class="text-heading text-content">Latest posts</h2>
-        <a href="/blog" class="text-sm font-semibold text-brand underline-offset-4 hover:underline">
-          See all articles &rarr;
-        </a>
+      <div class="animate mb-10">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <h2 class="font-serif text-heading text-content">Latest posts</h2>
+          <a
+            href="/blog"
+            class="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-brand underline-offset-4 hover:underline"
+          >
+            See all articles &rarr;
+          </a>
+        </div>
+        <div class="mt-4 h-px w-full bg-brand/30"></div>
       </div>
 
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -97,10 +110,10 @@ const topics = [...new Set(posts.flatMap(p => p.data.tags ?? []))].slice(0, 8);
   <!-- Topics + contact -->
   <section class="pb-16 sm:pb-24">
     <Container>
-      <div class="animate overflow-hidden rounded-card border border-line bg-surface p-8 sm:p-12">
+      <div class="plate plate-inset deco-corners animate p-8 sm:p-12">
         <div class="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
           <div>
-            <h2 class="text-heading text-content">No fluff, no theory.</h2>
+            <h2 class="font-serif text-heading text-content">No fluff, no theory.</h2>
             <p class="mt-4 max-w-xl font-serif text-lg leading-relaxed text-content-muted">
               Every article is grounded in real project work. If you want to talk about something,
               or just say hi, reach out.
@@ -111,9 +124,10 @@ const topics = [...new Set(posts.flatMap(p => p.data.tags ?? []))].slice(0, 8);
           </div>
           <div>
             <h3 class="eyebrow">Topics covered</h3>
+            <div class="mt-3 h-px w-full bg-brand/25"></div>
             <ul class="mt-4 flex flex-wrap gap-2">
               {topics.map(topic => (
-                <li class="pill">{topic}</li>
+                <li class="badge">{topic}</li>
               ))}
             </ul>
           </div>

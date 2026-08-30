@@ -2,20 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Palette taken from the Bacha Coffee tins: cobalt blue, black label panels,
+  gold ornament, cream type. Every text pair below clears WCAG AA.
+*/
 :root {
   color-scheme: dark;
 
-  --ink: #06251f;
-  --ink-2: #082e27;
-  --surface: #0c3a31;
-  --surface-hover: #0e4036;
-  --line: #1b4f44;
-  --line-strong: #2a6b58;
-  --content: #f1f7f4;
-  --content-muted: #c3d8d1;
-  --content-faint: #9bb4ac;
-  --brand: #55b48e;
-  --brand-bright: #7acfac;
+  --navy: #06356e;
+  --navy-deep: #04264f;
+  --panel: #080d16;
+  --panel-2: #101828;
+  --cobalt: #0a5aae;
+  --cobalt-bright: #1276d8;
+  --cobalt-deep: #073f7d;
+  --gold: #e8b33c;
+  --gold-bright: #f5ce72;
+  --gold-deep: #c8912a;
+  --cream: #f8f3e7;
+  --cream-muted: #dcd2bc;
+  --cream-faint: #b3a98f;
+  --rule: #14498c;
+
+  --gold-hair: rgb(232 179 60 / 0.42);
+  --gold-hair-soft: rgb(232 179 60 / 0.22);
 }
 
 html {
@@ -54,70 +64,137 @@ main {
 }
 
 ::selection {
-  background: var(--brand);
-  color: var(--ink);
+  background: var(--gold);
+  color: var(--panel);
 }
 
 :focus-visible {
-  outline: 2px solid var(--brand-bright);
+  outline: 2px solid var(--gold-bright);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
-/* ---------- Reusable pieces ---------- */
-
 @layer components {
-  .pill {
-    @apply inline-flex items-center rounded-full border border-line-strong px-3 py-1;
-    @apply text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-brand;
+  /* ---------- Label plate: the black panel with its gold hairline ---------- */
+
+  .plate {
+    @apply relative rounded-card bg-surface;
+    box-shadow: inset 0 0 0 1px var(--gold-hair);
+  }
+
+  .plate-inset::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid var(--gold-hair-soft);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  /* ---------- Corner ornaments, four small gold diamonds ---------- */
+
+  .deco-corners::after {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    pointer-events: none;
+    --b: linear-gradient(var(--gold), var(--gold));
+    background:
+      var(--b) 0 0 / 24px 2px no-repeat,
+      var(--b) 0 0 / 2px 24px no-repeat,
+      var(--b) 100% 0 / 24px 2px no-repeat,
+      var(--b) 100% 0 / 2px 24px no-repeat,
+      var(--b) 0 100% / 24px 2px no-repeat,
+      var(--b) 0 100% / 2px 24px no-repeat,
+      var(--b) 100% 100% / 24px 2px no-repeat,
+      var(--b) 100% 100% / 2px 24px no-repeat;
+  }
+
+  /* ---------- Badge, the little gold-framed category stamp ---------- */
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-sm border border-brand/55 px-2.5 py-1;
+    @apply text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-brand;
     @apply transition-colors duration-200;
   }
 
-  a.pill:hover {
-    @apply border-brand bg-brand text-ink;
+  a.badge:hover,
+  .group:hover .badge {
+    @apply border-brand bg-brand text-brand-ink;
+  }
+
+  /* Kept as an alias so older markup keeps working */
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-sm border border-brand/55 px-2.5 py-1;
+    @apply text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-brand;
+    @apply transition-colors duration-200;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3;
-    @apply text-sm font-semibold transition-colors duration-200;
+    @apply inline-flex items-center justify-center gap-2 rounded-sm px-6 py-3;
+    @apply text-xs font-bold uppercase tracking-[0.14em] transition-colors duration-200;
   }
 
   .btn-primary {
-    @apply bg-brand text-ink hover:bg-brand-bright;
+    @apply bg-brand text-brand-ink hover:bg-brand-bright;
   }
 
   .btn-ghost {
-    @apply border border-line-strong text-content hover:border-brand hover:text-brand;
-  }
-
-  .rule {
-    @apply h-px w-full bg-line;
+    @apply border border-brand/50 text-content hover:border-brand hover:text-brand;
   }
 
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.18em] text-brand;
+    @apply text-[0.6875rem] font-semibold uppercase tracking-[0.24em] text-brand;
   }
+
+  /* ---------- Gold rule with a centred diamond ---------- */
+
+  .deco-rule {
+    @apply flex items-center gap-3;
+  }
+
+  .deco-rule::before,
+  .deco-rule::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(90deg, transparent, var(--gold-deep), transparent);
+  }
+
+  .rule {
+    @apply h-px w-full;
+    background: linear-gradient(90deg, transparent, var(--rule), transparent);
+  }
+}
+
+/* Small gold diamond used as a separator */
+.diamond {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  rotate: 45deg;
+  background: var(--gold);
 }
 
 /* ---------- Long-form article typography ---------- */
 
 article.prose {
-  --tw-prose-body: var(--content-muted);
-  --tw-prose-headings: var(--content);
-  --tw-prose-lead: var(--content-muted);
-  --tw-prose-links: var(--brand-bright);
-  --tw-prose-bold: var(--content);
-  --tw-prose-counters: var(--brand);
-  --tw-prose-bullets: var(--brand-deep, #3c8e6e);
-  --tw-prose-hr: var(--line);
-  --tw-prose-quotes: var(--content);
-  --tw-prose-quote-borders: var(--brand);
-  --tw-prose-captions: var(--content-faint);
-  --tw-prose-code: var(--content);
-  --tw-prose-pre-code: var(--content-muted);
-  --tw-prose-pre-bg: var(--ink-2);
-  --tw-prose-th-borders: var(--line-strong);
-  --tw-prose-td-borders: var(--line);
+  --tw-prose-body: var(--cream-muted);
+  --tw-prose-headings: var(--cream);
+  --tw-prose-lead: var(--cream-muted);
+  --tw-prose-links: var(--gold-bright);
+  --tw-prose-bold: var(--cream);
+  --tw-prose-counters: var(--gold);
+  --tw-prose-bullets: var(--gold-deep);
+  --tw-prose-hr: var(--rule);
+  --tw-prose-quotes: var(--cream);
+  --tw-prose-quote-borders: var(--gold);
+  --tw-prose-captions: var(--cream-faint);
+  --tw-prose-code: var(--cream);
+  --tw-prose-pre-code: var(--cream-muted);
+  --tw-prose-pre-bg: var(--panel);
+  --tw-prose-th-borders: var(--gold-deep);
+  --tw-prose-td-borders: var(--rule);
 }
 
 article.prose {
@@ -139,35 +216,37 @@ article.prose li {
 }
 
 article.prose h2 {
-  @apply font-sans font-bold tracking-tight text-content;
+  @apply font-serif font-semibold text-content;
   font-size: clamp(1.6rem, 2.6vw, 2.05rem);
-  line-height: 1.2;
+  line-height: 1.22;
   margin-top: 2.75em;
   margin-bottom: 0.85em;
   scroll-margin-top: 7rem;
 }
 
+/* Deco marker above every section heading */
 article.prose h2::before {
   content: "";
   display: block;
-  width: 2.5rem;
+  width: 3.5rem;
   height: 3px;
-  border-radius: 999px;
-  background: var(--brand);
   margin-bottom: 1rem;
+  background:
+    linear-gradient(90deg, var(--gold) 0 1.25rem, transparent 1.25rem 1.5rem, var(--gold) 1.5rem 3.5rem);
 }
 
 article.prose h3 {
-  @apply font-sans font-semibold tracking-tight text-content;
+  @apply font-serif font-semibold text-content;
   font-size: clamp(1.25rem, 1.9vw, 1.45rem);
-  line-height: 1.3;
+  line-height: 1.32;
   margin-top: 2em;
   margin-bottom: 0.6em;
   scroll-margin-top: 7rem;
 }
 
 article.prose h4 {
-  @apply font-sans font-semibold text-content;
+  @apply font-sans font-semibold uppercase tracking-[0.1em] text-brand;
+  font-size: 0.875rem;
 }
 
 article.prose strong {
@@ -175,7 +254,7 @@ article.prose strong {
 }
 
 article.prose a {
-  @apply font-medium underline decoration-brand/40 underline-offset-4;
+  @apply font-medium underline decoration-brand/45 underline-offset-4;
   @apply transition-colors duration-200;
 }
 
@@ -184,21 +263,21 @@ article.prose a:hover {
 }
 
 article.prose blockquote {
-  @apply rounded-r-xl border-l-4 bg-ink-2 py-1 pr-6 not-italic;
+  @apply rounded-r-sm border-l-2 bg-ink-2 py-1 pr-6 not-italic;
 }
 
 article.prose blockquote p {
-  @apply font-sans text-content;
+  @apply font-serif text-content;
 }
 
 article.prose ul > li::marker,
 article.prose ol > li::marker {
-  color: var(--brand);
+  color: var(--gold);
 }
 
 article.prose code {
-  @apply rounded-md bg-ink-2 px-1.5 py-0.5 font-sans text-[0.875em] font-medium;
-  border: 1px solid var(--line);
+  @apply rounded-sm bg-ink-2 px-1.5 py-0.5 font-sans text-[0.875em] font-medium;
+  border: 1px solid var(--rule);
 }
 
 article.prose code::before,
@@ -207,15 +286,19 @@ article.prose code::after {
 }
 
 article.prose pre {
-  @apply rounded-xl border border-line;
+  @apply rounded-sm;
+  border: 1px solid var(--gold-hair-soft);
 }
 
 article.prose img {
-  @apply mx-auto rounded-card border border-line;
+  @apply mx-auto rounded-sm;
+  border: 1px solid var(--gold-hair);
 }
 
 article.prose hr {
-  @apply my-14;
+  @apply my-14 border-0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-deep), transparent);
 }
 
 article.prose table {
@@ -223,20 +306,22 @@ article.prose table {
 }
 
 article.prose thead th {
-  @apply font-sans text-content;
+  @apply font-sans text-xs uppercase tracking-[0.1em] text-brand;
 }
 
 /* ---------- Marquee strip ---------- */
 
 .marquee {
-  @apply relative flex overflow-hidden border-y border-line py-3;
-  --mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  @apply relative flex overflow-hidden bg-surface py-2.5;
+  border-top: 1px solid var(--gold-hair);
+  border-bottom: 1px solid var(--gold-hair);
+  --mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
   -webkit-mask-image: var(--mask);
   mask-image: var(--mask);
 }
 
 .marquee__track {
-  @apply flex w-max shrink-0 animate-marquee items-center gap-6 pr-6;
+  @apply flex w-max shrink-0 animate-marquee items-center gap-5 pr-5;
 }
 
 .marquee:hover .marquee__track {
@@ -253,8 +338,6 @@ article.prose thead th {
 .animate.show {
   @apply translate-y-0 opacity-100;
 }
-
-
 
 /* ---------- Reading progress ---------- */
 

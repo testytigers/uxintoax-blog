@@ -6,28 +6,36 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Deep navy reading surfaces
         ink: {
-          DEFAULT: "#06251F",
-          2: "#082E27",
+          DEFAULT: "#06356E",
+          2: "#04264F",
         },
+        // Near-black label panels, the way the tins carry their black labels
         surface: {
-          DEFAULT: "#0C3A31",
-          hover: "#0E4036",
+          DEFAULT: "#080D16",
+          hover: "#101828",
+        },
+        // The saturated tin blue, for accent blocks and cover art
+        cobalt: {
+          DEFAULT: "#0A5AAE",
+          bright: "#1276D8",
+          deep: "#073F7D",
         },
         line: {
-          DEFAULT: "#1B4F44",
-          strong: "#2A6B58",
+          DEFAULT: "#14498C",
+          strong: "#8A6A22",
         },
         content: {
-          DEFAULT: "#F1F7F4",
-          muted: "#C3D8D1",
-          faint: "#9BB4AC",
+          DEFAULT: "#F8F3E7",
+          muted: "#DCD2BC",
+          faint: "#B3A98F",
         },
         brand: {
-          DEFAULT: "#55b48e",
-          bright: "#7ACFAC",
-          deep: "#3C8E6E",
-          ink: "#06251F",
+          DEFAULT: "#E8B33C",
+          bright: "#F5CE72",
+          deep: "#C8912A",
+          ink: "#080D16",
         },
       },
       fontFamily: {
@@ -35,15 +43,15 @@ export default {
         serif: ["Lora", ...defaultTheme.fontFamily.serif],
       },
       fontSize: {
-        display: ["clamp(2.6rem, 7vw, 4.5rem)", { lineHeight: "1.02", letterSpacing: "-0.035em", fontWeight: "700" }],
-        title: ["clamp(2rem, 4.6vw, 3rem)", { lineHeight: "1.08", letterSpacing: "-0.03em", fontWeight: "700" }],
-        heading: ["clamp(1.5rem, 2.6vw, 2rem)", { lineHeight: "1.15", letterSpacing: "-0.02em", fontWeight: "600" }],
+        display: ["clamp(2.6rem, 7vw, 4.5rem)", { lineHeight: "1.04", letterSpacing: "-0.02em", fontWeight: "600" }],
+        title: ["clamp(2rem, 4.6vw, 3rem)", { lineHeight: "1.1", letterSpacing: "-0.015em", fontWeight: "600" }],
+        heading: ["clamp(1.5rem, 2.6vw, 2rem)", { lineHeight: "1.18", letterSpacing: "-0.01em", fontWeight: "600" }],
       },
       maxWidth: {
         prose: "68ch",
       },
       borderRadius: {
-        card: "1.25rem",
+        card: "0.375rem",
       },
       keyframes: {
         marquee: {
