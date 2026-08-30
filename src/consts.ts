@@ -1,15 +1,15 @@
 import type { Site, Metadata, Socials } from "@types";
 
 export const SITE: Site = {
-  NAME: "UXArchitect Blog",
-  EMAIL: "hello@uxarchitect.co",
+  NAME: "UXintoax Blog",
+  EMAIL: "hello@uxintoax.com",
   NUM_POSTS_ON_HOMEPAGE: 6,
   NUM_WORKS_ON_HOMEPAGE: 3,
   NUM_PROJECTS_ON_HOMEPAGE: 3,
 };
 
 export const HOME: Metadata = {
-  TITLE: "UX Architect — AI-Powered UX Design Strategies & Processes",
+  TITLE: "UXintoax — AI-Powered UX Design Strategies & Processes",
   DESCRIPTION: "Practical UX design frameworks, AI workflow optimization tips, and tactical guides for modern UX designers. Learn how to integrate AI into your design process effectively.",
   IMAGE: "/og-home.jpg",
 };
@@ -33,18 +33,18 @@ export const PROJECTS: Metadata = {
 export const SOCIALS: Socials = [
   { 
     NAME: "twitter-x",
-    HREF: "https://twitter.com/uxarchitect_",
+    HREF: "https://twitter.com/uxintoax",
   },
   { 
     NAME: "github",
-    HREF: "https://github.com/uxarchitect"
+    HREF: "https://github.com/uxintoax"
   },
   { 
     NAME: "linkedin",
-    HREF: "https://www.linkedin.com/company/uxarchitect"
+    HREF: "https://www.linkedin.com/company/uxintoax"
   },
   {
     NAME: "dribbble",
-    HREF: "https://dribbble.com/uxarchitect"
+    HREF: "https://dribbble.com/uxintoax"
   }
 ];
