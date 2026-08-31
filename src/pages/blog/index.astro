@@ -22,20 +22,15 @@ const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
 ---
 
 <PageLayout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
-  <section class="py-10 sm:py-14">
+  <section class="border-b border-line">
     <Container>
-      <div class="plate plate-inset deco-corners animate px-6 py-12 sm:px-12 sm:py-16">
-        <div class="max-w-3xl">
-          <p class="eyebrow">Archive</p>
-          <h1 class="mt-4 font-serif text-title text-content">All articles</h1>
-          <div class="deco-rule mt-6 max-w-[18rem]">
-            <span class="diamond"></span>
-          </div>
-          <p class="mt-6 font-serif text-lg leading-relaxed text-content-muted">
-            {data.length} {data.length === 1 ? "article" : "articles"} on UX design process,
-            research, accessibility and AI-assisted workflows.
-          </p>
-        </div>
+      <div class="max-w-3xl py-14 sm:py-20">
+        <p class="animate eyebrow">Archive</p>
+        <h1 class="animate mt-5 text-title text-content">All articles</h1>
+        <p class="animate mt-5 font-serif text-lg leading-relaxed text-content-muted">
+          {data.length} {data.length === 1 ? "article" : "articles"} on AI-powered UX design
+          processes, tool choices and workflow decisions.
+        </p>
       </div>
     </Container>
   </section>
@@ -47,14 +42,12 @@ const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
       <div class="space-y-16">
         {years.map(year => (
           <section class="space-y-7">
-            <div class="animate">
-              <div class="flex items-center gap-5">
-                <h2 class="font-serif text-heading text-content">{year}</h2>
-                <span class="h-px flex-1 bg-brand/30"></span>
-                <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-content-faint">
-                  {posts[year].length} {posts[year].length === 1 ? "post" : "posts"}
-                </span>
-              </div>
+            <div class="animate flex items-center gap-5">
+              <h2 class="text-heading text-content">{year}</h2>
+              <span class="h-px flex-1 bg-line"></span>
+              <span class="text-sm text-content-faint">
+                {posts[year].length} {posts[year].length === 1 ? "post" : "posts"}
+              </span>
             </div>
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {posts[year].map(post => (

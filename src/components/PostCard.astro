@@ -14,11 +14,10 @@ const tag = entry.data.tags?.[0];
 
 // The featured cover grows to absorb any extra column height,
 // so the card never ends up with a dead gap under its text.
-const coverWrap = featured ? "relative flex-1 min-h-[240px]" : "relative";
 const coverClass = {
-  featured: "h-full w-full",
-  grid: "aspect-[3/2] w-full",
-  row: "aspect-[16/9] w-full",
+  featured: "aspect-[16/9] min-h-[220px] flex-1",
+  grid: "aspect-[3/2]",
+  row: "aspect-[16/9]",
 }[variant];
 
 const titleSize = {
@@ -31,18 +30,14 @@ const titleSize = {
 <article class="group h-full">
   <a
     href={`/blog/${entry.slug}`}
-    class="plate flex h-full flex-col overflow-hidden transition-colors duration-300 hover:bg-surface-hover"
+    class="flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-colors duration-300 hover:border-line-strong hover:bg-surface-hover"
   >
-    <div class={coverWrap}>
-      <Cover seed={entry.slug} class={coverClass} />
-      <!-- gold band separating the label art from the type block -->
-      <div class="absolute inset-x-0 bottom-0 h-[3px] bg-brand/70"></div>
-    </div>
+    <Cover seed={entry.slug} class={`w-full ${coverClass}`} />
 
-    <div class={`relative flex flex-col gap-3 p-5 sm:p-6 ${featured ? "shrink-0" : "flex-1"}`}>
-      {tag && <span class="badge w-fit">{tag}</span>}
+    <div class={`flex flex-col gap-3 p-5 sm:p-6 ${featured ? "shrink-0" : "flex-1"}`}>
+      {tag && <span class="pill w-fit">{tag}</span>}
 
-      <h3 class={`font-serif font-semibold tracking-tight text-content transition-colors duration-300 group-hover:text-brand ${titleSize}`}>
+      <h3 class={`font-bold tracking-tight text-content transition-colors duration-300 group-hover:text-brand ${titleSize}`}>
         {entry.data.title}
       </h3>
 
@@ -52,10 +47,7 @@ const titleSize = {
         </p>
       )}
 
-      <div class={featured ? "pt-1" : "mt-auto pt-2"}>
-        <div class="mb-3 h-px w-full bg-brand/20"></div>
-        <PostMeta date={entry.data.date} body={entry.body} />
-      </div>
+      <PostMeta date={entry.data.date} body={entry.body} class={featured ? "pt-1" : "mt-auto pt-2"} />
     </div>
   </a>
 </article>

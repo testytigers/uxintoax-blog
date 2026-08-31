@@ -1,9 +1,8 @@
 ---
 /**
- * Deterministic generated cover art, drawn as a coffee-tin label:
- * a colour field, a geometric deco motif, and a gold hairline frame.
- * Palette and pattern come from the post slug, so each post keeps the
- * same label forever and the grid stays varied. No image assets needed.
+ * Deterministic generated cover art.
+ * Every post gets a stable palette + pattern derived from its slug,
+ * so the grid looks designed rather than random, with zero image assets.
  */
 type Props = {
   seed: string;
@@ -12,6 +11,7 @@ type Props = {
 
 const { seed, class: className = "" } = Astro.props;
 
+// Two independent hashes so palette and pattern don't correlate.
 const fnv = (s: string) => {
   let h = 2166136261;
   for (let i = 0; i < s.length; i++) {
@@ -21,49 +21,27 @@ const fnv = (s: string) => {
   return h;
 };
 
-// Avalanche step. Without it, similar slugs land on neighbouring buckets and
-// the archive shows the same label three times in a row.
-const mix = (h: number) => {
-  h ^= h >>> 16;
-  h = Math.imul(h, 0x85ebca6b) >>> 0;
-  h ^= h >>> 13;
-  h = Math.imul(h, 0xc2b2ae35) >>> 0;
-  h ^= h >>> 16;
-  return h >>> 0;
+const djb2 = (s: string) => {
+  let h = 5381;
+  for (let i = 0; i < s.length; i++) h = ((h * 33) ^ s.charCodeAt(i)) >>> 0;
+  return h;
 };
 
-const pick = (s: string) => mix(fnv(s));
-
-const GOLD = "#E8B33C";
-const CREAM = "#F8F3E7";
-const NOIR = "#080D16";
-const COBALT = "#0A5AAE";
-const COBALT_BRIGHT = "#1276D8";
-const NAVY = "#06356E";
-
 const palettes = [
-  { bg: COBALT, ink: GOLD, alt: CREAM, frame: GOLD },
-  { bg: GOLD, ink: NOIR, alt: COBALT, frame: NOIR },
-  { bg: NOIR, ink: GOLD, alt: COBALT_BRIGHT, frame: GOLD },
-  { bg: CREAM, ink: NAVY, alt: GOLD, frame: NAVY },
-  { bg: NAVY, ink: GOLD, alt: COBALT_BRIGHT, frame: GOLD },
-  { bg: COBALT_BRIGHT, ink: CREAM, alt: GOLD, frame: CREAM },
+  { bg: "#55b48e", ink: "#06251F", alt: "#0C3A31" },
+  { bg: "#7ACFAC", ink: "#06251F", alt: "#0C3A31" },
+  { bg: "#E4D8B8", ink: "#06251F", alt: "#3C8E6E" },
+  { bg: "#C2D2EE", ink: "#06251F", alt: "#3C8E6E" },
+  { bg: "#3C8E6E", ink: "#06251F", alt: "#E4D8B8" },
+  { bg: "#EBC96A", ink: "#06251F", alt: "#0C3A31" },
 ];
 
-const p = palettes[pick(`${seed}|colour`) % palettes.length];
-const pattern = pick(`${seed}|art`) % 8;
-const flip = pick(`${seed}|flip`) % 2 === 0;
-
-// Continuous variation on top of palette + motif. Scale never drops below 1
-// so a full-bleed motif can't pull away from the edges of the label.
-const rot = [-9, -6, -3, 0, 3, 6, 9][pick(`${seed}|rot`) % 7];
-const scale = [1, 1.08, 1.18, 1.3][pick(`${seed}|scale`) % 4];
-const ox = [-30, -14, 0, 14, 30][pick(`${seed}|ox`) % 5];
-const oy = [-18, -6, 0, 6, 18][pick(`${seed}|oy`) % 5];
-const motif = `translate(${200 + ox} ${125 + oy}) rotate(${rot}) scale(${scale}) translate(-200 -125)`;
+const p = palettes[fnv(seed) % palettes.length];
+const pattern = djb2(`${seed}|art`) % 6;
+const flip = djb2(`${seed}|flip`) % 2 === 0;
 ---
 
-<div class={`relative overflow-hidden bg-surface ${className}`} aria-hidden="true">
+<div class={`relative overflow-hidden bg-ink-2 ${className}`} aria-hidden="true">
   <svg
     viewBox="0 0 400 250"
     preserveAspectRatio="xMidYMid slice"
@@ -72,146 +50,77 @@ const motif = `translate(${200 + ox} ${125 + oy}) rotate(${rot}) scale(${scale})
   >
     <rect width="400" height="250" fill={p.bg} />
 
-    <g opacity="0.95" transform={motif}>
-      {/* 0 — deco sunburst, the rays on the tin lids */}
-      {pattern === 0 && (
-        <g>
-          {Array.from({ length: 24 }).map((_, i) => (
-            <path
-              d={`M 200 125 L ${200 + 300 * Math.cos((i * 15 - 90) * Math.PI / 180)} ${
-                125 + 300 * Math.sin((i * 15 - 90) * Math.PI / 180)
-              } L ${200 + 300 * Math.cos((i * 15 - 83) * Math.PI / 180)} ${
-                125 + 300 * Math.sin((i * 15 - 83) * Math.PI / 180)
-              } Z`}
-              fill={p.ink}
-              opacity={i % 2 ? 0.5 : 0.85}
-            />
-          ))}
-          <circle cx="200" cy="125" r="42" fill={p.bg} stroke={p.alt} stroke-width="2" />
-          <circle cx="200" cy="125" r="30" fill="none" stroke={p.ink} stroke-width="1.5" />
-        </g>
-      )}
+    {pattern === 0 && (
+      <g fill="none" stroke={p.ink} stroke-width="2" opacity="0.9">
+        {[26, 52, 78, 104, 130, 156, 182].map((r, i) => (
+          <circle cx="300" cy="196" r={r} opacity={1 - i * 0.1} />
+        ))}
+        <circle cx="300" cy="196" r="12" fill={p.alt} stroke="none" />
+      </g>
+    )}
 
-      {/* 1 — stepped deco arch */}
-      {pattern === 1 && (
-        <g fill="none" stroke={p.ink} stroke-width="2.5">
-          {[0, 1, 2, 3, 4].map(i => (
-            <path
-              d={`M ${112 + i * 15} 250 L ${112 + i * 15} ${132 - i * 16} Q 200 ${
-                70 - i * 22
-              } ${288 - i * 15} ${132 - i * 16} L ${288 - i * 15} 250`}
-              opacity={0.35 + i * 0.15}
-            />
-          ))}
-          <circle cx="200" cy="96" r="17" fill={p.alt} stroke="none" />
-        </g>
-      )}
+    {pattern === 1 && (
+      <g>
+        {Array.from({ length: 9 }).map((_, row) =>
+          Array.from({ length: 15 }).map((_, col) => (
+            <circle cx={16 + col * 27} cy={18 + row * 27} r="3.2" fill={p.ink} opacity="0.55" />
+          ))
+        )}
+        <circle cx="286" cy="90" r="62" fill={p.alt} />
+        <circle cx="286" cy="90" r="62" fill="none" stroke={p.ink} stroke-width="2" />
+      </g>
+    )}
 
-      {/* 2 — diamond lattice */}
-      {pattern === 2 && (
-        <g>
-          {Array.from({ length: 6 }).map((_, row) =>
-            Array.from({ length: 9 }).map((_, col) => {
-              const x = 8 + col * 48 + (row % 2 ? 24 : 0);
-              const y = 12 + row * 45;
-              const big = (row + col) % 3 === 0;
-              return (
-                <rect
-                  x={x - 13}
-                  y={y - 13}
-                  width="26"
-                  height="26"
-                  transform={`rotate(45 ${x} ${y})`}
-                  fill={big ? p.alt : "none"}
-                  stroke={p.ink}
-                  stroke-width="2"
-                  opacity={big ? 0.95 : 0.6}
-                />
-              );
-            })
-          )}
-        </g>
-      )}
+    {pattern === 2 && (
+      <g>
+        {Array.from({ length: 10 }).map((_, i) => (
+          <rect
+            x={-60 + i * 52}
+            y="-40"
+            width={i % 3 === 0 ? 22 : 10}
+            height="340"
+            fill={i % 3 === 0 ? p.alt : p.ink}
+            opacity={i % 3 === 0 ? 0.95 : 0.4}
+            transform="rotate(18 200 125)"
+          />
+        ))}
+      </g>
+    )}
 
-      {/* 3 — fluted columns, like the tin ribbing */}
-      {pattern === 3 && (
-        <g>
-          {Array.from({ length: 13 }).map((_, i) => (
-            <rect
-              x={4 + i * 31}
-              y={i % 2 ? 0 : 34}
-              width={i % 3 === 0 ? 15 : 7}
-              height={i % 2 ? 216 : 250}
-              rx="3"
-              fill={i % 3 === 0 ? p.alt : p.ink}
-              opacity={i % 3 === 0 ? 0.9 : 0.45}
-            />
-          ))}
-        </g>
-      )}
+    {pattern === 3 && (
+      <g fill="none" stroke={p.ink} stroke-width="2.5">
+        <rect x="118" y="43" width="164" height="164" rx="26" fill={p.alt} stroke="none" />
+        <rect x="118" y="43" width="164" height="164" rx="26" />
+        <rect x="146" y="71" width="108" height="108" rx="18" />
+        <rect x="174" y="99" width="52" height="52" rx="10" />
+        <line x1="0" y1="125" x2="118" y2="125" />
+        <line x1="282" y1="125" x2="400" y2="125" />
+      </g>
+    )}
 
-      {/* 4 — concentric guilloche rings */}
-      {pattern === 4 && (
-        <g fill="none" stroke={p.ink}>
-          {[22, 44, 66, 88, 110, 132, 154].map((r, i) => (
-            <circle cx="312" cy="196" r={r} stroke-width={i % 2 ? 1 : 2.5} opacity={0.9 - i * 0.09} />
-          ))}
-          <circle cx="312" cy="196" r="14" fill={p.alt} stroke="none" />
-          <path d="M0 40 H400" stroke={p.alt} stroke-width="3" opacity="0.8" />
-          <path d="M0 52 H400" stroke={p.ink} stroke-width="1" opacity="0.6" />
-        </g>
-      )}
+    {pattern === 4 && (
+      <g fill="none" stroke={p.ink} stroke-width="3" stroke-linecap="round">
+        {Array.from({ length: 7 }).map((_, i) => (
+          <path
+            d={`M -20 ${40 + i * 30} q 50 -34 100 0 t 100 0 t 100 0 t 100 0`}
+            opacity={0.35 + i * 0.09}
+          />
+        ))}
+        <circle cx="316" cy="70" r="30" fill={p.alt} stroke="none" />
+      </g>
+    )}
 
-      {/* 6 — arched window grid, the deco panel on the tin face */}
-      {pattern === 6 && (
-        <g fill="none" stroke={p.ink} stroke-width="2.5">
-          {[0, 1, 2, 3].map(col =>
-            [0, 1].map(row => (
-              <path
-                d={`M ${28 + col * 96} ${104 + row * 106} L ${28 + col * 96} ${58 + row * 106} q 0 -26 26 -26 t 26 26 L ${80 + col * 96} ${104 + row * 106} Z`}
-                fill={(col + row) % 2 ? p.alt : "none"}
-                opacity={(col + row) % 2 ? 0.9 : 0.7}
-              />
-            ))
-          )}
-          <path d="M0 122 H400" stroke={p.alt} stroke-width="3" opacity="0.75" />
-        </g>
-      )}
-
-      {/* 7 — banded label with a centred medallion */}
-      {pattern === 7 && (
-        <g>
-          {[
-            [0, 18], [26, 6], [40, 10], [200, 10], [218, 6], [232, 18],
-          ].map(([y, h]) => (
-            <rect x="-40" y={y} width="480" height={h} fill={p.ink} />
-          ))}
-          {Array.from({ length: 16 }).map((_, i) => (
-            <rect x={-20 + i * 27} y="58" width="11" height="134" fill={p.ink} opacity="0.85" />
-          ))}
-          <rect x="132" y="52" width="136" height="146" fill={p.bg} />
-          <path d="M200 62 L262 125 L200 188 L138 125 Z" fill={p.alt} stroke={p.ink} stroke-width="2.5" />
-          <path d="M200 88 L238 125 L200 162 L162 125 Z" fill="none" stroke={p.ink} stroke-width="2" />
-        </g>
-      )}
-
-      {/* 5 — chevron banding */}
-      {pattern === 5 && (
-        <g fill="none" stroke-linecap="square">
-          {Array.from({ length: 9 }).map((_, i) => (
-            <path
-              d={`M -20 ${-40 + i * 46} L 200 ${60 + i * 46} L 420 ${-40 + i * 46}`}
-              stroke={i % 3 === 0 ? p.alt : p.ink}
-              stroke-width={i % 3 === 0 ? 9 : 4}
-              opacity={i % 3 === 0 ? 0.95 : 0.5}
-            />
-          ))}
-        </g>
-      )}
-    </g>
-
-    {/* Gold label frame, on every cover */}
-    <rect x="9" y="9" width="382" height="232" fill="none" stroke={p.frame} stroke-width="2" opacity="0.85" />
-    <rect x="16" y="16" width="368" height="218" fill="none" stroke={p.frame} stroke-width="1" opacity="0.5" />
+    {pattern === 5 && (
+      <g stroke={p.ink} stroke-width="2" fill="none">
+        <path d="M60 190 L140 96 L240 150 L330 62" />
+        <path d="M60 190 L150 200 L240 150 L340 176" opacity="0.45" />
+        <circle cx="60" cy="190" r="13" fill={p.alt} />
+        <circle cx="140" cy="96" r="19" fill={p.alt} />
+        <circle cx="240" cy="150" r="15" fill={p.alt} />
+        <circle cx="330" cy="62" r="24" fill={p.alt} />
+        <circle cx="150" cy="200" r="9" fill={p.alt} opacity="0.6" />
+        <circle cx="340" cy="176" r="11" fill={p.alt} opacity="0.6" />
+      </g>
+    )}
   </svg>
 </div>

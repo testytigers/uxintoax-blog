@@ -2,7 +2,6 @@
 import Container from "@components/Container.astro";
 import SocialIcon from "@components/SocialIcon.astro";
 import BackToTop from "@components/BackToTop.astro";
-import Wordmark from "@components/Wordmark.astro";
 import { SITE, SOCIALS } from "@consts";
 
 const year = new Date().getFullYear();
@@ -14,16 +13,16 @@ const labels: Record<string, string> = {
 };
 ---
 
-<footer class="bg-ink-2">
-  <div class="h-px w-full bg-brand/45"></div>
-  <div class="mt-[2px] h-px w-full bg-brand/20"></div>
-
+<footer class="border-t border-line bg-ink-2">
   <Container>
     <div class="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
       <div class="space-y-4">
-        <div class="flex items-center gap-3">
-          <Wordmark class="size-8" />
-          <span class="font-serif text-lg font-semibold tracking-tight text-content">UXintoax</span>
+        <div class="flex items-center gap-2.5">
+          <svg viewBox="0 0 32 32" class="size-7" aria-hidden="true">
+            <rect x="1.5" y="1.5" width="29" height="29" rx="8" fill="none" stroke="#55b48e" stroke-width="2" />
+            <path d="M9 9 L16 22 L23 9" fill="none" stroke="#55b48e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="text-base font-bold tracking-tight text-content">UXintoax</span>
         </div>
         <p class="max-w-sm font-serif leading-relaxed text-content-muted">
           Practical UX design strategies and AI integration guides for modern designers.
@@ -35,7 +34,7 @@ const labels: Record<string, string> = {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={labels[social.NAME] ?? social.NAME}
-              class="flex size-10 items-center justify-center rounded-sm border border-brand/35 text-content-muted transition-colors duration-200 hover:border-brand hover:bg-brand hover:text-brand-ink"
+              class="flex size-10 items-center justify-center rounded-full border border-line text-content-muted transition-colors duration-200 hover:border-brand hover:text-brand"
             >
               <SocialIcon name={social.NAME} />
             </a>
@@ -43,7 +42,7 @@ const labels: Record<string, string> = {
         </div>
       </div>
 
-      <nav class="space-y-4" aria-label="Site">
+      <nav class="space-y-3" aria-label="Site">
         <h2 class="eyebrow">Explore</h2>
         <ul class="space-y-2.5 text-content-muted">
           <li><a href="/" class="transition-colors hover:text-brand">Home</a></li>
@@ -52,7 +51,7 @@ const labels: Record<string, string> = {
         </ul>
       </nav>
 
-      <div class="space-y-4">
+      <div class="space-y-3">
         <h2 class="eyebrow">Contact</h2>
         <ul class="space-y-2.5 text-content-muted">
           <li>
@@ -67,11 +66,7 @@ const labels: Record<string, string> = {
       </div>
     </div>
 
-    <div class="deco-rule py-1">
-      <span class="diamond"></span>
-    </div>
-
-    <div class="flex flex-wrap items-center justify-between gap-3 py-6 text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-content-faint">
+    <div class="flex flex-wrap items-center justify-between gap-3 border-t border-line py-6 text-sm text-content-faint">
       <span>&copy; {year} {SITE.NAME}</span>
       <span>Built with Astro</span>
     </div>

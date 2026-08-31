@@ -1,6 +1,5 @@
 ---
 import Container from "@components/Container.astro";
-import Wordmark from "@components/Wordmark.astro";
 import { SITE } from "@consts";
 
 const path = Astro.url.pathname;
@@ -13,38 +12,37 @@ const isActive = (href: string) =>
   href === "/" ? path === "/" : path.startsWith(href);
 ---
 
-<header class="sticky top-0 z-50 bg-ink/90 backdrop-blur-md">
+<header class="sticky top-0 z-50 border-b border-line/70 bg-ink/80 backdrop-blur-md">
   <Container>
     <div class="flex h-16 items-center justify-between gap-4 sm:h-[4.5rem]">
-      <a href="/" class="group flex items-center gap-3" aria-label={`${SITE.NAME} home`}>
-        <Wordmark class="size-8 shrink-0" />
-        <span class="font-serif text-lg font-semibold tracking-tight text-content transition-colors group-hover:text-brand">
+      <a href="/" class="group flex items-center gap-2.5" aria-label={`${SITE.NAME} home`}>
+        <svg viewBox="0 0 32 32" class="size-7 shrink-0" aria-hidden="true">
+          <rect x="1.5" y="1.5" width="29" height="29" rx="8" fill="none" stroke="#55b48e" stroke-width="2" />
+          <path d="M9 9 L16 22 L23 9" fill="none" stroke="#55b48e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="text-base font-bold tracking-tight text-content transition-colors group-hover:text-brand">
           UXintoax
         </span>
       </a>
 
-      <nav class="flex items-center gap-0.5 sm:gap-1" aria-label="Main">
+      <nav class="flex items-center gap-1 sm:gap-2" aria-label="Main">
         {nav.map(item => (
           <a
             href={item.href}
             aria-current={isActive(item.href) ? "page" : undefined}
-            class={`rounded-sm px-3 py-2 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] transition-colors duration-200 ${
+            class={`rounded-full px-3 py-2 text-sm font-medium transition-colors duration-200 ${
               isActive(item.href)
-                ? "text-brand"
-                : "text-content-muted hover:text-content"
+                ? "bg-brand/15 text-brand"
+                : "text-content-muted hover:bg-surface hover:text-content"
             }`}
           >
             {item.label}
           </a>
         ))}
-        <a href={`mailto:${SITE.EMAIL}`} class="btn btn-primary ml-2 hidden !px-5 !py-2.5 sm:inline-flex">
+        <a href={`mailto:${SITE.EMAIL}`} class="btn btn-primary ml-1 hidden !px-5 !py-2.5 sm:inline-flex">
           Get in touch
         </a>
       </nav>
     </div>
   </Container>
-
-  <!-- Gold double rule, the way the tins band their lids -->
-  <div class="h-px w-full bg-brand/45"></div>
-  <div class="mt-[2px] h-px w-full bg-brand/20"></div>
 </header>
