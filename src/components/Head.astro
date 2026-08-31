@@ -91,6 +91,15 @@ const twitterImage = props.image || "/og-twitter.jpg";
 }
 </script>
 
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HH8M2D27CW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HH8M2D27CW');
+</script>
+
 <script is:inline>
   function init() {
     onScroll();
