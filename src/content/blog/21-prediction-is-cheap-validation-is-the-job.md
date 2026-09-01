@@ -1,8 +1,8 @@
 ---
-title: "Prediction Is Cheap. Validation Is the Job."
-description: "No matter how impressive a generated interface looks, the engine is still predicting patterns. It does not know if the UI works, cannot verify complia"
+title: 'Prediction Is Cheap. Validation Is the Job.'
+description: 'No matter how impressive a generated interface looks, the engine is still predicting patterns. It does not know if the UI works, cannot verify compliance, and will not test the 0-state or inject dirty data. The designer owns the verification.'
 date: 2026-09-21
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # Prediction Is Cheap. Validation Is the Job.

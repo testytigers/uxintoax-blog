@@ -1,8 +1,8 @@
 ---
-title: "What AI Is Genuinely Strong At (And Genuinely Weak At)"
-description: "A clear balance sheet: AI excels at reading volume, consistent categorization, summarizing supplied documents, drafting initial outlines, and translat"
+title: 'What AI Is Genuinely Strong At (And Genuinely Weak At)'
+description: 'A clear balance sheet: AI excels at reading volume, consistent categorization, summarizing supplied documents, drafting initial outlines, and translating text. It is genuinely weak at deciding what matters, understanding organizational context, fact-checking, providing pushback, and creating novel ideas.'
 date: 2026-09-16
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # What AI Is Genuinely Strong At (And Genuinely Weak At)

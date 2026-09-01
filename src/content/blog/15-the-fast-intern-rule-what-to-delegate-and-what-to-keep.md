@@ -1,8 +1,8 @@
 ---
-title: "The Fast Intern Rule: What to Delegate and What to Keep"
-description: "When deciding whether to delegate to AI, ask: would I hand this to an exceptionally fast, capable intern who knows nothing about our internal politics"
+title: 'The Fast Intern Rule: What to Delegate and What to Keep'
+description: 'When deciding whether to delegate to AI, ask: would I hand this to an exceptionally fast, capable intern who knows nothing about our internal politics, history, or strategy? If yes, delegate it. If no, keep it.'
 date: 2026-09-15
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # The Fast Intern Rule: What to Delegate and What to Keep

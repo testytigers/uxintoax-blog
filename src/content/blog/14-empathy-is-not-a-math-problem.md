@@ -1,8 +1,8 @@
 ---
-title: "Empathy Is Not a Math Problem"
-description: "Empathy comes from physical observation: noticing a user hesitate before clicking, spotting a handwritten notebook beside the computer because the sof"
+title: 'Empathy Is Not a Math Problem'
+description: 'Empathy comes from physical observation: noticing a user hesitate before clicking, spotting a handwritten notebook beside the computer because the software is untrusted, hearing the quiet sigh before they say it is fine. AI analyzes the problem you hand it. It will never ask whether that problem should exist.'
 date: 2026-09-14
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # Empathy Is Not a Math Problem

@@ -1,8 +1,8 @@
 ---
-title: "Why It Lies to Your Face (And Why That Is Not a Bug)"
-description: "Hallucination is not a glitch — it is the expected output of a prediction engine asked to produce facts it cannot verify. There is no built-in step wh"
+title: 'Why It Lies to Your Face (And Why That Is Not a Bug)'
+description: 'Hallucination is not a glitch — it is the expected output of a prediction engine asked to produce facts it cannot verify. There is no built-in step where the model pauses and checks whether its answer exists in reality.'
 date: 2026-09-03
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # Why It Lies to Your Face (And Why That Is Not a Bug)

@@ -1,8 +1,8 @@
 ---
-title: "Vision Models as Structural Auditors, Not Just Pretty Generators"
-description: "Multimodal vision models can review interface layouts, visual weight, and Information Architecture. The quality of that audit depends entirely on cont"
+title: 'Vision Models as Structural Auditors, Not Just Pretty Generators'
+description: 'Multimodal vision models can review interface layouts, visual weight, and Information Architecture. The quality of that audit depends entirely on context: without it, you get generic textbook feedback. With your user goals and technical constraints, you get genuine structural analysis.'
 date: 2026-09-19
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # Vision Models as Structural Auditors, Not Just Pretty Generators

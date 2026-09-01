@@ -1,8 +1,8 @@
 ---
-title: "Why Identical Questions Yield Different Answers"
-description: "The context window explains every inconsistency: surrounding text differs, randomness settings vary, and early instructions fall off the top. Long con"
+title: 'Why Identical Questions Yield Different Answers'
+description: 'The context window explains every inconsistency: surrounding text differs, randomness settings vary, and early instructions fall off the top. Long conversations degrade not from forgetfulness but from dilution — accumulated chatter replaces constraints.'
 date: 2026-09-07
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # Why Identical Questions Yield Different Answers

@@ -1,8 +1,8 @@
 ---
-title: "From Static Mockups to Live Code: The New Designer Baseline"
-description: "The traditional workflow of drawing rectangles and handing them to engineers is shrinking. AI turns layouts directly into functional React components,"
+title: 'From Static Mockups to Live Code: The New Designer Baseline'
+description: 'The traditional workflow of drawing rectangles and handing them to engineers is shrinking. AI turns layouts directly into functional React components, HTML, or Tailwind CSS. The craft moves from pushing pixels on a static canvas to architecting design tokens and interaction rules.'
 date: 2026-09-20
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # From Static Mockups to Live Code: The New Designer Baseline

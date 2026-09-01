@@ -1,8 +1,8 @@
 ---
-title: "Why You Would Want Your Own AI Setup"
-description: "Hosted cloud tools are convenient. But as AI becomes integral to your workflow, four boundaries appear: sensitive data must stay private, high-volume "
+title: 'Why You Would Want Your Own AI Setup'
+description: 'Hosted cloud tools are convenient. But as AI becomes integral to your workflow, four boundaries appear: sensitive data must stay private, high-volume costs add up, offline reliability matters, and permanent workflow control is essential. A local model addresses all four.'
 date: 2026-09-27
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # Why You Would Want Your Own AI Setup

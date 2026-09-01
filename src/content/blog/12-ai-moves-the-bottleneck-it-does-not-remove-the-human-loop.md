@@ -1,8 +1,8 @@
 ---
-title: "AI Moves the Bottleneck. It Does Not Remove the Human Loop."
-description: "The machine organizes volume. Real users and real tests confirm whether the conclusions are correct. Processing speed used to be the bottleneck. AI re"
+title: 'AI Moves the Bottleneck. It Does Not Remove the Human Loop.'
+description: 'The machine organizes volume. Real users and real tests confirm whether the conclusions are correct. Processing speed used to be the bottleneck. AI removes that bottleneck but does not remove the need for human verification.'
 date: 2026-09-12
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # AI Moves the Bottleneck. It Does Not Remove the Human Loop.

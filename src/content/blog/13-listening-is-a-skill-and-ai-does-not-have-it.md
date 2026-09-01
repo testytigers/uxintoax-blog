@@ -1,8 +1,8 @@
 ---
-title: "Listening Is a Skill. And AI Does Not Have It."
-description: "There are three levels of responding to user needs: direct execution (build what they ask), interpretation (find the underlying need), and root-cause "
+title: 'Listening Is a Skill. And AI Does Not Have It.'
+description: 'There are three levels of responding to user needs: direct execution (build what they ask), interpretation (find the underlying need), and root-cause questioning (ask why the problem exists in the first place). AI can do Level 1. Level 2 is assistable. Level 3 cannot be automated.'
 date: 2026-09-13
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # Listening Is a Skill. And AI Does Not Have It.

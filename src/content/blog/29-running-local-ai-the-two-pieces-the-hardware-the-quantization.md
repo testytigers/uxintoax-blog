@@ -1,8 +1,8 @@
 ---
-title: "Running Local AI: The Two Pieces, The Hardware, The Quantization"
-description: "Local AI runs on two components: the model (a static file of trained weights) and the engine (software that loads weights into memory). Performance de"
+title: 'Running Local AI: The Two Pieces, The Hardware, The Quantization'
+description: 'Local AI runs on two components: the model (a static file of trained weights) and the engine (software that loads weights into memory). Performance depends on RAM capacity and bandwidth. Quantization (Q4) is the sweet spot — reducing model size to one-third with almost no quality drop.'
 date: 2026-09-29
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # Running Local AI: The Two Pieces, The Hardware, The Quantization

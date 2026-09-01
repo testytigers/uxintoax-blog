@@ -1,8 +1,8 @@
 ---
-title: "The Four Habits That Make Any AI Session Useful"
-description: "Build reusable context documents with your product rules and personas. Restart conversations frequently when they wander. Place critical instructions "
+title: 'The Four Habits That Make Any AI Session Useful'
+description: 'Build reusable context documents with your product rules and personas. Restart conversations frequently when they wander. Place critical instructions near the end where the model pays highest attention. Watch for truncation on long documents.'
 date: 2026-09-09
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # The Four Habits That Make Any AI Session Useful

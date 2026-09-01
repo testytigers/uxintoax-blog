@@ -1,8 +1,8 @@
 ---
-title: "The Data Food Chain: Plankton, Shrimp, Carp, Dolphin, Shark, Whale"
-description: "Product inputs exist on a quality hierarchy. Most professionals live at the Dolphin level — a handful of interviews. AI lets you scale up the food cha"
+title: 'The Data Food Chain: Plankton, Shrimp, Carp, Dolphin, Shark, Whale'
+description: 'Product inputs exist on a quality hierarchy. Most professionals live at the Dolphin level — a handful of interviews. AI lets you scale up the food chain: from personal taste (Plankton) to thousands of unfiltered behavioral signals (Whale).'
 date: 2026-09-10
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # The Data Food Chain: Plankton, Shrimp, Carp, Dolphin, Shark, Whale

@@ -1,8 +1,8 @@
 ---
-title: "One Task, One Action, One Verification"
-description: "Never assign a broad task to an autonomous loop and wait for a self-reported summary. Enforce this pattern: generate one item, commit it, fetch the li"
+title: 'One Task, One Action, One Verification'
+description: 'Never assign a broad task to an autonomous loop and wait for a self-reported summary. Enforce this pattern: generate one item, commit it, fetch the live result from the server to verify independently, then move to the next. Verification must come from outside the model.'
 date: 2026-09-23
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # One Task, One Action, One Verification

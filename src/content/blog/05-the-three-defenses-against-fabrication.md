@@ -1,8 +1,8 @@
 ---
-title: "The Three Defenses Against Fabrication"
-description: "You cannot stop hallucination inside the model, but you can build three external defenses: force the model to work from your source material, demand r"
+title: 'The Three Defenses Against Fabrication'
+description: 'You cannot stop hallucination inside the model, but you can build three external defenses: force the model to work from your source material, demand receipts and citations for every assertion, and sort tasks by the cost of being wrong.'
 date: 2026-09-05
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # The Three Defenses Against Fabrication

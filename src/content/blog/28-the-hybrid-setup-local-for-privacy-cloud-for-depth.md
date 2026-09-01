@@ -1,8 +1,8 @@
 ---
-title: "The Hybrid Setup: Local for Privacy, Cloud for Depth"
-description: "The best setup for most professionals is hybrid: local models for sensitive data, high-volume repetitive categorization, and offline tasks. Cloud mode"
+title: 'The Hybrid Setup: Local for Privacy, Cloud for Depth'
+description: 'The best setup for most professionals is hybrid: local models for sensitive data, high-volume repetitive categorization, and offline tasks. Cloud models for complex reasoning and deep synthesis where you want access to the largest available compute.'
 date: 2026-09-28
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # The Hybrid Setup: Local for Privacy, Cloud for Depth

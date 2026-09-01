@@ -1,8 +1,8 @@
 ---
-title: "Context Is King: The Window That Determines Everything"
-description: "An AI model has no long-term memory. What it has is a context window: everything currently placed on the table. Deciding what goes into that window is"
+title: 'Context Is King: The Window That Determines Everything'
+description: 'An AI model has no long-term memory. What it has is a context window: everything currently placed on the table. Deciding what goes into that window is your actual craft. Every message is read fresh and then wiped clean.'
 date: 2026-09-06
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # Context Is King: The Window That Determines Everything

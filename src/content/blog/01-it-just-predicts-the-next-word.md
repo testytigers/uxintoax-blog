@@ -1,8 +1,8 @@
 ---
-title: "It Just Predicts the Next Word"
-description: "Finish this sentence in your head: "The sky is blue, but the grass is ___.""
+title: 'It Just Predicts the Next Word'
+description: 'An LLM is not a reasoning engine — it is a statistical prediction machine that generates text one token at a time. Understanding this single mechanism explains everything else about how AI works, fails, and should be used.'
 date: 2026-09-01
-tags: ["ai", "ux", "signal-vs-noise"]
+tags: ['ai', 'ux', 'signal-vs-noise']
 ---
 
 # It Just Predicts the Next Word
