@@ -1,3 +1,10 @@
+---
+title: "The Death of the Pure Pixel Pusher"
+description: "AI creates polished visual mockups effortlessly. If your workflow consists solely of arranging standard UI elements into a clean layout, AI can alread"
+date: 2026-09-17
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # The Death of the Pure Pixel Pusher
 
 AI creates polished visual mockups effortlessly. If your workflow consists solely of arranging standard UI elements into a clean layout, AI can already do that faster.

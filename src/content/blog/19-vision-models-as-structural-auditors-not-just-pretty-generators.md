@@ -1,3 +1,10 @@
+---
+title: "Vision Models as Structural Auditors, Not Just Pretty Generators"
+description: "Multimodal vision models can review interface layouts, visual weight, and Information Architecture. The quality of that audit depends entirely on cont"
+date: 2026-09-19
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Vision Models as Structural Auditors, Not Just Pretty Generators
 
 Visual design is the area where AI feels most immediately impressive. Modern models generate clean color palettes, balanced spacing, and modern UI components in seconds.

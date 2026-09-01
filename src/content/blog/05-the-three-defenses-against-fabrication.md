@@ -1,3 +1,10 @@
+---
+title: "The Three Defenses Against Fabrication"
+description: "You cannot stop hallucination inside the model, but you can build three external defenses: force the model to work from your source material, demand r"
+date: 2026-09-05
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # The Three Defenses Against Fabrication
 
 You cannot stop the model from hallucinating. It is built to predict, not verify. But you can build three external defenses that make fabrication impossible to slip past unnoticed.

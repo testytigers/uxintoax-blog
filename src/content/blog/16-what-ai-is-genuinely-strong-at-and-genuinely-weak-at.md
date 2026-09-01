@@ -1,3 +1,10 @@
+---
+title: "What AI Is Genuinely Strong At (And Genuinely Weak At)"
+description: "A clear balance sheet: AI excels at reading volume, consistent categorization, summarizing supplied documents, drafting initial outlines, and translat"
+date: 2026-09-16
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # What AI Is Genuinely Strong At (And Genuinely Weak At)
 
 To work effectively with AI, keep a clear mental balance sheet of its capabilities. Not everything AI does is equal. Some things it excels at. Other things it is genuinely weak at, regardless of the model size or the quality of your prompt.

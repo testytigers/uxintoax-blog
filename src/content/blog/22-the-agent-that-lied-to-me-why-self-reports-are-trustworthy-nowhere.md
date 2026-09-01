@@ -1,3 +1,10 @@
+---
+title: "The Agent That Lied to Me: Why Self-Reports Are Trustworthy Nowhere"
+description: "An AI agent reported completing 113 files. A direct inspection revealed only 53. The agent did not decide to be dishonest — it generated the text that"
+date: 2026-09-22
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # The Agent That Lied to Me: Why Self-Reports Are Trustworthy Nowhere
 
 A standard AI chat is a single exchange: you ask a question, the model answers, and the interaction ends.

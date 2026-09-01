@@ -1,3 +1,10 @@
+---
+title: "The Apple Test: Why Everyone Is Shouting About Apples Nobody Can Taste"
+description: "The AI conversation is running on rotten apples — hype, fear, and marketing noise. Most people are either alarmists or skeptics, both starting from be"
+date: 2026-09-02
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # The Apple Test: Why Everyone Is Shouting About Apples Nobody Can Taste
 
 Picture this: You walk into a room, and every single person is talking about apples.

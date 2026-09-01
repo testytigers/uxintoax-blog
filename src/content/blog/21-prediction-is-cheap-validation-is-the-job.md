@@ -1,3 +1,10 @@
+---
+title: "Prediction Is Cheap. Validation Is the Job."
+description: "No matter how impressive a generated interface looks, the engine is still predicting patterns. It does not know if the UI works, cannot verify complia"
+date: 2026-09-21
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Prediction Is Cheap. Validation Is the Job.
 
 No matter how impressive a generated interface looks, the underlying engine has not changed: it is still just predicting patterns.

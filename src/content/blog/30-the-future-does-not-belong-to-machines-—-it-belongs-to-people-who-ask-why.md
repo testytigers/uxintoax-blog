@@ -1,3 +1,9 @@
+---
+title: "The Future Does Not Belong to Machines — It Belongs to People Who Ask Why"
+description: "The vital parts of product development are not mechanical tasks: deciding what is worth investigating, knowing which user problems matter to the business, asking why broken systems exist, building verification checks, and taking personal accountability. Accountability cannot be delegated to a machine."
+date: 2026-09-30
+tags: ["ai", "ux", "signal-vs-noise"]
+---
 # The Future Does Not Belong to Machines
 
 It belongs to people who ask why.

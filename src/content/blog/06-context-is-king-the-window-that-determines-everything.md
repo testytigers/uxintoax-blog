@@ -1,3 +1,10 @@
+---
+title: "Context Is King: The Window That Determines Everything"
+description: "An AI model has no long-term memory. What it has is a context window: everything currently placed on the table. Deciding what goes into that window is"
+date: 2026-09-06
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Context Is King: The Window That Determines Everything
 
 An AI model has no long-term memory between individual requests. It does not remember who you are, what you discussed yesterday, or what was said twenty minutes ago.

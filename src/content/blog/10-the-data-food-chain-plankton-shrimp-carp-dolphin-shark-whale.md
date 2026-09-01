@@ -1,3 +1,10 @@
+---
+title: "The Data Food Chain: Plankton, Shrimp, Carp, Dolphin, Shark, Whale"
+description: "Product inputs exist on a quality hierarchy. Most professionals live at the Dolphin level — a handful of interviews. AI lets you scale up the food cha"
+date: 2026-09-10
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # The Data Food Chain: Plankton, Shrimp, Carp, Dolphin, Shark, Whale
 
 Think of product inputs as a data food chain. The quality of your input determines the quality of your output. This is true for human decision-making. It is also true for AI.

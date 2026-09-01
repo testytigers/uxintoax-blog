@@ -1,3 +1,10 @@
+---
+title: "Why You Would Want Your Own AI Setup"
+description: "Hosted cloud tools are convenient. But as AI becomes integral to your workflow, four boundaries appear: sensitive data must stay private, high-volume "
+date: 2026-09-27
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Why You Would Want Your Own AI Setup
 
 For most everyday tasks, hosted cloud tools (using AI via a web browser subscription) are convenient and powerful.

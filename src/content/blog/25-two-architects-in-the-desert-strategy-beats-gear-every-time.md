@@ -1,3 +1,10 @@
+---
+title: "Two Architects in the Desert: Strategy Beats Gear Every Time"
+description: "Jeff had equipment — a vehicle, binoculars, a tablet. Steve had a drone. Jeff took seven days and $1,300. Steve took one day and eight hours for $700."
+date: 2026-09-25
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Two Architects in the Desert: Strategy Beats Gear Every Time
 
 Consider two experienced architects assigned the exact same mission: locate and map an ancient city hidden in the desert.

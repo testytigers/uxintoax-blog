@@ -1,3 +1,10 @@
+---
+title: "Empathy Is Not a Math Problem"
+description: "Empathy comes from physical observation: noticing a user hesitate before clicking, spotting a handwritten notebook beside the computer because the sof"
+date: 2026-09-14
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Empathy Is Not a Math Problem
 
 Empathy comes from physical observation: noticing a user hesitate before clicking, spotting a handwritten notebook kept beside the computer because the software is untrusted, or hearing the quiet sigh before they say, "It is fine."

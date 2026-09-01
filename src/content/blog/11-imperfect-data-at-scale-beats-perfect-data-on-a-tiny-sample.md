@@ -1,3 +1,10 @@
+---
+title: "Imperfect Data at Scale Beats Perfect Data on a Tiny Sample"
+description: "AI categorization may be 80-88% accurate on 10,000 support tickets, and that is fine — if you are looking for broad patterns and rankings rather than "
+date: 2026-09-11
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Imperfect Data at Scale Beats Perfect Data on a Tiny Sample
 
 Here is one of the most counterintuitive truths about working with AI and design data: you do not need perfect data. You need enough data.

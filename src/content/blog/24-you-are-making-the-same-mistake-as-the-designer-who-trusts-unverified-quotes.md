@@ -1,3 +1,10 @@
+---
+title: "You Are Making the Same Mistake as the Designer Who Trusts Unverified Quotes"
+description: "Every time you accept an AI output without checking the source, you are making the exact same mistake as the autonomous agent. The designer who presen"
+date: 2026-09-24
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # You Are Making the Same Mistake as the Designer Who Trusts Unverified Quotes
 
 Every time you accept an AI output without checking the source, you are making the exact same mistake.

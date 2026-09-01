@@ -1,3 +1,10 @@
+---
+title: "It Just Predicts the Next Word"
+description: "Finish this sentence in your head: "The sky is blue, but the grass is ___.""
+date: 2026-09-01
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # It Just Predicts the Next Word
 
 Finish this sentence in your head:

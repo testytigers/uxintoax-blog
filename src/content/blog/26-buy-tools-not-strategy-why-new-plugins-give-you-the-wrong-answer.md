@@ -1,3 +1,10 @@
+---
+title: "Buy Tools, Not Strategy: Why New Plugins Give You the Wrong Answer"
+description: "Buying newer tools, subscriptions, or plugins without a clear strategy will give you Jeff's outcome at a higher price. Review the broad landscape firs"
+date: 2026-09-26
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Buy Tools, Not Strategy: Why New Plugins Give You the Wrong Answer
 
 Buying newer tools, subscriptions, or plugins without a clear strategy will simply give you Jeff's outcome at a higher price.

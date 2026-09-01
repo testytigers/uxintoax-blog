@@ -1,3 +1,10 @@
+---
+title: "Running Local AI: The Two Pieces, The Hardware, The Quantization"
+description: "Local AI runs on two components: the model (a static file of trained weights) and the engine (software that loads weights into memory). Performance de"
+date: 2026-09-29
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Running Local AI: The Two Pieces, The Hardware, The Quantization
 
 Here is the essential guide to understanding how local AI runs on personal hardware.

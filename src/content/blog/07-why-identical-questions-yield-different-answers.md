@@ -1,3 +1,10 @@
+---
+title: "Why Identical Questions Yield Different Answers"
+description: "The context window explains every inconsistency: surrounding text differs, randomness settings vary, and early instructions fall off the top. Long con"
+date: 2026-09-07
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Why Identical Questions Yield Different Answers
 
 If you ask an AI model the same question twice and get different answers, or if it forgets an agreement made earlier in a long conversation, the system is not broken. Both behaviors come down to one fundamental concept: context.

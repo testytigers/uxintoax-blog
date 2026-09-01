@@ -1,3 +1,10 @@
+---
+title: "The Four Habits That Make Any AI Session Useful"
+description: "Build reusable context documents with your product rules and personas. Restart conversations frequently when they wander. Place critical instructions "
+date: 2026-09-09
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # The Four Habits That Make Any AI Session Useful
 
 Most AI sessions fail not because the model is bad, but because the session was poorly structured. You get generic, useless, or misleading output not from the model's limitations, but from your own process.

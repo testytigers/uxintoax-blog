@@ -1,3 +1,10 @@
+---
+title: "Context Over Phrasing: Stop Crafting Magic Prompts"
+description: "People spend excessive energy crafting intricate prompt phrases. Modern models do not need elaborate roleplay. What a model cannot do is guess facts, "
+date: 2026-09-08
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Context Over Phrasing: Stop Crafting Magic Prompts
 
 People spend excessive energy crafting intricate prompt phrases: "Act as a world-class principal researcher with 20 years of experience in behavioral design, please analyze the following..."

@@ -1,3 +1,10 @@
+---
+title: "AI Moves the Bottleneck. It Does Not Remove the Human Loop."
+description: "The machine organizes volume. Real users and real tests confirm whether the conclusions are correct. Processing speed used to be the bottleneck. AI re"
+date: 2026-09-12
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # AI Moves the Bottleneck. It Does Not Remove the Human Loop.
 
 Reading volume used to be the main bottleneck in product research. An AI model that reads quickly and categorizes consistently removes that barrier. But removing one bottleneck does not remove the need for human verification.

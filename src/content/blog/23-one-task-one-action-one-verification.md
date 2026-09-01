@@ -1,3 +1,10 @@
+---
+title: "One Task, One Action, One Verification"
+description: "Never assign a broad task to an autonomous loop and wait for a self-reported summary. Enforce this pattern: generate one item, commit it, fetch the li"
+date: 2026-09-23
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # One Task, One Action, One Verification
 
 Never assign an autonomous loop a broad list of 100 items and wait for a self-reported completion summary. This is the single most important rule for working with AI agents.

@@ -1,3 +1,10 @@
+---
+title: "Listening Is a Skill. And AI Does Not Have It."
+description: "There are three levels of responding to user needs: direct execution (build what they ask), interpretation (find the underlying need), and root-cause "
+date: 2026-09-13
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Listening Is a Skill. And AI Does Not Have It.
 
 Processing data volume is about breadth. Real listening is about depth. There are three distinct levels of responding to user needs, and AI sits at a very specific place on that spectrum.

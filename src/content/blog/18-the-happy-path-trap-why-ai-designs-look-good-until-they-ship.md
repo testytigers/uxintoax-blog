@@ -1,3 +1,10 @@
+---
+title: "The Happy-Path Trap: Why AI Designs Look Good Until They Ship"
+description: "AI naturally defaults to ideal conditions: short names, neat lists, clean cards. Real software is defined by its edge cases: empty states, loading ske"
+date: 2026-09-18
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # The Happy-Path Trap: Why AI Designs Look Good Until They Ship
 
 AI creates polished visual mockups effortlessly. It displays short names, neat three-item lists, and clean cards. It designs for the happy path.

@@ -1,3 +1,10 @@
+---
+title: "Why It Lies to Your Face (And Why That Is Not a Bug)"
+description: "Hallucination is not a glitch — it is the expected output of a prediction engine asked to produce facts it cannot verify. There is no built-in step wh"
+date: 2026-09-03
+tags: ["ai", "ux", "signal-vs-noise"]
+---
+
 # Why It Lies to Your Face (And Why That Is Not a Bug)
 
 Ask a model for academic sources on a niche topic, and it may provide three clean citations: author, title, publication year, and journal name.
