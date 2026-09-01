@@ -1,0 +1,41 @@
+{
+  "sentence_rhythm": "Short, punchy sentences dominate. The author favors declarative statements over 20 words, with occasional longer sentences (40-60 words) used to explain mechanisms. Average sentence length is ~15-20 words. The rhythm is staccato: claim, evidence, implication.",
+  "tone": "Direct, contrarian, slightly provocative, but never sensationalist. The author positions himself as a clarifier cutting through hype. He is skeptical of both alarmists and skeptics. The tone is teacherly but not condescending \u2014 he assumes intelligence but not prior knowledge. There is a consistent undercurrent of: 'I've seen how this actually works, let me show you.'",
+  "rhetorical_patterns": [
+    "The \"Remember:\" callback \u2014 every section closes with a single-sentence takeaway prefaced by \"Remember:\"",
+    "The \"Picture this:\" scenario framing \u2014 introduces hypothetical situations with \"Picture this:\"",
+    "The \"Here's what nobody tells you:\" reveal \u2014 positions the author as revealing hidden truth",
+    "The \"It is not X; it is Y\" structure \u2014 repeatedly disambiguates misconceptions",
+    "Numbered lists of exactly 3, 4, or 5 items \u2014 never more, never fewer",
+    "The \"DIAGRAM N \u00b7 LABEL\" markers \u2014 the author structures around visual concepts even in text form",
+    "Direct second-person address \u2014 \"you,\" \"your,\" \"your work\" \u2014 creates intimacy and accountability"
+  ],
+  "vocabulary_quirks": [
+    "Uses 'machine' and 'model' interchangeably to refer to AI (avoids the personifying 'it knows')",
+    "Coined term: 'Rotten Apples' \u2014 hype, fear-mongering, and marketing noise about AI",
+    "Coined term: 'The Apple Test' \u2014 the experience of being sold something everyone praises that turns out to be worthless",
+    "Coined term: 'Data Food Chain' \u2014 the hierarchy of input data quality: Plankton, Shrimp, Carp, Dolphin, Shark, Whale",
+    "Coined term: 'The Fast Intern Rule' \u2014 a mental model for deciding what to delegate to AI",
+    "Uses 'context window' as a central conceptual anchor throughout",
+    "Uses 'verification' as a recurring theme \u2014 never self-report, always external check",
+    "Uses 'edge case' and 'happy path' as technical design vocabulary",
+    "Prefers 'real users' and 'reality' over abstract concepts",
+    "Uses 'signal' and 'noise' as binary oppositions"
+  ],
+  "formatting_habits": {
+    "opens_sections": "Often with a 'Remember:' statement, a direct question, or a 'Picture this:' scenario",
+    "closes_sections": "Always with a 'Remember:' statement that distills the section into one actionable insight",
+    "uses_headings": "Clear hierarchical headings; subheadings are action-oriented or declarative ('Why Hallucination Happens', 'Not What You Think')",
+    "uses_diagrams": "References DIAGRAM N \u00b7 LABEL even in text-only format, suggesting these are meant to be visual in the final product",
+    "uses_lists": "Bulleted or numbered lists for principles, rules, and comparisons \u2014 always concrete, never abstract"
+  },
+  "things_author_never_does": [
+    "Never hedging \u2014 'might', 'could possibly', 'some people argue' are absent",
+    "Never generic \u2014 no 'in today's fast-paced world', no 'as technology advances'",
+    "Never abstract \u2014 every claim is anchored to a concrete example or scenario",
+    "Never deferential to hype \u2014 explicitly rejects both alarmist and dismissive extremes",
+    "Never uses em dashes (\u2014) \u2014 uses periods, colons, or parentheses instead",
+    "Never promises transformational outcomes \u2014 the tone is always 'here is what you can actually do'",
+    "Never ignores the reader's career anxiety \u2014 addresses it directly and reframes it"
+  ]
+}
