@@ -1,0 +1,450 @@
+---
+import EmptyLayout from "../layouts/EmptyLayout.astro";
+---
+
+<EmptyLayout>
+  <div class="min-h-screen">
+    {/* HERO */}
+    <div class="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#1a5f92] via-[#0D0D0D] to-[#06251f]">
+      {/* Gradient overlay */}
+      <div class="absolute inset-0 bg-gradient-to-r from-[#06251f]/90 via-[#06251f]/60 to-transparent z-10" />
+      {/* Decorative grid pattern */}
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(85,180,142,0.1),transparent_50%)] z-0" />
+      
+      <div class="relative z-20 container mx-auto px-6 py-20 lg:py-32 max-w-5xl">
+        <p class="text-[#55b48e] font-bold text-sm tracking-[0.2em] uppercase mb-8">
+          Signal vs Noise · a free guide from uxintoax.com
+        </p>
+        
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-white max-w-4xl mb-8">
+          AI can draw the screen. It still cannot decide what belongs on it.
+        </h1>
+        
+        <p class="text-xl md:text-2xl leading-relaxed text-[#c3d8d1] max-w-3xl mb-12">
+          You have spent years learning to tell a real problem from a loud one.
+          That skill just became the most valuable thing in the room.
+        </p>
+        
+        {/* Signup form */}
+        <div class="max-w-xl">
+          <form action="/api/subscribe" method="POST" class="flex flex-col sm:flex-row gap-3">
+            <input
+              type="email"
+              name="email"
+              placeholder="you@studio.com"
+              required
+              class="flex-1 px-4 py-3 rounded-lg bg-[#0c3a31] border border-[#1b4f44] text-[#f1f7f4] placeholder-[#9bb4ac] focus:outline-none focus:ring-2 focus:ring-[#55b48e] focus:border-transparent"
+              autocomplete="email"
+            />
+            <button
+              type="submit"
+              class="px-6 py-3 rounded-lg bg-[#55b48e] text-[#06251f] font-bold hover:bg-[#7acfac] transition-colors duration-200 whitespace-nowrap"
+            >
+              Send me the guide
+            </button>
+          </form>
+          <p class="mt-4 text-sm text-[#9bb4ac]">
+            Eleven chapters, about an hour to read. No card, no trial.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* THESIS */}
+    <section class="py-20 lg:py-32 bg-[#06251f] border-t border-[#1b4f44]">
+      <div class="container mx-auto px-6 max-w-4xl">
+        {/* Decorative dots */}
+        <div class="flex items-center gap-2 mb-8" aria-hidden="true">
+          <div class="w-2 h-2 rounded-full bg-[#9bb4ac]" />
+          <div class="w-2 h-2 rounded-full bg-[#9bb4ac]" />
+          <div class="w-2 h-2 rounded-full bg-[#9bb4ac]" />
+          <div class="w-3 h-3 rounded-full bg-[#55b48e]" />
+          <div class="w-2 h-2 rounded-full bg-[#9bb4ac]" />
+          <div class="w-2 h-2 rounded-full bg-[#9bb4ac]" />
+          <div class="w-2 h-2 rounded-full bg-[#9bb4ac]" />
+          <div class="w-2 h-2 rounded-full bg-[#9bb4ac]" />
+          <div class="w-2 h-2 rounded-full bg-[#9bb4ac]" />
+          <div class="w-2 h-2 rounded-full bg-[#9bb4ac]" />
+          <span class="text-sm font-semibold text-[#9bb4ac] ml-3 uppercase tracking-[0.1em]">
+            one of these is worth your attention
+          </span>
+        </div>
+        
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-white max-w-2xl mb-8">
+          You are not behind. You are holding the part nobody can automate.
+        </h2>
+        
+        <div class="max-w-2xl">
+          <p class="text-xl leading-relaxed text-[#c3d8d1] mb-6">
+            Every week someone announces that designers are finished. Learn prompts
+            or be replaced. It is a good way to sell a course and a poor way to describe what is
+            actually happening.
+          </p>
+          <p class="text-lg leading-relaxed text-[#9bb4ac] mb-6">
+            Machines got fast at the surface of design work: the layout, the first
+            draft, the tidy summary. They did not get good at the part underneath. They cannot tell
+            which of fifteen findings matters. They cannot know your users are pharmacists working
+            under time pressure with gloves on. They cannot sit in a room and say the feature should
+            not be built at all.
+          </p>
+          <p class="text-lg leading-relaxed text-[#9bb4ac] mb-6">
+            That underneath part is what you have been quietly building for years.
+            You have just never had to name it, because nothing was competing with you at the surface.
+          </p>
+          <p class="text-lg leading-relaxed text-[#f1f7f4] font-medium">
+            Name it, and you stop feeling replaceable.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* LEARNING OUTCOMES */}
+    <section class="py-20 lg:py-32 bg-[#0c3a31]">
+      <div class="container mx-auto px-6 max-w-4xl">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-white max-w-2xl mb-6">
+          What you will be able to do by the end
+        </h2>
+        <p class="text-xl leading-relaxed text-[#c3d8d1] max-w-2xl mb-12">
+          Not theory. Things you can use on your next project.
+        </p>
+        
+        <div class="border-t border-[#2a6b58]">
+          {[
+            {
+              title: "Look at any AI output and know why it came out that way",
+              desc: "Once you understand the single thing it is actually doing, every strange answer makes sense."
+            },
+            {
+              title: "Catch the confident lie before it reaches a client",
+              desc: "It invents sources in exactly the tone it uses for facts. You will know where to check and what to ask for."
+            },
+            {
+              title: "Turn a pile nobody has read into a roadmap",
+              desc: "The ticket backlog, the store reviews, the cancellation reasons. Thousands of them, read properly, in days."
+            },
+            {
+              title: "Walk into the meeting with evidence instead of taste",
+              desc: "Numbers from your own product end a debate. Nobody argues with the best-prepared person in the room."
+            },
+            {
+              title: "Say out loud which parts of your job are safe, and why",
+              desc: "To your manager, to a client, to yourself at two in the morning. Calmly, with reasons."
+            },
+            {
+              title: "Run a model on your own machine when the data cannot leave",
+              desc: "Plain language, no terminal anxiety. The last chapter, for the day you actually need it."
+            }
+          ].map((item, i) => (
+            <div class={`py-6 border-b border-[#2a6b58] ${i === 5 ? 'border-b-0' : ''}`}>
+              <span class="block font-bold text-lg text-white tracking-tight">
+                {item.title}
+              </span>
+              <span class="block mt-2 text-[#9bb4ac]">
+                {item.desc}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* CREDIBILITY */}
+    <section class="py-20 lg:py-32 bg-[#0D0D0D]">
+      <div class="container mx-auto px-6 max-w-4xl">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-white max-w-2xl mb-6">
+          Written from production work, including the parts that went wrong
+        </h2>
+        <p class="text-xl leading-relaxed text-[#c3d8d1] max-w-2xl mb-12">
+          Every claim here comes out of shipped projects, not a content calendar.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+          <div class="border-t-2 border-[#55b48e] pt-5">
+            <dt class="text-5xl font-black tracking-tight text-white leading-none">
+              10,800
+            </dt>
+            <dd class="mt-4 text-[#9bb4ac] leading-relaxed text-sm">
+              Support tickets analysed on one project, at roughly 80 to 85% accuracy. The guide explains why that was accurate enough, and how more than twenty users confirmed the result.
+            </dd>
+          </div>
+          <div class="border-t-2 border-[#55b48e] pt-5">
+            <dt class="text-5xl font-black tracking-tight text-white leading-none">
+              113 vs 53
+            </dt>
+            <dd class="mt-4 text-[#9bb4ac] leading-relaxed text-sm">
+              My own agent reported 113 files created. There were 53. That failure produced the one rule I now apply to every piece of AI work.
+            </dd>
+          </div>
+          <div class="border-t-2 border-[#55b48e] pt-5">
+            <dt class="text-5xl font-black tracking-tight text-white leading-none">
+              13 years
+            </dt>
+            <dd class="mt-4 text-[#9bb4ac] leading-relaxed text-sm">
+              Product and UX design, with teams at CHANEL, AT&amp;T, HelloFresh and Fnac.
+            </dd>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* CONTENTS */}
+    <section class="py-20 lg:py-32 bg-[#06251f]">
+      <div class="container mx-auto px-6 max-w-4xl">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-white max-w-2xl mb-6">
+          What is inside
+        </h2>
+        <p class="text-xl leading-relaxed text-[#c3d8d1] max-w-2xl mb-12">
+          Four parts. Read them in order the first time.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+          <div>
+            <h3 class="font-bold text-sm uppercase tracking-[0.2em] text-[#55b48e] border-b border-[#2a6b58] pb-3 mb-6">
+              How it thinks
+            </h3>
+            <ol class="space-y-3">
+              <li class="flex items-start gap-3 text-[#9bb4ac] text-base">
+                <span class="font-bold text-[#55b48e]">1</span>
+                <span>It just predicts the next word</span>
+              </li>
+              <li class="flex items-start gap-3 text-[#9bb4ac] text-base">
+                <span class="font-bold text-[#55b48e]">2</span>
+                <span>Why it lies to your face</span>
+              </li>
+              <li class="flex items-start gap-3 text-[#9bb4ac] text-base">
+                <span class="font-bold text-[#55b48e]">3</span>
+                <span>What it can actually see</span>
+              </li>
+            </ol>
+          </div>
+          
+          <div>
+            <h3 class="font-bold text-sm uppercase tracking-[0.2em] text-[#55b48e] border-b border-[#2a6b58] pb-3 mb-6">
+              How you work with it
+            </h3>
+            <ol class="space-y-3">
+              <li class="flex items-start gap-3 text-[#9bb4ac] text-base">
+                <span class="font-bold text-[#55b48e]">4</span>
+                <span>Garbage in, garbage out</span>
+              </li>
+              <li class="flex items-start gap-3 text-[#9bb4ac] text-base">
+                <span class="font-bold text-[#55b48e]">5</span>
+                <span>Listening is a skill, and AI does not have it</span>
+              </li>
+              <li class="flex items-start gap-3 text-[#9bb4ac] text-base">
+                <span class="font-bold text-[#55b48e]">6</span>
+                <span>What it is great at, what it is terrible at</span>
+              </li>
+              <li class="flex items-start gap-3 text-[#9bb4ac] text-base">
+                <span class="font-bold text-[#55b48e]">7</span>
+                <span>Pointing AI at the design itself</span>
+              </li>
+            </ol>
+          </div>
+          
+          <div>
+            <h3 class="font-bold text-sm uppercase tracking-[0.2em] text-[#55b48e] border-b border-[#2a6b58] pb-3 mb-6">
+              Why it fails, and how you plan around it
+            </h3>
+            <ol class="space-y-3">
+              <li class="flex items-start gap-3 text-[#9bb4ac] text-base">
+                <span class="font-bold text-[#55b48e]">8</span>
+                <span>The agent that lied to me</span>
+              </li>
+              <li class="flex items-start gap-3 text-[#9bb4ac] text-base">
+                <span class="font-bold text-[#55b48e]">9</span>
+                <span>Two architects in the desert</span>
+              </li>
+            </ol>
+          </div>
+          
+          <div>
+            <h3 class="font-bold text-sm uppercase tracking-[0.2em] text-[#55b48e] border-b border-[#2a6b58] pb-3 mb-6">
+              Going independent
+            </h3>
+            <ol class="space-y-3">
+              <li class="flex items-start gap-3 text-[#9bb4ac] text-base">
+                <span class="font-bold text-[#55b48e]">10</span>
+                <span>Why you would want your own setup</span>
+              </li>
+              <li class="flex items-start gap-3 text-[#9bb4ac] text-base">
+                <span class="font-bold text-[#55b48e]">11</span>
+                <span>Running local AI, the practical guide</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* WHO IS IT FOR */}
+    <section class="py-20 lg:py-32 bg-[#0c3a31]">
+      <div class="container mx-auto px-6 max-w-4xl">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-white max-w-2xl mb-12">
+          Who this is for
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+          <div class="border-l-4 border-[#55b48e] pl-6">
+            <h3 class="font-bold text-lg text-white mb-6">
+              Read this if
+            </h3>
+            <ul class="space-y-4">
+              {[
+                "You design products and the AI conversation has started to feel personal.",
+                "You have used the tools and got answers that looked right and were not.",
+                "You would rather understand the machine than memorise tricks for it.",
+                "You want one honest hour instead of forty hours of hype."
+              ].map((item, i) => (
+                <li class="flex items-start gap-3 text-[#c3d8d1]">
+                  <svg class="w-5 h-5 text-[#55b48e] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div class="border-l-4 border-[#C1281C] pl-6">
+            <h3 class="font-bold text-lg text-white mb-6">
+              Skip this if
+            </h3>
+            <ul class="space-y-4">
+              {[
+                "You want prompt templates to copy and paste. There are none here.",
+                "You are an ML engineer. You already know the first three chapters.",
+                "You want to be told everything is fine. Some of it is not, and I say so."
+              ].map((item, i) => (
+                <li class="flex items-start gap-3 text-[#c3d8d1]">
+                  <svg class="w-5 h-5 text-[#C1281C] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* FAQ */}
+    <section class="py-20 lg:py-32 bg-[#06251f]">
+      <div class="container mx-auto px-6 max-w-4xl">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-white max-w-2xl mb-12">
+          Questions people ask first
+        </h2>
+        
+        <div class="space-y-4">
+          {[
+            {
+              q: "Is it actually free?",
+              a: "Yes. No card, no trial, nothing hidden three pages in. You give an email, the guide arrives."
+            },
+            {
+              q: "Do I need to know how to code?",
+              a: "No. If you can read a Figma file you can read this. The one technical chapter sits at the end on purpose, and you can skip it entirely."
+            },
+            {
+              q: "I use ChatGPT every day. Is this too basic for me?",
+              a: "The first three chapters will be partly familiar. Chapters four to eight are where daily users tend to find the gaps, particularly around what to feed it and how to check what comes back."
+            },
+            {
+              q: "What happens to my email address?",
+              a: "You get the guide, then roughly one email a week about using AI in real design work. Never shared, never sold, one click to leave."
+            },
+            {
+              q: "How long does it take to read?",
+              a: "About an hour end to end. Chapter four takes ten minutes on its own and is the one that changes how you work."
+            }
+          ].map((item, i) => (
+            <details class="border-b border-[#1b4f44] pb-4 group">
+              <summary class="font-bold text-lg text-white cursor-pointer list-none flex justify-between items-center py-2 hover:text-[#55b48e] transition-colors">
+                {item.q}
+                <svg class="w-5 h-5 text-[#55b48e] group-open:rotate-45 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+              </summary>
+              <p class="mt-2 text-[#c3d8d1] leading-relaxed max-w-3xl">
+                {item.a}
+              </p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* AUTHOR */}
+    <section class="py-20 lg:py-32 bg-[#0c3a31] border-t border-[#1b4f44]">
+      <div class="container mx-auto px-6 max-w-3xl">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-white max-w-2xl mb-8">
+          Who wrote it
+        </h2>
+        
+        <div class="max-w-2xl">
+          <p class="text-xl leading-relaxed text-[#f1f7f4] mb-6">
+            Oussama Bougnouch, product and UX designer, thirteen years.
+          </p>
+          <p class="text-lg leading-relaxed text-[#9bb4ac] mb-6">
+            I have built design systems, research operations and production interfaces for
+            teams at CHANEL, AT&amp;T, HelloFresh and Fnac. These days I build AI systems for design work:
+            local models, agents, and the instruction files that keep them honest.
+          </p>
+          <p class="text-lg leading-relaxed text-[#9bb4ac] mb-6">
+            I publish what breaks alongside what works, because the failures are where the
+            useful rules come from. I wrote this guide because the advice designers were getting was either
+            panic or cheerleading, and neither tells you what to do on Monday morning.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* CTA */}
+    <section class="py-20 lg:py-32 bg-gradient-to-br from-[#0D0D0D] via-[#06251f] to-[#0c3a31]">
+      <div class="container mx-auto px-6 max-w-3xl text-center">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-white max-w-2xl mx-auto mb-8">
+          An hour from now you could stop wondering where you stand.
+        </h2>
+        <p class="text-xl leading-relaxed text-[#c3d8d1] max-w-2xl mx-auto mb-12">
+          The next time somebody tells you designers are finished, you will know
+          which part of that is true and which part is noise.
+        </p>
+        
+        <div class="max-w-xl mx-auto">
+          <form action="/api/subscribe" method="POST" class="flex flex-col sm:flex-row gap-3">
+            <input
+              type="email"
+              name="email"
+              placeholder="you@studio.com"
+              required
+              class="flex-1 px-4 py-3 rounded-lg bg-[#0c3a31] border border-[#1b4f44] text-[#f1f7f4] placeholder-[#9bb4ac] focus:outline-none focus:ring-2 focus:ring-[#55b48e] focus:border-transparent"
+              autocomplete="email"
+            />
+            <button
+              type="submit"
+              class="px-6 py-3 rounded-lg bg-[#55b48e] text-[#06251f] font-bold hover:bg-[#7acfac] transition-colors duration-200 whitespace-nowrap"
+            >
+              Send me the guide
+            </button>
+          </form>
+          <p class="mt-4 text-sm text-[#9bb4ac]">
+            Free. One email with the guide attached.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* FOOTER (minimal, detached) */}
+    <footer class="bg-[#0D0D0D] text-[#8A867D] py-12 border-t border-[#1b4f44]">
+      <div class="container mx-auto px-6 max-w-4xl flex flex-col sm:flex-row justify-between gap-6">
+        <span>&copy; 2026 Oussama Bougnouch</span>
+        <span class="flex gap-6">
+          <a href="https://uxintoax.com" class="text-[#CFE6F7] hover:underline">uxintoax.com</a>
+          <a href="/privacy" class="text-[#CFE6F7] hover:underline">Privacy</a>
+          <a href="/terms" class="text-[#CFE6F7] hover:underline">Terms</a>
+        </span>
+      </div>
+    </footer>
+  </div>
+</EmptyLayout>
