@@ -24,7 +24,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    const response = await fetch("https://api.sendfox.com/api/contacts", {
+    const response = await fetch("https://api.sendfox.com/contacts", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${SENDFOX_API_KEY}`,
