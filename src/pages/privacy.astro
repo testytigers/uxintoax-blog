@@ -1,0 +1,37 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import { SITE } from "@consts";
+---
+
+<PageLayout
+  title="Privacy"
+  description="How email addresses submitted for the Signal vs Noise book are collected and used."
+>
+  <Container size="narrow">
+    <div class="py-14 sm:py-20">
+      <p class="eyebrow">Privacy</p>
+      <h1 class="mt-5 text-title text-content">Privacy policy</h1>
+      <div class="prose mt-10 max-w-none space-y-5 text-content-muted">
+        <p>
+          When you submit your email address to get the free book, it is stored with our
+          email provider so we can send you the book and, roughly once a week, an email about
+          using AI in real design work.
+        </p>
+        <p>
+          Your email is never sold and never shared with anyone outside of sending you the book
+          and these follow-up emails. Every email includes a one-click way to unsubscribe, and
+          doing so removes you from the list immediately.
+        </p>
+        <p>
+          This site does not process payments and does not store any payment information,
+          because the book is free.
+        </p>
+        <p>
+          If you have a question about your data, or want it removed sooner, email{" "}
+          <a href={`mailto:${SITE.EMAIL}`} class="font-medium text-brand hover:underline">{SITE.EMAIL}</a>.
+        </p>
+      </div>
+    </div>
+  </Container>
+</PageLayout>

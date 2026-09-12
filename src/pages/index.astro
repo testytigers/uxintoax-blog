@@ -1,200 +1,519 @@
 ---
-import EmptyLayout from "../layouts/EmptyLayout.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { HOME } from "@consts";
 ---
 
-<EmptyLayout>
-  <div class="min-h-screen">
-    {/* ATTENTION BAR */}
-    <div class="bg-[#14567F] text-white text-center py-3 px-4">
-      <p class="font-display font-bold text-sm tracking-wide">
-        Attention UX and product designers: <mark class="bg-[#E8F5D8] text-[#3F6612] px-1">this is not another prompt-tricks course</mark>
-      </p>
+<PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION} image={HOME.IMAGE}>
+  <!-- EYEBROW -->
+  <p class="eyebrow text-center pt-8">A free guide for UX &amp; product designers</p>
+
+  <!-- HERO: quote | book | quote -->
+  <header class="hero">
+    <div class="wrap hero-3">
+      <div class="pull">
+        <div class="ch">From chapter 2</div>
+        <blockquote>&ldquo;It does not know when it does not know. Confidence tells you nothing
+          about correctness.&rdquo;</blockquote>
+        <div class="rule"></div>
+        <div class="src">on why AI invents sources in the tone it uses for facts</div>
+      </div>
+
+      <div class="book-cell">
+        <div class="book-wrap"><div class="book">
+          <div class="pages" aria-hidden="true"></div>
+          <div class="top-edge" aria-hidden="true"></div>
+          <img
+            class="cover-art"
+            src="/assets/signal-noise-cover-650.jpg"
+            width="433"
+            height="650"
+            alt="Book cover: a hand reaching up through a swirling sky to hold one green apple among dozens of rotten yellow apples."
+          />
+          <div class="spine" aria-hidden="true"></div>
+          <div class="sheen" aria-hidden="true"></div>
+        </div></div>
+      </div>
+
+      <div class="pull">
+        <div class="ch">From chapter 5</div>
+        <blockquote>&ldquo;AI works on the problem you hand it. It will not ask whether that problem
+          should be there.&rdquo;</blockquote>
+        <div class="rule"></div>
+        <div class="src">on the one level of listening a machine cannot reach</div>
+      </div>
     </div>
+  </header>
 
-    {/* HERO */}
-    <section class="py-16 md:py-24 border-b border-[#DDD6C6]" style="background: linear-gradient(180deg, #F6F3E9 0%, #FCFAF4 100%);">
-      <div class="max-w-4xl mx-auto px-6 text-center">
-        <p class="font-display font-bold text-sm text-[#3F6612] mb-5 uppercase tracking-wide">New free book</p>
-        <h1 class="font-display font-black text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] tracking-[-0.03em] max-w-[20ch] mx-auto mb-6">The part of your job AI cannot do is the part that actually pays</h1>
-        <p class="max-w-[40rem] mx-auto text-lg leading-relaxed text-[#514E47] mb-12">Eleven short chapters on what AI is really doing under the hood, written by a designer who ships with it. Read it in an hour and stop guessing where you stand.</p>
-
-        <div class="max-w-lg mx-auto">
-          <form action="/api/subscribe" method="POST" class="flex flex-col gap-3">
-            <input type="email" name="email" placeholder="Your best email" required autocomplete="email" class="px-4 py-3.5 border-2 border-[#DDD6C6] bg-white rounded text-[1.0625rem] w-full focus:border-[#3F6612] focus:outline-none" />
-            <button type="submit" class="bg-[#3F6612] text-white font-display font-black text-xl py-4 border-0 rounded w-full hover:bg-[#325210] transition-colors cursor-pointer">Yes, send me the book<span class="block font-semibold text-sm opacity-88 mt-1">Arrives in about a minute</span></button>
-          </form>
-          <p class="mt-3 text-xs text-[#514E47] leading-relaxed">I will also send you roughly one email a week about using AI in real design work. Leave any time with one click.</p>
-        </div>
+  <!-- THE ASK -->
+  <div class="ask" id="get">
+    <div class="wrap">
+      <h1>Everyone is handing you rotten AI advice. <em>This is the one worth taking.</em></h1>
+      <p class="sub">Eleven short chapters on what AI is really doing under the hood, written by a
+        designer who ships with it. About an hour to read.</p>
+      <div class="signup">
+        <form action="/api/subscribe" method="post">
+          <input type="hidden" name="source" value="hero">
+          <label for="e1" class="sr-only">Your email address</label>
+          <input id="e1" type="email" name="email" placeholder="Your best email" required autocomplete="email">
+          <button type="submit">Send me the book</button>
+        </form>
+        <p class="fine">Free, no card, no shipping. Arrives in about a minute.</p>
       </div>
-    </section>
-
-    {/* TASTE / BULLETS */}
-    <section class="py-16 md:py-24 border-b border-[#DDD6C6]" style="background: linear-gradient(180deg, #FCFAF4 0%, #F0EDDF 100%);">
-      <div class="max-w-4xl mx-auto px-6 text-center">
-        <h2 class="font-display font-black text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.1] tracking-[-0.026em] mb-3">Here is a taste of what is inside</h2>
-        <p class="max-w-[36rem] mx-auto text-[#514E47] mb-8">Every one of these comes out of work that shipped, not a content calendar.</p>
-
-        <div class="text-left max-w-[42rem] mx-auto space-y-4">
-          <div class="flex items-start gap-3"><span class="text-[#3F6612] font-bold text-lg leading-[1.5] shrink-0">&#10004;</span><span>The single thing an AI model is actually doing every time it answers you. Once you see it, every strange result it has ever given you suddenly makes sense. <span class="font-semibold text-[#514E47]">(Chapter 1)</span></span></div>
-          <div class="flex items-start gap-3"><span class="text-[#3F6612] font-bold text-lg leading-[1.5] shrink-0">&#10004;</span><span>Why it invents sources in <mark class="bg-[#E8F5D8]">exactly the same confident tone</mark> it uses for real ones, and the one habit that catches it before a client ever sees it. <span class="font-semibold text-[#514E47]">(Chapter 2)</span></span></div>
-          <div class="flex items-start gap-3"><span class="text-[#3F6612] font-bold text-lg leading-[1.5] shrink-0">&#10004;</span><span>The reason the same question gives you two different answers, and why what you paste in matters far more than how you word the request. <span class="font-semibold text-[#514E47]">(Chapter 3)</span></span></div>
-          <div class="flex items-start gap-3"><span class="text-[#3F6612] font-bold text-lg leading-[1.5] shrink-0">&#10004;</span><span>The food chain that quietly decides how senior your work looks, <strong class="text-[#3F6612]">before you ever open Figma.</strong> <span class="font-semibold text-[#514E47]">(Chapter 4)</span></span></div>
-          <div class="flex items-start gap-3"><span class="text-[#3F6612] font-bold text-lg leading-[1.5] shrink-0">&#10004;</span><span>How 10,800 support tickets became a redesign, even though the analysis was only 80 to 85% accurate. Why that was accurate enough. <span class="font-semibold text-[#514E47]">(Chapter 4)</span></span></div>
-          <div class="flex items-start gap-3"><span class="text-[#3F6612] font-bold text-lg leading-[1.5] shrink-0">&#10004;</span><span>The three levels of listening to a user, and the one level AI cannot reach no matter how good it gets. <span class="font-semibold text-[#514E47]">(Chapter 5)</span></span></div>
-          <div class="flex items-start gap-3"><span class="text-[#3F6612] font-bold text-lg leading-[1.5] shrink-0">&#10004;</span><span>Where AI quietly ruins design work: generated screens, critique, microcopy and accessibility. What each one gets wrong. <span class="font-semibold text-[#514E47]">(Chapter 7)</span></span></div>
-          <div class="flex items-start gap-3"><span class="text-[#3F6612] font-bold text-lg leading-[1.5] shrink-0">&#10004;</span><span>The night my own AI agent told me it had finished 113 files. <mark class="bg-[#E8F5D8]">It had finished 53.</mark> The rule I built from that failure. <span class="font-semibold text-[#514E47]">(Chapter 8)</span></span></div>
-          <div class="flex items-start gap-3"><span class="text-[#3F6612] font-bold text-lg leading-[1.5] shrink-0">&#10004;</span><span>Two architects sent to map the same city. One took seven days, the other took one. The reason has nothing to do with their tools. <span class="font-semibold text-[#514E47]">(Chapter 9)</span></span></div>
-          <div class="flex items-start gap-3"><span class="text-[#3F6612] font-bold text-lg leading-[1.5] shrink-0">&#10004;</span><span>When it is worth running a model on your own machine, in plain language, with no terminal anxiety. <span class="font-semibold text-[#514E47]">(Chapters 10 and 11)</span></span></div>
-        </div>
+      <div class="creds">
+        <div><div class="mark">13 years</div><div class="cap">in product design</div></div>
+        <div><div class="mark">10,800 tickets</div><div class="cap">analysed on one project</div></div>
+        <div><div class="mark">CHANEL &middot; AT&amp;T &middot; Fnac</div><div class="cap">teams worked with</div></div>
       </div>
-    </section>
-
-    {/* THE LETTER */}
-    <section class="py-16 md:py-24" style="background: linear-gradient(180deg, #F0EDDF 0%, #E8F5D8 100%);">
-      <div class="max-w-[42rem] mx-auto px-6">
-        <p class="font-display font-bold text-sm text-[#3F6612] mb-5">From Oussama Bougnouch, product and UX designer</p>
-        <h2 class="font-display font-black text-[clamp(1.5rem,3vw,2.2rem)] leading-[1.12] tracking-[-0.025em] mb-6">I spent thirteen years getting good at something, then watched everyone tell me it was over.</h2>
-        <p class="mb-5">You know the posts. Designers are finished. Learn to prompt or get replaced. Usually attached to a course.</p>
-        <p class="mb-5">I did not want to argue with it or ignore it. I wanted to know if it was true. So I did what we do with any unfamiliar system: I opened it up and looked at how it works.</p>
-        <p class="mb-5"><strong>Machines got genuinely fast at the surface of design work.</strong> The layout, the first draft, the tidy summary. That part is real and it is not going backwards.</p>
-        <p class="mb-5">But they did not get good at the part underneath. They cannot tell which of fifteen findings actually matters. They cannot know your users are pharmacists working under time pressure with gloves on. They cannot sit in a room and say the feature should not be built at all.</p>
-        <div class="my-8 pl-6 py-4 border-l-[5px] border-[#3F6612] bg-[#E8F5D8] font-display font-bold text-xl leading-[1.3] tracking-[-0.015em] text-[#3F6612]">The part underneath is the part you have been quietly building for years. You have just never had to name it, because nothing was competing with you at the surface.</div>
-        <p class="mb-5">I wrote this book so you can name it. Not with theory, and not with reassurance. With the actual mechanics, in plain language, plus the failures from my own projects, because the failures are where the useful rules come from.</p>
-        <p class="mb-5">It takes about an hour. It costs nothing. And when you finish it, the next person who tells you designers are finished will be talking to <mark class="bg-[#E8F5D8] text-[#3F6612]">someone who knows exactly which part of that is true</mark> and which part is noise.</p>
-        <div class="mt-6 font-display font-bold">Oussama<span class="block font-semibold text-sm text-[#514E47] mt-1">uxintoax.com</span></div>
-      </div>
-    </section>
-
-    {/* CHAPTERS */}
-    <section class="py-16 md:py-24 border-b border-[#DDD6C6]" style="background: linear-gradient(180deg, #FCFAF4 0%, #F6F3E9 100%);">
-      <div class="max-w-[44rem] mx-auto px-6">
-        <h2 class="font-display font-black text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.1] tracking-[-0.026em] text-center mb-3">The eleven chapters</h2>
-        <p class="text-[#514E47] text-center mb-10">Four parts. Read them in order the first time through.</p>
-
-        <div class="space-y-8">
-          <div>
-            <span class="font-display font-bold text-xs text-white bg-[#3F6612] inline-block px-2 py-1 rounded mb-4">Part 1 -- How it thinks</span>
-            <div class="space-y-0 border-b border-[#DDD6C6] pb-3">
-              <div class="grid grid-cols-[2.4rem_1fr] gap-3 pb-3 border-b border-[#DDD6C6]"><span class="font-display font-black text-[#3F6612]">1</span><div><strong class="font-display font-bold">It just predicts the next word</strong><span class="block text-[#514E47] text-sm">The only thing it does. Everything else follows from this.</span></div></div>
-              <div class="grid grid-cols-[2.4rem_1fr] gap-3 pb-3 border-b border-[#DDD6C6]"><span class="font-display font-black text-[#3F6612]">2</span><div><strong class="font-display font-bold">Why it lies to your face</strong><span class="block text-[#514E47] text-sm">Hallucination is not a bug. It is the machine working correctly.</span></div></div>
-              <div class="grid grid-cols-[2.4rem_1fr] gap-3 pb-3 border-b border-[#DDD6C6]"><span class="font-display font-black text-[#3F6612]">3</span><div><strong class="font-display font-bold">What it can actually see</strong><span class="block text-[#514E47] text-sm">The most useful chapter for your daily work, and the one nobody teaches.</span></div></div>
-            </div>
-          </div>
-          <div>
-            <span class="font-display font-bold text-xs text-white bg-[#3F6612] inline-block px-2 py-1 rounded mb-4">Part 2 -- How you work with it</span>
-            <div class="grid grid-cols-[2.4rem_1fr] gap-3 pb-3 border-b border-[#DDD6C6]"><span class="font-display font-black text-[#3F6612]">4</span><div><strong class="font-display font-bold">Garbage in, garbage out</strong><span class="block text-[#514E47] text-sm">The data food chain, and how to climb one level this month.</span></div></div>
-            <div class="grid grid-cols-[2.4rem_1fr] gap-3 pb-3 border-b border-[#DDD6C6]"><span class="font-display font-black text-[#3F6612]">5</span><div><strong class="font-display font-bold">Listening is a skill, and AI does not have it</strong><span class="block text-[#514E47] text-sm">Three levels of empathy. Where the machine stops.</span></div></div>
-            <div class="grid grid-cols-[2.4rem_1fr] gap-3 pb-3 border-b border-[#DDD6C6]"><span class="font-display font-black text-[#3F6612]">6</span><div><strong class="font-display font-bold">What it is great at, what it is terrible at</strong><span class="block text-[#514E47] text-sm">The honest split, and a test for what to hand over.</span></div></div>
-            <div class="grid grid-cols-[2.4rem_1fr] gap-3 pb-3"><span class="font-display font-black text-[#3F6612]">7</span><div><strong class="font-display font-bold">Pointing AI at the design itself</strong><span class="block text-[#514E47] text-sm">Screens, critique, copy, accessibility. Where each one breaks.</span></div></div>
-          </div>
-          <div>
-            <span class="font-display font-bold text-xs text-white bg-[#3F6612] inline-block px-2 py-1 rounded mb-4">Part 3 -- Why it fails and how you plan around it</span>
-            <div class="grid grid-cols-[2.4rem_1fr] gap-3 pb-3 border-b border-[#DDD6C6]"><span class="font-display font-black text-[#3F6612]">8</span><div><strong class="font-display font-bold">The agent that lied to me</strong><span class="block text-[#514E47] text-sm">113 reported, 53 delivered, and the rule that came out of it.</span></div></div>
-            <div class="grid grid-cols-[2.4rem_1fr] gap-3"><span class="font-display font-black text-[#3F6612]">9</span><div><strong class="font-display font-bold">Two architects in the desert</strong><span class="block text-[#514E47] text-sm">Why the one with better tools still lost.</span></div></div>
-          </div>
-          <div>
-            <span class="font-display font-bold text-xs text-white bg-[#3F6612] inline-block px-2 py-1 rounded mb-4">Part 4 -- Going independent</span>
-            <div class="grid grid-cols-[2.4rem_1fr] gap-3 pb-3 border-b border-[#DDD6C6]"><span class="font-display font-black text-[#3F6612]">10</span><div><strong class="font-display font-bold">Why you would want your own setup</strong><span class="block text-[#514E47] text-sm">Four walls you will eventually hit, and an honest cost answer.</span></div></div>
-            <div class="grid grid-cols-[2.4rem_1fr] gap-3"><span class="font-display font-black text-[#3F6612]">11</span><div><strong class="font-display font-bold">Running local AI, the practical guide</strong><span class="block text-[#514E47] text-sm">Enough to decide whether your laptop can handle it.</span></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* PROOF */}
-    <section class="py-16 md:py-24" style="background: linear-gradient(180deg, #2F4E1A 0%, #1F3410 100%);">
-      <div class="max-w-4xl mx-auto px-6 text-center">
-        <h2 class="font-display font-black text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.1] tracking-[-0.026em] mb-3">Why listen to me</h2>
-        <p class="text-[#A8D48A] max-w-[36rem] mx-auto mb-12">Three things I can point at, rather than three things I can claim.</p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="border-t-[3px] border-[#6FA82E] pt-4"><dt class="font-display font-black text-[2.75rem] tracking-[-0.04em] leading-none text-white">10,800</dt><dd class="mt-3 text-[#A8D48A] text-sm leading-relaxed">Support tickets analysed with AI on one project, then validated in a workshop with more than twenty real users before a single screen was redesigned.</dd></div>
-          <div class="border-t-[3px] border-[#6FA82E] pt-4"><dt class="font-display font-black text-[2.75rem] tracking-[-0.04em] leading-none text-white">113 vs 53</dt><dd class="mt-3 text-[#A8D48A] text-sm leading-relaxed">My own agent reported 113 files created. There were 53. That is in the book, in full, because it produced the rule I now apply to everything.</dd></div>
-          <div class="border-t-[3px] border-[#6FA82E] pt-4"><dt class="font-display font-black text-[2.75rem] tracking-[-0.04em] leading-none text-white">13 years</dt><dd class="mt-3 text-[#A8D48A] text-sm leading-relaxed">Product and UX design, including work with teams at CHANEL, AT&amp;T, HelloFresh and Fnac.</dd></div>
-        </div>
-      </div>
-    </section>
-
-    {/* FIT */}
-    <section class="py-16 md:py-24 border-b border-[#DDD6C6]">
-      <div class="max-w-4xl mx-auto px-6">
-        <h2 class="font-display font-black text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.1] tracking-[-0.026em] text-center mb-10">Who this is for</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div>
-            <h3 class="font-display font-bold text-lg pb-3 border-b-[3px] border-[#3F6612] mb-5">This is for you if</h3>
-            <ul class="space-y-3">
-              <li class="flex items-start gap-2 text-[#514E47]"><span class="text-[#3F6612] font-bold shrink-0">&#10004;</span><span>You design products and the AI conversation has started to feel personal.</span></li>
-              <li class="flex items-start gap-2 text-[#514E47]"><span class="text-[#3F6612] font-bold shrink-0">&#10004;</span><span>You have used the tools and got answers that looked right and were not.</span></li>
-              <li class="flex items-start gap-2 text-[#514E47]"><span class="text-[#3F6612] font-bold shrink-0">&#10004;</span><span>You would rather understand the machine than memorise tricks for it.</span></li>
-              <li class="flex items-start gap-2 text-[#514E47]"><span class="text-[#3F6612] font-bold shrink-0">&#10004;</span><span>You want one honest hour instead of forty hours of hype.</span></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="font-display font-bold text-lg pb-3 border-b-[3px] border-[#3F6612] mb-5">This is not for you if</h3>
-            <ul class="space-y-3">
-              <li class="flex items-start gap-2 text-[#514E47]"><span class="text-[#C1281C] font-bold shrink-0">&#10008;</span><span>You want prompt templates to copy and paste. There are none in here.</span></li>
-              <li class="flex items-start gap-2 text-[#514E47]"><span class="text-[#C1281C] font-bold shrink-0">&#10008;</span><span>You are an ML engineer. You already know the first three chapters.</span></li>
-              <li class="flex items-start gap-2 text-[#514E47]"><span class="text-[#C1281C] font-bold shrink-0">&#10008;</span><span>You want to be told everything is fine. Some of it is not, and I say so.</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* GUARANTEE */}
-    <section class="py-16 md:py-24" style="background: linear-gradient(180deg, #F0EDDF 0%, #E8F5D8 100%);">
-      <div class="max-w-[42rem] mx-auto px-6">
-        <div class="border-[3px] dashed border-[#3F6612] p-8 text-center bg-white">
-          <h3 class="font-display font-black text-xl tracking-[-0.02em] mb-4 text-[#3F6612]">My side of the deal</h3>
-          <p class="text-[#514E47]">The book is free and it stays free. If you read it and it was not worth your hour, reply to the email and tell me which chapter wasted your time. I read every reply, and the next version gets better because of it. That is the whole arrangement.</p>
-        </div>
-      </div>
-    </section>
-
-    {/* FAQ */}
-    <section class="py-16 md:py-24 border-b border-[#DDD6C6]" style="background: linear-gradient(180deg, #FCFAF4 0%, #F0EDDF 100%);">
-      <div class="max-w-[42rem] mx-auto px-6">
-        <h2 class="font-display font-black text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.1] tracking-[-0.026em] text-center mb-10">Questions people ask first</h2>
-        <div class="border-t border-[#DDD6C6]">
-          {
-            [
-              { q: "Is it really free?", a: "Yes. No card, no shipping fee, no trial, nothing hidden three pages in. You give an email address and the book arrives as a PDF." },
-              { q: "Do I need to know how to code?", a: "No. If you can read a Figma file you can read this. The single technical chapter sits at the very end on purpose, and you can skip it entirely." },
-              { q: "I use ChatGPT every day. Will this be too basic?", a: "The first three chapters will be partly familiar. Chapters four to eight are where daily users tend to find the gaps, particularly around what to feed it and how to check what comes back." },
-              { q: "How long does it take to read?", a: "About an hour end to end. Chapter four takes ten minutes on its own and is the one most readers say changed how they work." },
-              { q: "What happens to my email address?", a: "You get the book, then roughly one email a week about using AI in real design work. Never shared, never sold, one click to leave." },
-              { q: "Is this a pitch for something more expensive?", a: "There is a paid course coming later. It is not built yet and you will not be nagged about it. If the free book is all you ever take from me, that is a fine outcome." },
-            ].map((item) => (
-              <details class="border-b border-[#DDD6C6] group">
-                <summary class="font-display font-bold text-lg py-4 cursor-pointer list-none flex justify-between gap-4 hover:text-[#3F6612] transition-colors">{item.q}<span class="text-[#3F6612] font-black text-xl group-open:hidden">+</span><span class="text-[#3F6612] font-black text-xl hidden group-open:inline">-</span></summary>
-                <p class="text-[#514E47] pb-4">{item.a}</p>
-              </details>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    {/* CLOSING */}
-    <section class="py-16 md:py-24" style="background: linear-gradient(180deg, #3F6612 0%, #2F4E1A 100%);">
-      <div class="max-w-4xl mx-auto px-6 text-center">
-        <h2 class="font-display font-black text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.1] tracking-[-0.026em] mb-3">An hour from now you could stop wondering where you stand</h2>
-        <p class="text-[#E8F5D8] max-w-[40rem] mx-auto mb-10">Put your email in and the book is with you in about a minute.</p>
-        <div class="max-w-sm mx-auto">
-          <form action="/api/subscribe" method="POST" class="flex flex-col gap-3">
-            <input type="email" name="email" placeholder="Your best email" required autocomplete="email" class="px-4 py-3.5 border-2 border-white/30 bg-white rounded text-[1.0625rem] w-full focus:border-white focus:outline-none text-[#141414]" />
-            <button type="submit" class="bg-white text-[#3F6612] font-display font-black text-xl py-4 border-0 rounded w-full hover:bg-[#E8F5D8] transition-colors cursor-pointer">Yes, send me the book<span class="block font-semibold text-sm opacity-88 mt-1">Eleven chapters, about an hour to read</span></button>
-          </form>
-          <p class="mt-3 text-xs text-[#E8F5D8]">Leave any time with one click.</p>
-        </div>
-      </div>
-    </section>
-
-    {/* FOOTER */}
-    <footer class="bg-[#1F3410] text-[#6FA82E] py-10 text-sm">
-      <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row justify-between gap-4">
-        <span>&copy; 2026 Oussama Bougnouch</span>
-        <span class="flex gap-5 flex-wrap"><a href="https://uxintoax.com" class="text-[#E8F5D8] hover:underline">uxintoax.com</a><a href="/privacy" class="text-[#E8F5D8] hover:underline">Privacy</a><a href="/terms" class="text-[#E8F5D8] hover:underline">Terms</a></span>
-      </div>
-    </footer>
+    </div>
   </div>
-</EmptyLayout>
+
+  <!-- RHYTHMIC PULL QUOTES -->
+  <div class="beats">
+    <div class="wrap measure">
+      <div class="beat"><div class="ch">Ch. 1</div>
+        <p>It is not answering your question. It is producing text shaped like an answer.</p></div>
+      <div class="beat"><div class="ch">Ch. 3</div>
+        <p>It can only work with what is in front of it. Deciding what goes there is the craft.</p></div>
+      <div class="beat"><div class="ch">Ch. 4</div>
+        <p>Size raises your ceiling, not your floor. A whale drowning in noise loses to a shark asking the right question.</p></div>
+      <div class="beat"><div class="ch">Ch. 6</div>
+        <p>Let it read. You decide.</p></div>
+      <div class="beat"><div class="ch">Ch. 7</div>
+        <p>It designs the happy path beautifully. Products are mostly the other paths.</p></div>
+    </div>
+  </div>
+
+  <!-- WHAT YOU LEARN -->
+  <section id="why">
+    <div class="wrap">
+      <h2>What you will be able to do by the end</h2>
+      <p class="lede">Not theory. Things you can use on your next project, this week.</p>
+      <ul class="learn">
+        <li><span>Understand the single thing a model is doing every time it answers you, and watch
+          every strange result you have ever seen suddenly make sense. <span class="ref">(Ch. 1)</span></span></li>
+        <li><span>Spot the confident invention, and learn the one habit that catches it every time.
+          <span class="ref">(Ch. 2)</span></span></li>
+        <li><span>Know why what you paste in matters far more than how you word the request.
+          <span class="ref">(Ch. 3)</span></span></li>
+        <li><span>Climb the data food chain that quietly decides how senior your work looks, before you
+          ever open Figma. <span class="ref">(Ch. 4)</span></span></li>
+        <li><span>Turn a pile nobody has read into a roadmap. Tickets, reviews, cancellation reasons,
+          thousands of them, in days. <span class="ref">(Ch. 4)</span></span></li>
+        <li><span>Reach the one level of listening to a user that AI cannot get to.
+          <span class="ref">(Ch. 5)</span></span></li>
+        <li><span>Avoid the four places AI quietly ruins design work: generated screens, critique,
+          microcopy and accessibility. <span class="ref">(Ch. 7)</span></span></li>
+        <li><span>Build the verification habit that came out of the night my own agent told me it had
+          finished 113 files. It had finished 53. <span class="ref">(Ch. 8)</span></span></li>
+        <li><span>Say out loud which parts of your job are safe, and why.
+          <span class="ref">(Ch. 6 &amp; 9)</span></span></li>
+        <li><span>Run a model on your own machine when the data cannot leave the building.
+          <span class="ref">(Ch. 10 &amp; 11)</span></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- LETTER -->
+  <section class="border-t">
+    <div class="wrap">
+      <h2>Why I wrote it</h2>
+      <div class="measure">
+        <p class="lede">I spent thirteen years getting good at something, then watched everyone
+          announce it was over.</p>
+        <p class="mt">You know the posts. Designers are finished. Learn to prompt or get
+          replaced. Usually attached to a course.</p>
+        <p>I did not want to argue with it or ignore it. I wanted to know if it was true, so I did what
+          we do with any unfamiliar system: I opened it up and looked at how it works.</p>
+        <p>What I found was not what either camp is selling. Machines really did get fast at the
+          surface: the layout, the first draft, the tidy summary. But they did not get good at the part
+          underneath. They cannot tell which of fifteen findings matters. They cannot know your users
+          are pharmacists working under time pressure with gloves on. They cannot sit in a room and say
+          the feature should not be built at all.</p>
+        <p>That part is what you have been quietly building for years. You have just never had to name
+          it, because nothing was competing with you at the surface.</p>
+        <p>This book helps you name it. Plain language, real mechanics, and my own failures included,
+          because the failures are where the useful rules come from.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTERS -->
+  <section id="chapters" class="border-t">
+    <div class="wrap">
+      <h2>The eleven chapters</h2>
+      <p class="lede">Four parts. Read them in order the first time through.</p>
+      <div class="chs">
+        <span class="pt">Part 1 &middot; How it thinks</span>
+        <div class="row"><span class="num">1</span><span><b>It just predicts the next word</b><span class="d">The only thing it does. Everything else follows.</span></span></div>
+        <div class="row"><span class="num">2</span><span><b>Why it lies to your face</b><span class="d">Hallucination is not a bug. It is the machine working correctly.</span></span></div>
+        <div class="row"><span class="num">3</span><span><b>What it can actually see</b><span class="d">The most useful chapter for daily work, and the one nobody teaches.</span></span></div>
+
+        <span class="pt">Part 2 &middot; How you work with it</span>
+        <div class="row"><span class="num">4</span><span><b>Garbage in, garbage out</b><span class="d">The data food chain, and how to climb one level this month.</span></span></div>
+        <div class="row"><span class="num">5</span><span><b>Listening is a skill, and AI does not have it</b><span class="d">Three levels of empathy, and where the machine stops.</span></span></div>
+        <div class="row"><span class="num">6</span><span><b>What it is great at, what it is terrible at</b><span class="d">The honest split, and a test for what to hand over.</span></span></div>
+        <div class="row"><span class="num">7</span><span><b>Pointing AI at the design itself</b><span class="d">Screens, critique, copy, accessibility. Where each one breaks.</span></span></div>
+
+        <span class="pt">Part 3 &middot; Why it fails, and how you plan around it</span>
+        <div class="row"><span class="num">8</span><span><b>The agent that lied to me</b><span class="d">113 reported, 53 delivered, and the rule that came out of it.</span></span></div>
+        <div class="row"><span class="num">9</span><span><b>Two architects in the desert</b><span class="d">Why the one with better tools still lost.</span></span></div>
+
+        <span class="pt">Part 4 &middot; Going independent</span>
+        <div class="row"><span class="num">10</span><span><b>Why you would want your own setup</b><span class="d">Four walls you will hit, and an honest answer on cost.</span></span></div>
+        <div class="row"><span class="num">11</span><span><b>Running local AI, the practical guide</b><span class="d">Enough to decide whether your laptop can handle it.</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINT BAND WITH CAPTURE -->
+  <div class="strip">
+    <div class="wrap">
+      <h3>Read it in an hour. Keep the parts that change how you work.</h3>
+      <div class="signup">
+        <form action="/api/subscribe" method="post">
+          <input type="hidden" name="source" value="strip">
+          <label for="e3" class="sr-only">Your email address</label>
+          <input id="e3" type="email" name="email" placeholder="Your best email" required autocomplete="email">
+          <button type="submit">Send me the book</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEW WALL -->
+  <section>
+    <div class="wrap">
+      <h2 class="centre">What readers say</h2>
+      <p class="lede centre">Real quotes only. These slots fill in as readers reply.</p>
+
+      <div class="wall">
+        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div></div>
+        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph s"></div></div>
+        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph s"></div></div>
+        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph s"></div></div>
+        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div></div>
+        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph s"></div></div>
+        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph s"></div></div>
+        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div></div>
+        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div></div>
+      </div>
+      <p class="wall-note">Intentionally unfilled. Inventing praise would be exactly the failure
+        chapter&nbsp;2 is about, so these stay empty until real readers fill them.</p>
+    </div>
+  </section>
+
+  <!-- PROOF -->
+  <section class="proof">
+    <div class="wrap">
+      <h2>Why listen to me</h2>
+      <p class="lede">Three things I can point at, rather than three things I can claim.</p>
+      <dl class="figs">
+        <div>
+          <dt>10,800</dt>
+          <dd>Support tickets analysed with AI on one project, then validated in a workshop with more
+            than twenty real users before a single screen was redesigned.</dd>
+        </div>
+        <div>
+          <dt>113 vs 53</dt>
+          <dd>My own agent reported 113 files created. There were 53. The full story is in the book,
+            because it produced the rule I now apply to everything.</dd>
+        </div>
+        <div>
+          <dt>13 years</dt>
+          <dd>Product and UX design, including work with teams at CHANEL, AT&amp;T, HelloFresh
+            and Fnac.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- FIT -->
+  <section>
+    <div class="wrap">
+      <h2>Who it is for</h2>
+      <div class="fit">
+        <div class="y">
+          <h3>Read it if</h3>
+          <ul>
+            <li><i>&#10003;</i><span>You design products and the AI conversation has started to feel personal.</span></li>
+            <li><i>&#10003;</i><span>You have used the tools and got answers that looked right and were not.</span></li>
+            <li><i>&#10003;</i><span>You would rather understand the machine than memorise tricks for it.</span></li>
+            <li><i>&#10003;</i><span>You want one honest hour instead of forty hours of hype.</span></li>
+          </ul>
+        </div>
+        <div class="n">
+          <h3>Skip it if</h3>
+          <ul>
+            <li><i>&#10007;</i><span>You want prompt templates to copy and paste. There are none in here.</span></li>
+            <li><i>&#10007;</i><span>You are an ML engineer. You already know the first three chapters.</span></li>
+            <li><i>&#10007;</i><span>You want to be told everything is fine. Some of it is not, and I say so.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTHOR -->
+  <section id="about" class="border-t">
+    <div class="wrap">
+      <h2>Who wrote it</h2>
+      <div class="measure">
+        <p class="lede">Oussama Bougnouch, product and UX designer, thirteen years.</p>
+        <p class="mt muted">I have built design systems, research
+          operations and production interfaces for teams at CHANEL, AT&amp;T, HelloFresh and Fnac.
+          These days I build AI systems for design work: local models, agents, and the instruction
+          files that keep them honest.</p>
+        <p class="muted">I publish what breaks alongside what works. I wrote this book
+          because the advice designers were getting was either panic or cheerleading, and neither one
+          tells you what to do on Monday morning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="border-t">
+    <div class="wrap">
+      <h2>Questions people ask first</h2>
+      <div class="faq">
+        <details>
+          <summary>Is it really free?</summary>
+          <p>Yes. No card, no shipping fee, no trial, nothing hidden three pages in. You give an email
+            address and the book arrives as a PDF.</p>
+        </details>
+        <details>
+          <summary>Do I need to know how to code?</summary>
+          <p>No. If you can read a Figma file you can read this. The single technical chapter sits at
+            the very end on purpose, and you can skip it entirely.</p>
+        </details>
+        <details>
+          <summary>I use ChatGPT every day. Will this be too basic?</summary>
+          <p>The first three chapters will be partly familiar. Chapters four to eight are where daily
+            users tend to find the gaps, particularly around what to feed it and how to check what
+            comes back.</p>
+        </details>
+        <details>
+          <summary>How long does it take to read?</summary>
+          <p>About an hour end to end. Chapter four takes ten minutes on its own and is the one that
+            changes how you work.</p>
+        </details>
+        <details>
+          <summary>What happens to my email address?</summary>
+          <p>You get the book, then roughly one email a week about using AI in real design work. Never
+            shared, never sold, one click to leave.</p>
+        </details>
+        <details>
+          <summary>Is this a pitch for something expensive?</summary>
+          <p>There is a paid course coming later. It is not built yet and you will not be nagged about
+            it. If the free book is all you ever take from me, that is a fine outcome.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSE -->
+  <div class="strip">
+    <div class="wrap">
+      <h3>An hour from now you could stop wondering where you stand.</h3>
+      <div class="signup">
+        <form action="/api/subscribe" method="post">
+          <input type="hidden" name="source" value="footer">
+          <label for="e2" class="sr-only">Your email address</label>
+          <input id="e2" type="email" name="email" placeholder="Your best email" required autocomplete="email">
+          <button type="submit">Send me the book</button>
+        </form>
+        <p class="fine">Eleven chapters. Free. Leave any time with one click.</p>
+      </div>
+    </div>
+  </div>
+</PageLayout>
+
+<style>
+  .wrap { max-width: 71.25rem; margin: 0 auto; padding: 0 1.25rem; }
+  .measure { max-width: 46rem; margin-inline: auto; }
+  h2, h3.sub, .lede, .learn, .chs, .fit, .faq, .figs, .wall-note, .beats .measure {
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+
+  p, .learn li, .fit li, .faq details > p, .chs span.d, .card blockquote {
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+  .creds p, .fine, .src, .cap, .lede.centre,
+  .beat p, .pull blockquote, .strip h3, .figs dd, .card .rl {
+    text-align: inherit;
+    hyphens: manual;
+  }
+
+  h1 { font-size: 2.2rem; font-weight: 700; line-height: 1.1; letter-spacing: -.1rem;
+    max-width: 30rem; margin: 0 auto; text-align: center; }
+  h1 em { font-style: normal; color: #2F6B18; }
+  h2 { font-size: 2.97rem; font-weight: 700; line-height: 1.1; letter-spacing: -.1rem; text-align: left; }
+  h2.centre { text-align: center; }
+  h3 { font-size: 2.2rem; font-weight: 700; line-height: 1.1; letter-spacing: -.075rem; }
+  p { font-size: 1.3rem; line-height: 1.6; margin-top: 0; }
+  p.mt { margin-top: 1rem; }
+  p.muted { color: #5A6069; }
+
+  /* ---------- eyebrow + credential strip ---------- */
+  .creds { display: flex; justify-content: center; align-items: baseline; gap: 3.5rem; flex-wrap: wrap;
+    margin-top: 2.5rem; padding-top: 2.25rem; border-top: 1px solid #E6E3DC; }
+  .creds div { text-align: center; }
+  .creds .mark { font-weight: 700; font-size: 1.35rem; letter-spacing: -.03em; }
+  .creds .cap { font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: #8C9199;
+    margin-top: .25rem; font-weight: 600; }
+
+  /* ---------- hero: quote | book | quote ---------- */
+  .hero { padding: 1.25rem 0 3rem; }
+  .hero-3 { display: grid; grid-template-columns: 1fr 1.1fr 1fr; gap: 2.5rem; align-items: center; }
+  .pull { text-align: center; padding: 0 .5rem; }
+  .pull .ch { font-weight: 700; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;
+    color: #2F6B18; margin-bottom: .85rem; }
+  .pull blockquote { font-size: 1.15rem; line-height: 1.5; }
+  .pull .src { margin-top: 1rem; font-size: .95rem; color: #5A6069; font-style: italic; }
+  .pull .rule { width: 2.2rem; height: 2px; background: #B9E3BE; margin: 1rem auto 0; }
+
+  .book-cell { display: flex; justify-content: center; }
+  .book-wrap { width: min(17.5rem, 92%); filter: drop-shadow(22px 20px 22px rgba(33,33,33,.24)); }
+  .book { position: relative; width: 100%; aspect-ratio: 650/975;
+    transform: perspective(1800px) rotateY(-18deg) rotateX(1.5deg) rotateZ(-.5deg);
+    transform-style: preserve-3d; }
+  .book .cover-art { width: 100%; height: 100%; display: block; object-fit: cover;
+    border-radius: 2px 5px 5px 2px; position: relative; z-index: 3; }
+  .book .pages { position: absolute; z-index: 1; top: 1.1%; height: 97.8%; right: -22px; width: 24px;
+    transform: rotateY(-68deg); transform-origin: left center; border-radius: 0 3px 3px 0;
+    background: linear-gradient(90deg, rgba(0,0,0,.04) 0%, rgba(0,0,0,.10) 30%, rgba(0,0,0,.38) 100%),
+      repeating-linear-gradient(90deg, #fbf7ea 0 1.5px, #cfc5ac 1.5px 3px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.7), inset 0 -1px 0 rgba(0,0,0,.16); }
+  .book .top-edge { position: absolute; z-index: 2; top: -3px; right: -11px; width: 22px; height: 7px;
+    transform: rotateX(74deg) rotateY(-18deg); transform-origin: center bottom;
+    background: linear-gradient(90deg, #f6f2e6, #ded6c3); border-radius: 1px; }
+  .book .spine { position: absolute; z-index: 4; left: 0; top: 0; bottom: 0; width: 11%; border-radius: 2px 0 0 2px;
+    pointer-events: none; background: linear-gradient(90deg, rgba(14,34,8,.52) 0%, rgba(14,34,8,.30) 24%,
+      rgba(14,34,8,.06) 58%, rgba(255,255,255,.26) 86%, rgba(255,255,255,0) 100%); }
+  .book .sheen { position: absolute; z-index: 5; inset: 0; border-radius: 2px 5px 5px 2px; pointer-events: none;
+    background: linear-gradient(104deg, rgba(255,255,255,0) 52%, rgba(255,255,255,.16) 78%, rgba(255,255,255,0) 100%); }
+
+  /* ---------- the ask ---------- */
+  .ask { text-align: center; padding: 0 0 3.75rem; border-bottom: 1px solid #E6E3DC; }
+  .ask .sub { margin: 1.1rem auto 0; color: #5A6069; max-width: 36rem; }
+  .signup { margin: 1.9rem auto 0; max-width: 30rem; }
+  .signup form { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .signup input { flex: 1 1 11rem; min-width: 0; font-family: inherit; font-size: 1.05rem;
+    padding: .75rem .9rem; border: 1px solid #C9C6BE; border-radius: 4px; background: #fff; color: #212121; }
+  .signup input:focus { border-color: #2F6B18; }
+  .signup button { font-family: inherit; font-weight: 600; font-size: 1.05rem; white-space: nowrap;
+    padding: .75rem 1.25rem; border: 0; border-radius: 4px; background: #2F6B18;
+    color: #fff; cursor: pointer; }
+  .signup button:hover { background: #245312; }
+  .signup .fine { margin-top: .85rem; font-size: .95rem; color: #5A6069; }
+
+  /* ---------- rhythmic pull-quote rows ---------- */
+  .beats { padding: 3.25rem 0 1rem; }
+  .beat { border-bottom: 1px solid #E6E3DC; padding: 1.5rem 0; display: grid;
+    grid-template-columns: 5rem 1fr; gap: 1.75rem; align-items: baseline; }
+  .beat .ch { font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+    color: #2F6B18; padding-top: .4rem; }
+  .beat p { font-weight: 600; font-size: 1.5rem; line-height: 1.3; letter-spacing: -.045rem; }
+
+  /* ---------- sections ---------- */
+  section { padding: 4rem 0; }
+  section.border-t { border-top: 1px solid #E6E3DC; }
+  .lede { margin-top: 1rem; color: #5A6069; }
+  .lede.centre { text-align: center; }
+  p + p { margin-top: 1rem; }
+
+  .learn { margin-top: 2.25rem; display: grid; gap: 1rem; list-style: none; }
+  .learn li { display: grid; grid-template-columns: 1.6rem 1fr; gap: .85rem; align-items: start;
+    font-size: 1.15rem; line-height: 1.55; }
+  .learn li::before { content: ""; width: .95rem; height: .95rem; border-radius: 50%; background: #4FA92B;
+    margin-top: .5rem; box-shadow: 0 0 0 4px #EBF5E3; }
+  .learn .ref { color: #5A6069; font-weight: 600; white-space: nowrap; }
+
+  .chs { margin-top: 2.25rem; }
+  .chs .pt { display: inline-block; font-weight: 700; font-size: .8rem; letter-spacing: .08em;
+    text-transform: uppercase; background: #D5F2D8; color: #212121;
+    padding: .35rem .7rem; border-radius: 4px; margin: 1.85rem 0 .75rem; }
+  .chs .pt:first-child { margin-top: 0; }
+  .chs .row { display: grid; grid-template-columns: 2rem 1fr; gap: .85rem; padding: .85rem 0;
+    border-bottom: 1px solid #E6E3DC; }
+  .chs .num { font-weight: 700; color: #2F6B18; font-size: 1.15rem; }
+  .chs b { display: block; font-weight: 700; font-size: 1.15rem; }
+  .chs span.d { display: block; color: #5A6069; font-size: 1.05rem; margin-top: .15rem; }
+
+  /* ---------- review wall ---------- */
+  .wall { margin-top: 2.5rem; columns: 3; column-gap: 1rem; max-width: none; }
+  .card { break-inside: avoid; margin-bottom: 1rem; border: 1px solid #E6E3DC; border-radius: 6px;
+    padding: 1.1rem 1.15rem; background: #fff; }
+  .card blockquote { margin-top: .6rem; font-size: 1.05rem; line-height: 1.5; }
+  .card.slot { border-style: dashed; background: #FCFCFA; }
+  .card.slot .ph { height: .55rem; border-radius: 3px; background: #EDEBE3; margin-bottom: .45rem; }
+  .card.slot .ph.s { width: 62%; }
+  .card.slot .lbl { font-weight: 700; font-size: .8rem; color: #A5A199; letter-spacing: .08em;
+    margin-bottom: .7rem; text-transform: uppercase; }
+  .wall-note { margin-top: 1.4rem; font-size: 1.05rem; color: #5A6069; }
+
+  /* ---------- proof ---------- */
+  .proof { background: #F7F6F2; border-top: 1px solid #E6E3DC; border-bottom: 1px solid #E6E3DC; }
+  .figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 2.25rem;
+    margin-top: 2.5rem; max-width: none; }
+  .figs > div { border-top: 3px solid #2F6B18; padding-top: 1rem; }
+  .figs dt { font-weight: 700; font-size: 2.6rem; letter-spacing: -.075rem; line-height: 1; color: #2F6B18; }
+  .figs dd { margin-top: .65rem; color: #5A6069; font-size: 1.05rem; line-height: 1.5; }
+
+  /* ---------- mint band ---------- */
+  .strip { background: #D5F2D8; border-top: 1px solid #B9E3BE; border-bottom: 1px solid #B9E3BE;
+    padding: 2.75rem 0; text-align: center; }
+  .strip h3 { max-width: 34ch; margin: 0 auto; }
+  .strip .signup { margin-top: 1.5rem; }
+  .strip .signup input { border-color: #A9CFAE; }
+
+  /* ---------- fit ---------- */
+  .fit { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2.25rem; }
+  .fit h3 { font-size: 1.2rem; letter-spacing: -.02em; padding-bottom: .55rem;
+    border-bottom: 2px solid #212121; margin-bottom: 1rem; }
+  .fit ul { list-style: none; display: grid; gap: .85rem; }
+  .fit li { display: grid; grid-template-columns: 1.2rem 1fr; gap: .6rem; color: #5A6069;
+    font-size: 1.1rem; line-height: 1.5; }
+  .fit li i { font-style: normal; font-weight: 700; }
+  .fit .y i { color: #2F6B18; }
+  .fit .n i { color: #B3261E; }
+
+  /* ---------- faq ---------- */
+  .faq { margin-top: 2rem; border-top: 1px solid #E6E3DC; }
+  .faq details { border-bottom: 1px solid #E6E3DC; }
+  .faq summary { font-weight: 700; font-size: 1.2rem; padding: 1.15rem 0; cursor: pointer; list-style: none;
+    display: flex; justify-content: space-between; gap: 1.5rem; letter-spacing: -.01em; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; color: #2F6B18; font-weight: 700; }
+  .faq details[open] summary::after { content: "\2212"; }
+  .faq details > p { padding-bottom: 1.2rem; color: #5A6069; font-size: 1.1rem; line-height: 1.55; }
+
+  .sr-only { position: absolute; left: -9999px; }
+
+  @media (max-width: 940px) {
+    h2 { font-size: 2.4rem; }
+    .hero-3 { grid-template-columns: 1fr; gap: 2rem; }
+    .pull { max-width: 30rem; margin: 0 auto; }
+    .book-cell { order: -1; }
+    .wall { columns: 2; }
+  }
+  @media (max-width: 640px) {
+    h1 { font-size: 1.85rem; letter-spacing: -.06rem; }
+    h2 { font-size: 2rem; letter-spacing: -.06rem; }
+    h3 { font-size: 1.7rem; }
+    p { font-size: 1.125rem; }
+    section { padding: 3rem 0; }
+    .wall { columns: 1; }
+    .fit { grid-template-columns: 1fr; gap: 1.85rem; }
+    .book-wrap { width: min(13rem, 60%); }
+    .book .pages { right: -16px; width: 18px; }
+    .book .top-edge { right: -8px; width: 16px; height: 6px; }
+    .beat { grid-template-columns: 1fr; gap: .4rem; }
+    .beat p { font-size: 1.3rem; }
+    .creds { gap: 1.75rem; }
+    .learn li, .fit li { font-size: 1.05rem; }
+    p, .learn li, .fit li, .faq details > p, .chs span.d, .card blockquote { text-align: left; }
+  }
+</style>

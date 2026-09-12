@@ -1,13 +1,13 @@
 ---
 import "../styles/global.css";
-import "@fontsource/inter/latin-400.css";
-import "@fontsource/inter/latin-600.css";
-import "@fontsource/lora/400.css";
-import "@fontsource/lora/600.css";
-import inter400 from "@fontsource/inter/files/inter-latin-400-normal.woff2";
-import inter600 from "@fontsource/inter/files/inter-latin-600-normal.woff2";
-import lora400 from "@fontsource/lora/files/lora-latin-400-normal.woff2";
-import lora600 from "@fontsource/lora/files/lora-latin-600-normal.woff2";
+import "@fontsource/figtree/latin-400.css";
+import "@fontsource/figtree/latin-500.css";
+import "@fontsource/figtree/latin-600.css";
+import "@fontsource/figtree/latin-700.css";
+import "@fontsource/figtree/latin-800.css";
+import figtree400 from "@fontsource/figtree/files/figtree-latin-400-normal.woff2";
+import figtree600 from "@fontsource/figtree/files/figtree-latin-600-normal.woff2";
+import figtree700 from "@fontsource/figtree/files/figtree-latin-700-normal.woff2";
 
 import { SITE } from "@consts";
 
@@ -34,13 +34,12 @@ const twitterImage = props.image || "/og-twitter.jpg";
 <link rel="icon" type="image/svg+xml" href="/favicon-light.svg" media="(prefers-color-scheme: light)">
 <link rel="icon" type="image/x-icon" href="/favicon-light.svg">
 <meta name="generator" content={Astro.generator} />
-<meta name="theme-color" content="#06251F">
+<meta name="theme-color" content="#FFFFFF">
 
 <!-- Font preloads -->
-<link rel="preload" href={inter400} as="font" type="font/woff2" crossorigin/>
-<link rel="preload" href={inter600} as="font" type="font/woff2" crossorigin/>
-<link rel="preload" href={lora400} as="font" type="font/woff2" crossorigin/>
-<link rel="preload" href={lora600} as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href={figtree400} as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href={figtree600} as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href={figtree700} as="font" type="font/woff2" crossorigin/>
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

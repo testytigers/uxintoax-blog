@@ -3,19 +3,23 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --ink: #06251f;
-  --ink-2: #082e27;
-  --surface: #0c3a31;
-  --surface-hover: #0e4036;
-  --line: #1b4f44;
-  --line-strong: #2a6b58;
-  --content: #f1f7f4;
-  --content-muted: #c3d8d1;
-  --content-faint: #9bb4ac;
-  --brand: #55b48e;
-  --brand-bright: #7acfac;
+  --ink: #ffffff;
+  --ink-2: #f7f6f2;
+  --surface: #ffffff;
+  --surface-hover: #fcfcfa;
+  --line: #e6e3dc;
+  --line-strong: #c9c6be;
+  --content: #212121;
+  --content-muted: #5a6069;
+  --content-faint: #8c9199;
+  --brand: #2f6b18;
+  --brand-bright: #4fa92b;
+  --mint: #d5f2d8;
+  --mint-line: #b9e3be;
+  --wash: #ebf5e3;
+  --gold: #e8af1c;
 }
 
 html {
@@ -54,12 +58,12 @@ main {
 }
 
 ::selection {
-  background: var(--brand);
-  color: var(--ink);
+  background: var(--mint);
+  color: var(--content, #212121);
 }
 
 :focus-visible {
-  outline: 2px solid var(--brand-bright);
+  outline: 2px solid var(--brand);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -124,6 +128,20 @@ article.prose {
   @apply max-w-none;
   font-size: 1.0625rem;
   line-height: 1.75;
+}
+
+article.prose p,
+article.prose li {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+@media (max-width: 640px) {
+  article.prose p,
+  article.prose li {
+    text-align: left;
+  }
 }
 
 @media (min-width: 640px) {

@@ -1,0 +1,36 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import { SITE } from "@consts";
+---
+
+<PageLayout
+  title="Terms"
+  description="Terms for reading the free Signal vs Noise book and articles on this site."
+>
+  <Container size="narrow">
+    <div class="py-14 sm:py-20">
+      <p class="eyebrow">Terms</p>
+      <h1 class="mt-5 text-title text-content">Terms</h1>
+      <div class="prose mt-10 max-w-none space-y-5 text-content-muted">
+        <p>
+          The Signal vs Noise book and every article on this site are free to read. There is no
+          purchase, subscription fee, or trial involved in getting the book.
+        </p>
+        <p>
+          The book and articles reflect one designer's opinions and experience. They are
+          educational content, not professional, legal, or financial advice, and you are
+          responsible for how you apply anything you read here to your own work.
+        </p>
+        <p>
+          Please do not republish or resell the book or articles as your own. Quoting or linking
+          to them with credit is welcome.
+        </p>
+        <p>
+          Questions about these terms can be sent to{" "}
+          <a href={`mailto:${SITE.EMAIL}`} class="font-medium text-brand hover:underline">{SITE.EMAIL}</a>.
+        </p>
+      </div>
+    </div>
+  </Container>
+</PageLayout>

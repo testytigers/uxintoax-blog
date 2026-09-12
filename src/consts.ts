@@ -1,7 +1,7 @@
 import type { Site, Metadata, Socials } from "@types";
 
 export const SITE: Site = {
-  NAME: "UXintoax Blog",
+  NAME: "UXintoax",
   EMAIL: "hello@uxintoax.com",
   NUM_POSTS_ON_HOMEPAGE: 6,
   NUM_WORKS_ON_HOMEPAGE: 3,
@@ -9,9 +9,9 @@ export const SITE: Site = {
 };
 
 export const HOME: Metadata = {
-  TITLE: "UXintoax — AI-Powered UX Design Strategies & Processes",
-  DESCRIPTION: "Practical UX design frameworks, AI workflow optimization tips, and tactical guides for modern UX designers. Learn how to integrate AI into your design process effectively.",
-  IMAGE: "/og-home.jpg",
+  TITLE: "Signal vs Noise — the free AI book for UX designers",
+  DESCRIPTION: "A free 11-chapter book for UX and product designers. Understand what AI is actually doing, so you stop guessing where you stand.",
+  IMAGE: "/assets/signal-noise-cover.jpg",
 };
 
 export const BLOG: Metadata = {

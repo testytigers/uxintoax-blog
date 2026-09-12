@@ -28,12 +28,12 @@ const djb2 = (s: string) => {
 };
 
 const palettes = [
-  { bg: "#55b48e", ink: "#06251F", alt: "#0C3A31" },
-  { bg: "#7ACFAC", ink: "#06251F", alt: "#0C3A31" },
-  { bg: "#E4D8B8", ink: "#06251F", alt: "#3C8E6E" },
-  { bg: "#C2D2EE", ink: "#06251F", alt: "#3C8E6E" },
-  { bg: "#3C8E6E", ink: "#06251F", alt: "#E4D8B8" },
-  { bg: "#EBC96A", ink: "#06251F", alt: "#0C3A31" },
+  { bg: "#D5F2D8", ink: "#212121", alt: "#2F6B18" },
+  { bg: "#EBF5E3", ink: "#212121", alt: "#4FA92B" },
+  { bg: "#F3EEE1", ink: "#212121", alt: "#2F6B18" },
+  { bg: "#E8AF1C", ink: "#212121", alt: "#2F6B18" },
+  { bg: "#4FA92B", ink: "#FFFFFF", alt: "#D5F2D8" },
+  { bg: "#2F6B18", ink: "#FFFFFF", alt: "#D5F2D8" },
 ];
 
 const p = palettes[fnv(seed) % palettes.length];

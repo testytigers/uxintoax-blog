@@ -7,32 +7,38 @@ export default {
     extend: {
       colors: {
         ink: {
-          DEFAULT: "#06251F",
-          2: "#082E27",
+          DEFAULT: "#FFFFFF",
+          2: "#F7F6F2",
         },
         surface: {
-          DEFAULT: "#0C3A31",
-          hover: "#0E4036",
+          DEFAULT: "#FFFFFF",
+          hover: "#FCFCFA",
         },
         line: {
-          DEFAULT: "#1B4F44",
-          strong: "#2A6B58",
+          DEFAULT: "#E6E3DC",
+          strong: "#C9C6BE",
         },
         content: {
-          DEFAULT: "#F1F7F4",
-          muted: "#C3D8D1",
-          faint: "#9BB4AC",
+          DEFAULT: "#212121",
+          muted: "#5A6069",
+          faint: "#8C9199",
         },
         brand: {
-          DEFAULT: "#55b48e",
-          bright: "#7ACFAC",
-          deep: "#3C8E6E",
-          ink: "#06251F",
+          DEFAULT: "#2F6B18",
+          bright: "#4FA92B",
+          deep: "#245312",
+          ink: "#FFFFFF",
         },
+        mint: {
+          DEFAULT: "#D5F2D8",
+          line: "#B9E3BE",
+        },
+        wash: "#EBF5E3",
+        gold: "#E8AF1C",
       },
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
-        serif: ["Lora", ...defaultTheme.fontFamily.serif],
+        sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+        serif: ["Figtree", ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         display: ["clamp(2.6rem, 7vw, 4.5rem)", { lineHeight: "1.02", letterSpacing: "-0.035em", fontWeight: "700" }],
