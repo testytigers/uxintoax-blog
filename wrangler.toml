@@ -1,2 +1,6 @@
 name = "uxintoax-blog"
-pages_build_output_dir = "dist"
+compatibility_date = "2026-09-03"
+compatibility_flags = ["global_fetch_strictly_public"]
+
+[assets]
+directory = "./dist"
