@@ -51,12 +51,13 @@ import { HOME } from "@consts";
       <p class="sub">Eleven short chapters on what AI is really doing under the hood, written by a
         designer who ships with it. About an hour to read.</p>
       <div class="signup">
-        <form action="/api/subscribe" method="post">
+        <form data-signup-form action="/api/subscribe" method="post">
           <input type="hidden" name="source" value="hero">
           <label for="e1" class="sr-only">Your email address</label>
           <input id="e1" type="email" name="email" placeholder="Your best email" required autocomplete="email">
           <button type="submit">Send me the book</button>
         </form>
+        <p class="msg" role="status" aria-live="polite" hidden></p>
         <p class="fine">Free, no card, no shipping. Arrives in about a minute.</p>
       </div>
       <div class="creds">
@@ -170,12 +171,13 @@ import { HOME } from "@consts";
     <div class="wrap">
       <h3>Read it in an hour. Keep the parts that change how you work.</h3>
       <div class="signup">
-        <form action="/api/subscribe" method="post">
+        <form data-signup-form action="/api/subscribe" method="post">
           <input type="hidden" name="source" value="strip">
           <label for="e3" class="sr-only">Your email address</label>
           <input id="e3" type="email" name="email" placeholder="Your best email" required autocomplete="email">
           <button type="submit">Send me the book</button>
         </form>
+        <p class="msg" role="status" aria-live="polite" hidden></p>
       </div>
     </div>
   </div>
@@ -315,16 +317,73 @@ import { HOME } from "@consts";
     <div class="wrap">
       <h3>An hour from now you could stop wondering where you stand.</h3>
       <div class="signup">
-        <form action="/api/subscribe" method="post">
+        <form data-signup-form action="/api/subscribe" method="post">
           <input type="hidden" name="source" value="footer">
           <label for="e2" class="sr-only">Your email address</label>
           <input id="e2" type="email" name="email" placeholder="Your best email" required autocomplete="email">
           <button type="submit">Send me the book</button>
         </form>
+        <p class="msg" role="status" aria-live="polite" hidden></p>
         <p class="fine">Eleven chapters. Free. Leave any time with one click.</p>
       </div>
     </div>
   </div>
+
+  <script>
+    const SUCCESS_MESSAGE = "You're in. Check your inbox — the book is on its way.";
+    const GENERIC_ERROR = "Something went wrong. Please try again.";
+
+    document.querySelectorAll<HTMLFormElement>("form[data-signup-form]").forEach((form) => {
+      const msg = form.parentElement?.querySelector<HTMLParagraphElement>(".msg");
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const emailInput = form.querySelector<HTMLInputElement>('input[type="email"]');
+      const sourceInput = form.querySelector<HTMLInputElement>('input[name="source"]');
+      if (!msg || !button || !emailInput) return;
+
+      const idleLabel = button.textContent ?? "Send me the book";
+
+      const showMessage = (text: string, kind: "ok" | "err") => {
+        msg.textContent = text;
+        msg.hidden = false;
+        msg.classList.remove("ok", "err");
+        msg.classList.add(kind);
+      };
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        button.disabled = true;
+        button.textContent = "Sending…";
+        msg.hidden = true;
+
+        try {
+          const response = await fetch("/api/subscribe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: emailInput.value,
+              source: sourceInput?.value ?? "unknown",
+            }),
+          });
+          const data = await response.json().catch(() => ({}) as { ok?: boolean; error?: string });
+
+          if (response.ok && data.ok) {
+            form.hidden = true;
+            showMessage(SUCCESS_MESSAGE, "ok");
+            return;
+          }
+
+          showMessage(data.error || GENERIC_ERROR, "err");
+        } catch {
+          showMessage(GENERIC_ERROR, "err");
+        } finally {
+          if (!form.hidden) {
+            button.disabled = false;
+            button.textContent = idleLabel;
+          }
+        }
+      });
+    });
+  </script>
 </PageLayout>
 
 <style>
@@ -400,6 +459,7 @@ import { HOME } from "@consts";
   .ask .sub { margin: 1.1rem auto 0; color: #5A6069; max-width: 36rem; }
   .signup { margin: 1.9rem auto 0; max-width: 30rem; }
   .signup form { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .signup form[hidden] { display: none; }
   .signup input { flex: 1 1 11rem; min-width: 0; font-family: inherit; font-size: 1.05rem;
     padding: .75rem .9rem; border: 1px solid #C9C6BE; border-radius: 4px; background: #fff; color: #212121; }
   .signup input:focus { border-color: #2F6B18; }
@@ -407,7 +467,12 @@ import { HOME } from "@consts";
     padding: .75rem 1.25rem; border: 0; border-radius: 4px; background: #2F6B18;
     color: #fff; cursor: pointer; }
   .signup button:hover { background: #245312; }
+  .signup button:disabled { opacity: .7; cursor: default; }
   .signup .fine { margin-top: .85rem; font-size: .95rem; color: #5A6069; }
+  .signup .msg { margin-top: .85rem; font-size: .95rem; font-weight: 600; }
+  .signup .msg.ok { color: #2F6B18; }
+  .signup .msg.err { color: #B3261E; }
+  .strip .signup .msg.ok { color: #245312; }
 
   /* ---------- rhythmic pull-quote rows ---------- */
   .beats { padding: 3.25rem 0 1rem; }
