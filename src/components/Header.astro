@@ -15,12 +15,13 @@ const isActive = (href: string) => href.startsWith("/blog") && path.startsWith("
   <Container>
     <div class="flex h-16 items-center justify-between gap-4 sm:h-[4.6rem]">
       <a href="/" class="flex items-center gap-2.5" aria-label="Oussama Bougnouch, home">
-        <span
-          class="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand text-xs font-bold tracking-tight text-brand-ink sm:size-10"
-          aria-hidden="true"
-        >
-          OB
-        </span>
+        <img
+          src="/assets/author.jpg"
+          width="72"
+          height="72"
+          alt=""
+          class="size-9 shrink-0 rotate-[10deg] border border-line object-cover sm:size-10"
+        />
         <span class="leading-tight">
           <span class="block text-[0.7rem] font-medium text-content-faint">by</span>
           <span class="block text-sm font-bold tracking-tight text-content sm:text-[0.95rem]">
