@@ -4,6 +4,9 @@ export const prerender = false;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// SendFox list that the "Signal vs Noise" welcome automation is triggered from.
+const SENDFOX_LIST_ID = 673741;
+
 function json(data: Record<string, unknown>, status: number) {
   return new Response(JSON.stringify(data), {
     status,
@@ -55,7 +58,7 @@ export const POST: APIRoute = async (context) => {
       },
       body: JSON.stringify({
         email: trimmed,
-        tags: [`signal-vs-noise`, `source:${source}`],
+        lists: [SENDFOX_LIST_ID],
       }),
     });
 
