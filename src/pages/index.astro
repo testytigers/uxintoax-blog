@@ -5,12 +5,13 @@ import Signup from "@components/Signup.astro";
 import Reviews from "@components/Reviews.astro";
 import { HOME } from "@consts";
 
+// Verbatim from the "Remember" box that closes each chapter of the PDF.
 const beats = [
-  { ch: "Ch. 1", text: "It is not answering your question. It is producing text shaped like an answer." },
-  { ch: "Ch. 3", text: "It can only work with what is in front of it. Deciding what goes there is the craft." },
-  { ch: "Ch. 4", text: "Size raises your ceiling, not your floor. A whale drowning in noise loses to a shark asking the right question." },
-  { ch: "Ch. 6", text: "Let it read. You decide." },
-  { ch: "Ch. 7", text: "It designs the happy path beautifully. Products are mostly the other paths." },
+  { ch: "Ch. 1", text: "The model is not answering your question; it is generating text shaped like an answer to your question." },
+  { ch: "Ch. 3", text: "The model can only work with what is currently in front of it. Deciding what goes into that window is your actual craft." },
+  { ch: "Ch. 4", text: "The model is only as effective as the data placed before it. Most of your impact is decided before you even open the tool." },
+  { ch: "Ch. 6", text: "Treat AI like an intern with a photographic memory and zero personal stake in the outcome. Brief it accordingly." },
+  { ch: "Ch. 9", text: "Jeff had tools; Steve had a process. Build the strategy before you buy the gear." },
 ];
 
 const learn = [
@@ -33,23 +34,23 @@ type TocEntry =
   | { kind: "chapter"; n: number; t: string; page: number };
 
 const toc: TocEntry[] = [
-  { kind: "front", t: "Before we start", page: 2 },
-  { kind: "part", n: 1, t: "How it thinks", page: 3 },
-  { kind: "chapter", n: 1, t: "It just predicts the next word", page: 5 },
-  { kind: "chapter", n: 2, t: "Why it lies to your face", page: 8 },
-  { kind: "chapter", n: 3, t: "What it can actually see", page: 11 },
-  { kind: "part", n: 2, t: "How you work with it", page: 13 },
-  { kind: "chapter", n: 4, t: "Garbage in, garbage out", page: 15 },
-  { kind: "chapter", n: 5, t: "Listening is a skill, and AI does not have it", page: 18 },
-  { kind: "chapter", n: 6, t: "What it is great at, what it is terrible at", page: 21 },
+  { kind: "front", t: "Before we start", page: 3 },
+  { kind: "part", n: 1, t: "How it thinks", page: 7 },
+  { kind: "chapter", n: 1, t: "It just predicts the next word", page: 8 },
+  { kind: "chapter", n: 2, t: "Why it lies to your face", page: 11 },
+  { kind: "chapter", n: 3, t: "What it can actually see", page: 13 },
+  { kind: "part", n: 2, t: "How you work with it", page: 16 },
+  { kind: "chapter", n: 4, t: "Garbage in, garbage out", page: 17 },
+  { kind: "chapter", n: 5, t: "Listening is a skill (and AI doesn’t have it)", page: 19 },
+  { kind: "chapter", n: 6, t: "What it’s great at, what it’s terrible at", page: 21 },
   { kind: "chapter", n: 7, t: "Pointing AI at the design itself", page: 23 },
-  { kind: "part", n: 3, t: "Why it fails", page: 25 },
-  { kind: "chapter", n: 8, t: "The agent that lied to me", page: 27 },
-  { kind: "chapter", n: 9, t: "Two architects in the desert", page: 31 },
-  { kind: "part", n: 4, t: "Going independent", page: 33 },
-  { kind: "chapter", n: 10, t: "Why you would want your own setup", page: 35 },
-  { kind: "chapter", n: 11, t: "Running local AI: the practical guide", page: 38 },
-  { kind: "front", t: "Where this leaves you", page: 41 },
+  { kind: "part", n: 3, t: "Why it fails and how you plan around it", page: 25 },
+  { kind: "chapter", n: 8, t: "The agent that lied to me", page: 26 },
+  { kind: "chapter", n: 9, t: "Two architects in the desert", page: 29 },
+  { kind: "part", n: 4, t: "Going independent", page: 32 },
+  { kind: "chapter", n: 10, t: "Why you would want your own setup", page: 33 },
+  { kind: "chapter", n: 11, t: "Running local AI: the practical guide", page: 35 },
+  { kind: "front", t: "Conclusion: where this leaves you", page: 37 },
 ];
 
 const faqs = [
@@ -98,14 +99,14 @@ const marqueeWords = Array.from({ length: 6 });
       <figure class="paper">
         <div class="slip">
           <figcaption>From chapter 2</figcaption>
-          <blockquote>It does not know when it does not know. Confidence tells you nothing about correctness.</blockquote>
+          <blockquote>The model does not know when it does not know. Confidence tells you nothing about correctness.</blockquote>
           <p>on why AI invents sources in the tone it uses for facts</p>
         </div>
       </figure>
       <figure class="paper">
         <div class="slip">
           <figcaption>From chapter 5</figcaption>
-          <blockquote>AI works on the problem you hand it. It will not ask whether that problem should be there.</blockquote>
+          <blockquote>AI analyzes the problem you hand it. It will never ask whether that problem should exist in the first place.</blockquote>
           <p>on the one level of listening a machine cannot reach</p>
         </div>
       </figure>
@@ -222,7 +223,7 @@ const marqueeWords = Array.from({ length: 6 });
             ))}
           </ol>
 
-          <footer class="toc-folio" aria-hidden="true">3</footer>
+          <footer class="toc-folio" aria-hidden="true">6</footer>
         </article>
       </div>
     </div>

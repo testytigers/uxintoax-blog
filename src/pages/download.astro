@@ -1,0 +1,350 @@
+---
+/**
+ * Where the book email sends people after they confirm.
+ * Not indexed: it is for subscribers, not search.
+ */
+import PageLayout from "@layouts/PageLayout.astro";
+import Book3D from "@components/Book3D.astro";
+import { SITE } from "@consts";
+
+const PDF = "/assets/signal-vs-noise-ebook.pdf";
+const FILE_NAME = "Signal-vs-Noise-Oussama-Bougnouch.pdf";
+
+const tips = [
+  {
+    n: "01",
+    title: "Start with chapter 4",
+    text: "Garbage in, garbage out, on page 17. Ten minutes, and it is the one that changes how you work.",
+  },
+  {
+    n: "02",
+    title: "Give it one sitting",
+    text: "The whole book takes about an hour. The chapters build on each other, so read them in order the first time.",
+  },
+  {
+    n: "03",
+    title: "Tell me what you are working on",
+    text: "Reply to the email the book came in. I read every reply, and it helps future emails reach your inbox.",
+  },
+];
+---
+
+<PageLayout
+  title="Your copy of Signal vs Noise"
+  description="Download your free copy of Signal vs Noise, the AI guide for UX designers."
+  noindex
+>
+  <section class="dl-hero" data-book-zone>
+    <div class="wrap dl-grid">
+      <div class="dl-copy" data-reveal>
+        <p class="eyebrow eyebrow-dot">Thanks for confirming</p>
+        <h1>Your copy of Signal vs Noise is ready.</h1>
+        <p class="dl-sub">
+          Eleven chapters on what AI is really doing under the hood. It is yours to keep, read
+          offline and share with your team.
+        </p>
+
+        <div class="dl-actions">
+          <a href={PDF} download={FILE_NAME} class="dl-primary" data-track="download_pdf">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14" /></svg>
+            Download PDF
+          </a>
+          <a href={PDF} target="_blank" rel="noopener" class="dl-secondary" data-track="read_in_browser">
+            Read in browser
+          </a>
+        </div>
+
+        <p class="dl-meta">PDF &middot; 38 pages &middot; 4.8 MB</p>
+      </div>
+
+      <div class="dl-book">
+        <div class="book-disc" aria-hidden="true"></div>
+        <Book3D />
+      </div>
+    </div>
+  </section>
+
+  <section class="dl-tips">
+    <div class="wrap" data-reveal>
+      <h2>Before you start</h2>
+      <ol class="tips">
+        {tips.map(t => (
+          <li class="card-soft">
+            <span class="tip-n">{t.n}</span>
+            <h3>{t.title}</h3>
+            <p>{t.text}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div class="dl-next card-soft">
+        <div>
+          <h3>Want more while you read?</h3>
+          <p>Short articles on using AI in real design work, one idea each.</p>
+        </div>
+        <div class="dl-next-actions">
+          <a href="/blog" class="dl-secondary">Browse the articles</a>
+          <a href={`mailto:${SITE.EMAIL}?subject=Signal%20vs%20Noise`} class="dl-link">Or email me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Count real downloads in Google Analytics (gtag is loaded in <head>)
+    document.querySelectorAll<HTMLAnchorElement>("[data-track]").forEach((link) => {
+      link.addEventListener("click", () => {
+        const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
+        gtag?.("event", link.dataset.track, {
+          file_name: "signal-vs-noise-ebook.pdf",
+          link_text: link.textContent?.trim(),
+        });
+      });
+    });
+  </script>
+</PageLayout>
+
+<style>
+  .wrap {
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .wrap {
+      padding: 0 2rem;
+    }
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--content);
+  }
+
+  p {
+    font-size: var(--text-size);
+    line-height: var(--text-leading);
+    color: var(--content-muted);
+  }
+
+  /* ---------- hero ---------- */
+  .dl-hero {
+    overflow: hidden;
+  }
+
+  .dl-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 3rem;
+    align-items: center;
+    min-height: min(calc(100svh - 4.5rem), 46rem);
+    padding-block: 3rem 4rem;
+  }
+
+  .dl-copy .eyebrow {
+    font-size: 0.72rem;
+  }
+
+  .dl-copy h1 {
+    margin-top: 1.5rem;
+    max-width: 13ch;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 4.8vw, 4.3rem);
+    line-height: 0.96;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+  }
+
+  .dl-sub {
+    max-width: 30rem;
+    margin-top: 1.5rem;
+  }
+
+  .dl-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2.25rem;
+  }
+
+  .dl-primary,
+  .dl-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 3px;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .dl-primary {
+    padding: 1.05rem 1.6rem;
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .dl-primary:hover {
+    background: var(--accent-deep);
+  }
+
+  .dl-primary svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .dl-secondary {
+    padding: 1rem 1.4rem;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--content);
+  }
+
+  .dl-secondary:hover {
+    border-color: var(--content);
+  }
+
+  .dl-meta {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--content-faint);
+  }
+
+  .dl-book {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: 2rem 0 4rem;
+  }
+
+  .book-disc {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: min(28rem, 100%);
+    aspect-ratio: 1;
+    translate: -50% -52%;
+    border-radius: 50%;
+    background: var(--ink-2);
+    pointer-events: none;
+  }
+
+  /* ---------- tips ---------- */
+  .dl-tips {
+    padding: 5rem 0 7rem;
+  }
+
+  .dl-tips h2 {
+    font-size: clamp(2rem, 3.6vw, 3rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .tips {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .tips li {
+    padding: 1.75rem;
+  }
+
+  .tip-n {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--content-faint);
+  }
+
+  .tips h3 {
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+
+  .tips p {
+    margin-top: 0.6rem;
+  }
+
+  .dl-next {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    padding: 1.75rem;
+  }
+
+  .dl-next h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  .dl-next p {
+    margin-top: 0.35rem;
+  }
+
+  .dl-next-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .dl-link {
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .dl-link:hover {
+    color: var(--accent-deep);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px) {
+    .dl-grid {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 0;
+      gap: 1rem;
+      padding-top: 2.5rem;
+    }
+
+    /* On phones the download button comes first; the book follows */
+    .dl-book {
+      padding: 2rem 0 1rem;
+    }
+
+    .book-disc {
+      width: 20rem;
+    }
+
+    .tips {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .dl-actions a {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

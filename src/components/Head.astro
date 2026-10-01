@@ -21,6 +21,7 @@ interface Props {
   type?: "website" | "article";
   articleDate?: string;
   canonical?: string;
+  noindex?: boolean;
 }
 
 const props = Astro.props;
@@ -44,6 +45,8 @@ const twitterImage = props.image || "/og-twitter.jpg";
 <link rel="preload" href={figtree600} as="font" type="font/woff2" crossorigin/>
 <link rel="preload" href={figtree700} as="font" type="font/woff2" crossorigin/>
 <link rel="preload" href={anton400} as="font" type="font/woff2" crossorigin/>
+
+{props.noindex && <meta name="robots" content="noindex, nofollow" />}
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
