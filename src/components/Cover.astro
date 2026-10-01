@@ -27,13 +27,14 @@ const djb2 = (s: string) => {
   return h;
 };
 
+// Drawn from the book cover: cream paper, vermilion, black ink, one green signal.
 const palettes = [
-  { bg: "#D5F2D8", ink: "#212121", alt: "#2F6B18" },
-  { bg: "#EBF5E3", ink: "#212121", alt: "#4FA92B" },
-  { bg: "#F3EEE1", ink: "#212121", alt: "#2F6B18" },
-  { bg: "#E8AF1C", ink: "#212121", alt: "#2F6B18" },
-  { bg: "#4FA92B", ink: "#FFFFFF", alt: "#D5F2D8" },
-  { bg: "#2F6B18", ink: "#FFFFFF", alt: "#D5F2D8" },
+  { bg: "#F4F3F0", ink: "#0D0C0A", alt: "#D42A10" },
+  { bg: "#D42A10", ink: "#0D0C0A", alt: "#FFFFFF" },
+  { bg: "#0D0C0A", ink: "#FFFFFF", alt: "#D42A10" },
+  { bg: "#FFFFFF", ink: "#0D0C0A", alt: "#4F9A2F" },
+  { bg: "#0D0C0A", ink: "#F4F3F0", alt: "#4F9A2F" },
+  { bg: "#F4F3F0", ink: "#D42A10", alt: "#0D0C0A" },
 ];
 
 const p = palettes[fnv(seed) % palettes.length];

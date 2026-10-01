@@ -5,9 +5,11 @@ import "@fontsource/figtree/latin-500.css";
 import "@fontsource/figtree/latin-600.css";
 import "@fontsource/figtree/latin-700.css";
 import "@fontsource/figtree/latin-800.css";
+import "@fontsource/anton/latin-400.css";
 import figtree400 from "@fontsource/figtree/files/figtree-latin-400-normal.woff2";
 import figtree600 from "@fontsource/figtree/files/figtree-latin-600-normal.woff2";
 import figtree700 from "@fontsource/figtree/files/figtree-latin-700-normal.woff2";
+import anton400 from "@fontsource/anton/files/anton-latin-400-normal.woff2";
 
 import { SITE } from "@consts";
 
@@ -34,12 +36,14 @@ const twitterImage = props.image || "/og-twitter.jpg";
 <link rel="icon" type="image/svg+xml" href="/favicon-light.svg" media="(prefers-color-scheme: light)">
 <link rel="icon" type="image/x-icon" href="/favicon-light.svg">
 <meta name="generator" content={Astro.generator} />
-<meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#0D0C0A">
+<meta name="view-transition" content="same-origin" />
 
 <!-- Font preloads -->
 <link rel="preload" href={figtree400} as="font" type="font/woff2" crossorigin/>
 <link rel="preload" href={figtree600} as="font" type="font/woff2" crossorigin/>
 <link rel="preload" href={figtree700} as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href={anton400} as="font" type="font/woff2" crossorigin/>
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -99,61 +103,19 @@ const twitterImage = props.image || "/og-twitter.jpg";
   gtag('config', 'G-HH8M2D27CW');
 </script>
 
+<!-- Motion switch: content is only hidden-for-animation when this class is present.
+     If the motion module fails to boot, the class is removed so nothing stays invisible. -->
 <script is:inline>
-  function init() {
-    onScroll();
-    revealOnScroll();
-    readingProgress();
+  (function () {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var root = document.documentElement;
+    root.classList.add("motion");
+    setTimeout(function () {
+      if (!window.__motion) root.classList.remove("motion");
+    }, 2500);
+  })();
+</script>
 
-    document.getElementById("back-to-top")?.addEventListener("click", (event) => {
-      event.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-    document.addEventListener("scroll", onScroll, { passive: true });
-  }
-
-  function revealOnScroll() {
-    const elements = document.querySelectorAll(".animate");
-
-    if (!("IntersectionObserver" in window)) {
-      elements.forEach((el) => el.classList.add("show"));
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry, index) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target;
-          setTimeout(() => el.classList.add("show"), Math.min(index, 4) * 90);
-          observer.unobserve(el);
-        });
-      },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.05 }
-    );
-
-    elements.forEach((el) => observer.observe(el));
-  }
-
-  function readingProgress() {
-    const bar = document.getElementById("read-progress");
-    if (!bar) return;
-
-    const update = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const ratio = max > 0 ? window.scrollY / max : 0;
-      bar.style.transform = `scaleX(${Math.min(Math.max(ratio, 0), 1)})`;
-    };
-
-    update();
-    document.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-  }
-
-  function onScroll() {
-    document.documentElement.classList.toggle("scrolled", window.scrollY > 0);
-  }
-
-  document.addEventListener("DOMContentLoaded", init);
+<script>
+  import "../scripts/motion.ts";
 </script>

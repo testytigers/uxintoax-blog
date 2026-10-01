@@ -1,0 +1,200 @@
+---
+type Props = {
+  id: string;
+  source: string;
+  fine?: string;
+  tone?: "light" | "dark" | "red";
+  class?: string;
+};
+
+const { id, source, fine, tone = "light", class: className = "" } = Astro.props;
+---
+
+<div class={`signup signup--${tone} ${className}`}>
+  <form data-signup-form action="/api/subscribe" method="post">
+    <input type="hidden" name="source" value={source} />
+    <label for={id} class="sr-only">Your email address</label>
+    <input id={id} type="email" name="email" placeholder="Your best email" required autocomplete="email" />
+    <button type="submit">
+      <span class="label">Send me the book</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </button>
+  </form>
+  <p class="msg" role="status" aria-live="polite" hidden></p>
+  {fine && <p class="fine">{fine}</p>}
+</div>
+
+<style>
+  .signup {
+    width: 100%;
+    max-width: 30rem;
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.3rem;
+    border-radius: 4px;
+    border: 2px solid var(--content);
+    background: var(--surface);
+    transition: border-color 0.3s ease, box-shadow 0.4s ease;
+  }
+
+  form:focus-within {
+    box-shadow: 5px 5px 0 var(--content);
+  }
+
+  form[hidden] {
+    display: none;
+  }
+
+  input[type="email"] {
+    flex: 1 1 0;
+    width: 100%;
+    min-width: 0;
+    font: inherit;
+    font-size: 1rem;
+    padding: 0.7rem 0.4rem 0.7rem 1.1rem;
+    border: 0;
+    background: transparent;
+    color: var(--content);
+    outline: none;
+  }
+
+  input::placeholder {
+    color: var(--content-faint);
+  }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0.85rem 1.2rem;
+    border: 0;
+    border-radius: 2px;
+    background: var(--accent);
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button svg {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  button:hover {
+    background: var(--content);
+  }
+
+  button:hover svg {
+    transform: translateX(3px);
+  }
+
+  button:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+
+  .fine,
+  .msg {
+    margin-top: 0.9rem;
+    font-size: 0.875rem;
+    color: var(--content-faint);
+  }
+
+  .msg {
+    font-weight: 600;
+    color: var(--content);
+  }
+
+  .msg:global(.err) {
+    color: var(--accent-deep);
+  }
+
+  /* Dark variant for inverted bands */
+  .signup--dark form {
+    background: rgb(255 255 255 / 0.06);
+    border-color: rgb(255 255 255 / 0.35);
+  }
+
+  .signup--dark form:focus-within {
+    border-color: var(--ink);
+    box-shadow: 5px 5px 0 var(--accent);
+  }
+
+  .signup--dark input[type="email"] {
+    color: var(--ink);
+  }
+
+  .signup--dark input::placeholder {
+    color: rgb(255 255 255 / 0.5);
+  }
+
+  .signup--dark button:hover {
+    background: var(--ink);
+    color: var(--content);
+  }
+
+  .signup--dark .fine {
+    color: rgb(255 255 255 / 0.6);
+  }
+
+  .signup--dark .msg {
+    color: var(--ink);
+  }
+
+  .signup--dark .msg:global(.err) {
+    color: #ff8a75;
+  }
+
+  /* Red variant, for the sunburst band */
+  .signup--red form {
+    background: var(--ink);
+    border-color: var(--content);
+    box-shadow: 5px 5px 0 var(--content);
+  }
+
+  .signup--red form:focus-within {
+    box-shadow: 7px 7px 0 var(--content);
+  }
+
+  .signup--red button {
+    background: var(--content);
+  }
+
+  .signup--red button:hover {
+    background: var(--accent-deep);
+  }
+
+  .signup--red .fine,
+  .signup--red .msg {
+    color: var(--ink);
+  }
+
+  .signup--red .msg:global(.err) {
+    color: var(--ink);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 400px) {
+    button {
+      padding: 0.75rem 0.95rem;
+    }
+    button svg {
+      display: none;
+    }
+  }
+</style>

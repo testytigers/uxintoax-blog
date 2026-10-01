@@ -1,127 +1,176 @@
 ---
 import PageLayout from "@layouts/PageLayout.astro";
+import Book3D from "@components/Book3D.astro";
+import Signup from "@components/Signup.astro";
+import Reviews from "@components/Reviews.astro";
 import { HOME } from "@consts";
+
+const beats = [
+  { ch: "Ch. 1", text: "It is not answering your question. It is producing text shaped like an answer." },
+  { ch: "Ch. 3", text: "It can only work with what is in front of it. Deciding what goes there is the craft." },
+  { ch: "Ch. 4", text: "Size raises your ceiling, not your floor. A whale drowning in noise loses to a shark asking the right question." },
+  { ch: "Ch. 6", text: "Let it read. You decide." },
+  { ch: "Ch. 7", text: "It designs the happy path beautifully. Products are mostly the other paths." },
+];
+
+const learn = [
+  { text: "Understand the single thing a model is doing every time it answers you, and watch every strange result you have ever seen suddenly make sense.", ref: "Ch. 1" },
+  { text: "Spot the confident invention, and learn the one habit that catches it every time.", ref: "Ch. 2" },
+  { text: "Know why what you paste in matters far more than how you word the request.", ref: "Ch. 3" },
+  { text: "Climb the data food chain that quietly decides how senior your work looks, before you ever open Figma.", ref: "Ch. 4" },
+  { text: "Turn a pile nobody has read into a roadmap. Tickets, reviews, cancellation reasons, thousands of them, in days.", ref: "Ch. 4" },
+  { text: "Reach the one level of listening to a user that AI cannot get to.", ref: "Ch. 5" },
+  { text: "Avoid the four places AI quietly ruins design work: generated screens, critique, microcopy and accessibility.", ref: "Ch. 7" },
+  { text: "Build the verification habit that came out of the night my own agent told me it had finished 113 files. It had finished 53.", ref: "Ch. 8" },
+  { text: "Say out loud which parts of your job are safe, and why.", ref: "Ch. 6 & 9" },
+  { text: "Run a model on your own machine when the data cannot leave the building.", ref: "Ch. 10 & 11" },
+];
+
+// Mirrors the Contents page of the PDF, with its real page numbers.
+type TocEntry =
+  | { kind: "front"; t: string; page: number }
+  | { kind: "part"; n: number; t: string; page: number }
+  | { kind: "chapter"; n: number; t: string; page: number };
+
+const toc: TocEntry[] = [
+  { kind: "front", t: "Before we start", page: 2 },
+  { kind: "part", n: 1, t: "How it thinks", page: 3 },
+  { kind: "chapter", n: 1, t: "It just predicts the next word", page: 5 },
+  { kind: "chapter", n: 2, t: "Why it lies to your face", page: 8 },
+  { kind: "chapter", n: 3, t: "What it can actually see", page: 11 },
+  { kind: "part", n: 2, t: "How you work with it", page: 13 },
+  { kind: "chapter", n: 4, t: "Garbage in, garbage out", page: 15 },
+  { kind: "chapter", n: 5, t: "Listening is a skill, and AI does not have it", page: 18 },
+  { kind: "chapter", n: 6, t: "What it is great at, what it is terrible at", page: 21 },
+  { kind: "chapter", n: 7, t: "Pointing AI at the design itself", page: 23 },
+  { kind: "part", n: 3, t: "Why it fails", page: 25 },
+  { kind: "chapter", n: 8, t: "The agent that lied to me", page: 27 },
+  { kind: "chapter", n: 9, t: "Two architects in the desert", page: 31 },
+  { kind: "part", n: 4, t: "Going independent", page: 33 },
+  { kind: "chapter", n: 10, t: "Why you would want your own setup", page: 35 },
+  { kind: "chapter", n: 11, t: "Running local AI: the practical guide", page: 38 },
+  { kind: "front", t: "Where this leaves you", page: 41 },
+];
+
+const faqs = [
+  { q: "Is it really free?", a: "Yes. No card, no shipping fee, no trial, nothing hidden three pages in. You give an email address and the book arrives as a PDF." },
+  { q: "Do I need to know how to code?", a: "No. If you can read a Figma file you can read this. The single technical chapter sits at the very end on purpose, and you can skip it entirely." },
+  { q: "I use ChatGPT every day. Will this be too basic?", a: "The first three chapters will be partly familiar. Chapters four to eight are where daily users tend to find the gaps, particularly around what to feed it and how to check what comes back." },
+  { q: "How long does it take to read?", a: "About an hour end to end. Chapter four takes ten minutes on its own and is the one that changes how you work." },
+  { q: "What happens to my email address?", a: "You get the book, then roughly one email a week about using AI in real design work. Never shared, never sold, one click to leave." },
+  { q: "Is this a pitch for something expensive?", a: "There is a paid course coming later. It is not built yet and you will not be nagged about it. If the free book is all you ever take from me, that is a fine outcome." },
+];
+
+const pad = (n: number) => String(n).padStart(2, "0");
+const marqueeWords = Array.from({ length: 6 });
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION} image={HOME.IMAGE}>
-  <!-- EYEBROW -->
-  <p class="eyebrow pt-8">A free guide for UX &amp; product designers</p>
-
-  <!-- HERO: quote | book | quote -->
-  <header class="hero">
-    <div class="wrap hero-3">
-      <div class="pull">
-        <div class="ch">From chapter 2</div>
-        <blockquote>&ldquo;It does not know when it does not know. Confidence tells you nothing
-          about correctness.&rdquo;</blockquote>
-        <div class="rule"></div>
-        <div class="src">on why AI invents sources in the tone it uses for facts</div>
+  <!-- HERO -->
+  <section class="hero" data-book-zone>
+    <div class="wrap hero-grid">
+      <div class="hero-copy" data-reveal>
+        <p class="eyebrow eyebrow-dot">AI guide for UX &amp; product designers</p>
+        <h1>
+          Everyone is handing you rotten AI advice. <span class="soft">This is the one worth taking.</span>
+        </h1>
+        <p class="hero-sub">
+          Eleven short chapters on what AI is really doing under the hood, written by a designer who
+          ships with it. About an hour to read.
+        </p>
+        <div id="get" class="hero-signup">
+          <Signup id="e1" source="hero" fine="Free, no card, no shipping. Arrives in about a minute." />
+        </div>
       </div>
 
-      <div class="book-cell">
-        <div class="book-wrap"><div class="book">
-          <div class="pages" aria-hidden="true"></div>
-          <div class="top-edge" aria-hidden="true"></div>
-          <img
-            class="cover-art"
-            src="/assets/signal-noise-cover-650.jpg"
-            width="433"
-            height="650"
-            alt="Book cover: a hand reaching up through a swirling sky to hold one green apple among dozens of rotten yellow apples."
-          />
-          <div class="spine" aria-hidden="true"></div>
-          <div class="sheen" aria-hidden="true"></div>
-        </div></div>
-      </div>
-
-      <div class="pull">
-        <div class="ch">From chapter 5</div>
-        <blockquote>&ldquo;AI works on the problem you hand it. It will not ask whether that problem
-          should be there.&rdquo;</blockquote>
-        <div class="rule"></div>
-        <div class="src">on the one level of listening a machine cannot reach</div>
+      <div class="hero-book">
+        <div class="book-disc" aria-hidden="true"></div>
+        <Book3D />
       </div>
     </div>
-  </header>
+  </section>
 
-  <!-- THE ASK -->
-  <div class="ask" id="get">
-    <div class="wrap">
-      <h1>Everyone is handing you rotten AI advice. <em>This is the one worth taking.</em></h1>
-      <p class="sub">Eleven short chapters on what AI is really doing under the hood, written by a
-        designer who ships with it. About an hour to read.</p>
-      <div class="signup">
-        <form data-signup-form action="/api/subscribe" method="post">
-          <input type="hidden" name="source" value="hero">
-          <label for="e1" class="sr-only">Your email address</label>
-          <input id="e1" type="email" name="email" placeholder="Your best email" required autocomplete="email">
-          <button type="submit">Send me the book</button>
-        </form>
-        <p class="msg" role="status" aria-live="polite" hidden></p>
-        <p class="fine">Free, no card, no shipping. Arrives in about a minute.</p>
+  <!-- TWO PULL QUOTES -->
+  <section class="quotes">
+    <div class="wrap" data-reveal>
+      <h2 class="quotes-title">From the book</h2>
+      <div class="quotes-grid">
+      <figure class="paper">
+        <div class="slip">
+          <figcaption>From chapter 2</figcaption>
+          <blockquote>It does not know when it does not know. Confidence tells you nothing about correctness.</blockquote>
+          <p>on why AI invents sources in the tone it uses for facts</p>
+        </div>
+      </figure>
+      <figure class="paper">
+        <div class="slip">
+          <figcaption>From chapter 5</figcaption>
+          <blockquote>AI works on the problem you hand it. It will not ask whether that problem should be there.</blockquote>
+          <p>on the one level of listening a machine cannot reach</p>
+        </div>
+      </figure>
       </div>
-      <div class="creds">
-        <div><div class="mark">13 years</div><div class="cap">in product design</div></div>
-        <div><div class="mark">10,800 tickets</div><div class="cap">analysed on one project</div></div>
-        <div><div class="mark">CHANEL &middot; AT&amp;T &middot; Fnac</div><div class="cap">teams worked with</div></div>
-      </div>
+    </div>
+  </section>
+
+  <!-- SCROLL MARQUEE -->
+  <div class="mq" aria-hidden="true">
+    <div class="mq-track" data-marquee="-1">
+      {marqueeWords.map(() => (
+        <span class="mq-item">Signal <span class="soft">vs</span> Noise <i></i></span>
+      ))}
     </div>
   </div>
 
-  <!-- RHYTHMIC PULL QUOTES -->
-  <div class="beats">
-    <div class="wrap measure">
-      <div class="beat"><div class="ch">Ch. 1</div>
-        <p>It is not answering your question. It is producing text shaped like an answer.</p></div>
-      <div class="beat"><div class="ch">Ch. 3</div>
-        <p>It can only work with what is in front of it. Deciding what goes there is the craft.</p></div>
-      <div class="beat"><div class="ch">Ch. 4</div>
-        <p>Size raises your ceiling, not your floor. A whale drowning in noise loses to a shark asking the right question.</p></div>
-      <div class="beat"><div class="ch">Ch. 6</div>
-        <p>Let it read. You decide.</p></div>
-      <div class="beat"><div class="ch">Ch. 7</div>
-        <p>It designs the happy path beautifully. Products are mostly the other paths.</p></div>
+  <!-- BEATS -->
+  <section class="sec beats">
+    <div class="wrap" data-reveal>
+      <p class="sec-label"><span>01</span>Highlights</p>
+      <h2 class="beats-title">Five lines from the book</h2>
+      <ol class="beat-list">
+        {beats.map(b => (
+          <li class="beat">
+            <div class="slip">
+              <span class="beat-ch">{b.ch}</span>
+              <p>{b.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
     </div>
-  </div>
+  </section>
 
   <!-- WHAT YOU LEARN -->
-  <section id="why">
-    <div class="wrap">
-      <h2>What you will be able to do by the end</h2>
-      <p class="lede">Not theory. Things you can use on your next project, this week.</p>
-      <ul class="learn">
-        <li><span>Understand the single thing a model is doing every time it answers you, and watch
-          every strange result you have ever seen suddenly make sense. <span class="ref">(Ch. 1)</span></span></li>
-        <li><span>Spot the confident invention, and learn the one habit that catches it every time.
-          <span class="ref">(Ch. 2)</span></span></li>
-        <li><span>Know why what you paste in matters far more than how you word the request.
-          <span class="ref">(Ch. 3)</span></span></li>
-        <li><span>Climb the data food chain that quietly decides how senior your work looks, before you
-          ever open Figma. <span class="ref">(Ch. 4)</span></span></li>
-        <li><span>Turn a pile nobody has read into a roadmap. Tickets, reviews, cancellation reasons,
-          thousands of them, in days. <span class="ref">(Ch. 4)</span></span></li>
-        <li><span>Reach the one level of listening to a user that AI cannot get to.
-          <span class="ref">(Ch. 5)</span></span></li>
-        <li><span>Avoid the four places AI quietly ruins design work: generated screens, critique,
-          microcopy and accessibility. <span class="ref">(Ch. 7)</span></span></li>
-        <li><span>Build the verification habit that came out of the night my own agent told me it had
-          finished 113 files. It had finished 53. <span class="ref">(Ch. 8)</span></span></li>
-        <li><span>Say out loud which parts of your job are safe, and why.
-          <span class="ref">(Ch. 6 &amp; 9)</span></span></li>
-        <li><span>Run a model on your own machine when the data cannot leave the building.
-          <span class="ref">(Ch. 10 &amp; 11)</span></span></li>
-      </ul>
+  <section id="why" class="sec">
+    <div class="wrap split" data-reveal>
+      <div class="split-head">
+        <p class="sec-label"><span>02</span>Outcomes</p>
+        <h2>What you will be able to do by the end</h2>
+        <p class="lede">Not theory. Things you can use on your next project, this week.</p>
+      </div>
+      <ol class="learn">
+        {learn.map((item, i) => (
+          <li>
+            <span class="n">{pad(i + 1)}</span>
+            <p>{item.text}</p>
+            <span class="ref">{item.ref}</span>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
   <!-- LETTER -->
-  <section class="border-t">
-    <div class="wrap">
-      <h2>Why I wrote it</h2>
-      <div class="measure">
-        <p class="lede">I spent thirteen years getting good at something, then watched everyone
+  <section class="sec letter">
+    <div class="wrap split" data-reveal>
+      <div class="split-head">
+        <p class="sec-label"><span>03</span>The letter</p>
+        <h2>Why I wrote it</h2>
+      </div>
+      <div class="letter-body">
+        <p class="letter-lede">I spent fifteen years getting good at something, then watched everyone
           announce it was over.</p>
-        <p class="mt">You know the posts. Designers are finished. Learn to prompt or get
+        <p>You know the posts. Designers are finished. Learn to prompt or get
           replaced. Usually attached to a course.</p>
         <p>I did not want to argue with it or ignore it. I wanted to know if it was true, so I did what
           we do with any unfamiliar system: I opened it up and looked at how it works.</p>
@@ -134,81 +183,80 @@ import { HOME } from "@consts";
           it, because nothing was competing with you at the surface.</p>
         <p>This book helps you name it. Plain language, real mechanics, and my own failures included,
           because the failures are where the useful rules come from.</p>
+        <p class="signature">Oussama</p>
       </div>
     </div>
   </section>
 
   <!-- CHAPTERS -->
-  <section id="chapters" class="border-t">
-    <div class="wrap">
-      <h2>The eleven chapters</h2>
-      <p class="lede">Four parts. Read them in order the first time through.</p>
-      <div class="chs">
-        <span class="pt">Part 1 &middot; How it thinks</span>
-        <div class="row"><span class="num">1</span><span><b>It just predicts the next word</b><span class="d">The only thing it does. Everything else follows.</span></span></div>
-        <div class="row"><span class="num">2</span><span><b>Why it lies to your face</b><span class="d">Hallucination is not a bug. It is the machine working correctly.</span></span></div>
-        <div class="row"><span class="num">3</span><span><b>What it can actually see</b><span class="d">The most useful chapter for daily work, and the one nobody teaches.</span></span></div>
+  <section id="chapters" class="sec">
+    <div class="wrap" data-reveal>
+      <div class="chapters-head">
+        <p class="sec-label"><span>04</span>Contents</p>
+        <h2>The eleven chapters</h2>
+        <p class="lede">Four parts. Read them in order the first time through.</p>
+      </div>
 
-        <span class="pt">Part 2 &middot; How you work with it</span>
-        <div class="row"><span class="num">4</span><span><b>Garbage in, garbage out</b><span class="d">The data food chain, and how to climb one level this month.</span></span></div>
-        <div class="row"><span class="num">5</span><span><b>Listening is a skill, and AI does not have it</b><span class="d">Three levels of empathy, and where the machine stops.</span></span></div>
-        <div class="row"><span class="num">6</span><span><b>What it is great at, what it is terrible at</b><span class="d">The honest split, and a test for what to hand over.</span></span></div>
-        <div class="row"><span class="num">7</span><span><b>Pointing AI at the design itself</b><span class="d">Screens, critique, copy, accessibility. Where each one breaks.</span></span></div>
 
-        <span class="pt">Part 3 &middot; Why it fails, and how you plan around it</span>
-        <div class="row"><span class="num">8</span><span><b>The agent that lied to me</b><span class="d">113 reported, 53 delivered, and the rule that came out of it.</span></span></div>
-        <div class="row"><span class="num">9</span><span><b>Two architects in the desert</b><span class="d">Why the one with better tools still lost.</span></span></div>
+      <!-- A page from the book, sitting on a small stack of sheets -->
+      <div class="toc-stack">
+        <article class="toc-page" aria-label="Table of contents">
+          <header class="toc-running">
+            <span>Signal vs Noise</span>
+            <span>Oussama Bougnouch</span>
+          </header>
 
-        <span class="pt">Part 4 &middot; Going independent</span>
-        <div class="row"><span class="num">10</span><span><b>Why you would want your own setup</b><span class="d">Four walls you will hit, and an honest answer on cost.</span></span></div>
-        <div class="row"><span class="num">11</span><span><b>Running local AI, the practical guide</b><span class="d">Enough to decide whether your laptop can handle it.</span></span></div>
+          <h3 class="toc-title">Contents</h3>
+
+          <ol class="toc">
+            {toc.map(e => (
+              <li class={`toc-row is-${e.kind}`}>
+                {e.kind === "chapter" && <span class="toc-n">{pad(e.n)}</span>}
+                <span class="toc-t">
+                  {e.kind === "part" && <span class="toc-kicker">Part {e.n}</span>}
+                  {e.t}
+                </span>
+                <span class="toc-leader" aria-hidden="true"></span>
+                <span class="toc-pg"><span class="sr-only">page </span>{e.page}</span>
+              </li>
+            ))}
+          </ol>
+
+          <footer class="toc-folio" aria-hidden="true">3</footer>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- MINT BAND WITH CAPTURE -->
-  <div class="strip">
-    <div class="wrap">
+  <!-- RED BAND WITH CAPTURE: the cover's burst, in miniature -->
+  <section class="band band-red">
+    <div class="wrap band-center" data-reveal>
+      <p class="band-kicker">Free PDF &middot; 11 chapters &middot; About an hour</p>
       <h3>Read it in an hour. Keep the parts that change how you work.</h3>
-      <div class="signup">
-        <form data-signup-form action="/api/subscribe" method="post">
-          <input type="hidden" name="source" value="strip">
-          <label for="e3" class="sr-only">Your email address</label>
-          <input id="e3" type="email" name="email" placeholder="Your best email" required autocomplete="email">
-          <button type="submit">Send me the book</button>
-        </form>
-        <p class="msg" role="status" aria-live="polite" hidden></p>
-      </div>
+      <Signup id="e3" source="strip" tone="red" class="band-signup" fine="No card, no spam. One click to leave." />
     </div>
-  </div>
+  </section>
 
   <!-- REVIEW WALL -->
-  <section>
-    <div class="wrap">
-      <h2 class="centre">What readers say</h2>
-      <p class="lede centre">Real quotes only. These slots fill in as readers reply.</p>
-
-      <div class="wall">
-        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div></div>
-        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph s"></div></div>
-        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph s"></div></div>
-        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph s"></div></div>
-        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div></div>
-        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph s"></div></div>
-        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph s"></div></div>
-        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div></div>
-        <div class="card slot"><div class="lbl">Reader review</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div></div>
+  <section class="sec">
+    <div class="wrap" data-reveal>
+      <div class="chapters-head">
+        <p class="sec-label"><span>05</span>Readers</p>
+        <h2>What readers say</h2>
+        <p class="lede">Real quotes only, from people who have read it.</p>
       </div>
-      <p class="wall-note">Intentionally unfilled. Inventing praise would be exactly the failure
-        chapter&nbsp;2 is about, so these stay empty until real readers fill them.</p>
+      <Reviews />
     </div>
   </section>
 
   <!-- PROOF -->
-  <section class="proof">
-    <div class="wrap">
-      <h2>Why listen to me</h2>
-      <p class="lede">Three things I can point at, rather than three things I can claim.</p>
+  <section class="sec proof">
+    <div class="wrap" data-reveal>
+      <div class="chapters-head">
+        <p class="sec-label"><span>06</span>Proof</p>
+        <h2>Why listen to me</h2>
+        <p class="lede">Three things I can point at, rather than three things I can claim.</p>
+      </div>
       <dl class="figs">
         <div>
           <dt>10,800</dt>
@@ -216,12 +264,12 @@ import { HOME } from "@consts";
             than twenty real users before a single screen was redesigned.</dd>
         </div>
         <div>
-          <dt>113 vs 53</dt>
+          <dt>113 <span class="soft">vs</span> 53</dt>
           <dd>My own agent reported 113 files created. There were 53. The full story is in the book,
             because it produced the rule I now apply to everything.</dd>
         </div>
         <div>
-          <dt>13 years</dt>
+          <dt>15 <span class="small">years</span></dt>
           <dd>Product and UX design, including work with teams at CHANEL, AT&amp;T, HelloFresh
             and Fnac.</dd>
         </div>
@@ -230,25 +278,28 @@ import { HOME } from "@consts";
   </section>
 
   <!-- FIT -->
-  <section>
-    <div class="wrap">
-      <h2>Who it is for</h2>
+  <section class="sec">
+    <div class="wrap" data-reveal>
+      <div class="chapters-head">
+        <p class="sec-label"><span>07</span>Fit</p>
+        <h2>Who it is for</h2>
+      </div>
       <div class="fit">
-        <div class="y">
+        <div class="fit-card yes">
           <h3>Read it if</h3>
           <ul>
-            <li><i>&#10003;</i><span>You design products and the AI conversation has started to feel personal.</span></li>
-            <li><i>&#10003;</i><span>You have used the tools and got answers that looked right and were not.</span></li>
-            <li><i>&#10003;</i><span>You would rather understand the machine than memorise tricks for it.</span></li>
-            <li><i>&#10003;</i><span>You want one honest hour instead of forty hours of hype.</span></li>
+            <li><i aria-hidden="true">&#10003;</i><span>You design products and the AI conversation has started to feel personal.</span></li>
+            <li><i aria-hidden="true">&#10003;</i><span>You have used the tools and got answers that looked right and were not.</span></li>
+            <li><i aria-hidden="true">&#10003;</i><span>You would rather understand the machine than memorise tricks for it.</span></li>
+            <li><i aria-hidden="true">&#10003;</i><span>You want one honest hour instead of forty hours of hype.</span></li>
           </ul>
         </div>
-        <div class="n">
+        <div class="fit-card no">
           <h3>Skip it if</h3>
           <ul>
-            <li><i>&#10007;</i><span>You want prompt templates to copy and paste. There are none in here.</span></li>
-            <li><i>&#10007;</i><span>You are an ML engineer. You already know the first three chapters.</span></li>
-            <li><i>&#10007;</i><span>You want to be told everything is fine. Some of it is not, and I say so.</span></li>
+            <li><i aria-hidden="true">&#10005;</i><span>You want prompt templates to copy and paste. There are none in here.</span></li>
+            <li><i aria-hidden="true">&#10005;</i><span>You are an ML engineer. You already know the first three chapters.</span></li>
+            <li><i aria-hidden="true">&#10005;</i><span>You want to be told everything is fine. Some of it is not, and I say so.</span></li>
           </ul>
         </div>
       </div>
@@ -256,16 +307,22 @@ import { HOME } from "@consts";
   </section>
 
   <!-- AUTHOR -->
-  <section id="about" class="border-t">
-    <div class="wrap">
-      <h2>Who wrote it</h2>
-      <div class="measure">
-        <p class="lede">Oussama Bougnouch, product and UX designer, thirteen years.</p>
-        <p class="mt muted">I have built design systems, research
+  <section id="about" class="sec">
+    <div class="wrap split" data-reveal>
+      <div class="split-head">
+        <p class="sec-label"><span>08</span>Author</p>
+        <h2>Who wrote it</h2>
+      </div>
+      <div class="about">
+        <div class="about-id">
+          <img src="/assets/author.jpg" width="200" height="200" alt="Oussama Bougnouch" loading="lazy" />
+          <p class="letter-lede">Oussama Bougnouch, product and UX designer, fifteen years.</p>
+        </div>
+        <p>I have built design systems, research
           operations and production interfaces for teams at CHANEL, AT&amp;T, HelloFresh and Fnac.
           These days I build AI systems for design work: local models, agents, and the instruction
           files that keep them honest.</p>
-        <p class="muted">I publish what breaks alongside what works. I wrote this book
+        <p>I publish what breaks alongside what works. I wrote this book
           because the advice designers were getting was either panic or cheerleading, and neither one
           tells you what to do on Monday morning.</p>
       </div>
@@ -273,61 +330,35 @@ import { HOME } from "@consts";
   </section>
 
   <!-- FAQ -->
-  <section class="border-t">
-    <div class="wrap">
-      <h2>Questions people ask first</h2>
+  <section class="sec">
+    <div class="wrap split" data-reveal>
+      <div class="split-head">
+        <p class="sec-label"><span>09</span>FAQ</p>
+        <h2>Questions people ask first</h2>
+      </div>
       <div class="faq">
-        <details>
-          <summary>Is it really free?</summary>
-          <p>Yes. No card, no shipping fee, no trial, nothing hidden three pages in. You give an email
-            address and the book arrives as a PDF.</p>
-        </details>
-        <details>
-          <summary>Do I need to know how to code?</summary>
-          <p>No. If you can read a Figma file you can read this. The single technical chapter sits at
-            the very end on purpose, and you can skip it entirely.</p>
-        </details>
-        <details>
-          <summary>I use ChatGPT every day. Will this be too basic?</summary>
-          <p>The first three chapters will be partly familiar. Chapters four to eight are where daily
-            users tend to find the gaps, particularly around what to feed it and how to check what
-            comes back.</p>
-        </details>
-        <details>
-          <summary>How long does it take to read?</summary>
-          <p>About an hour end to end. Chapter four takes ten minutes on its own and is the one that
-            changes how you work.</p>
-        </details>
-        <details>
-          <summary>What happens to my email address?</summary>
-          <p>You get the book, then roughly one email a week about using AI in real design work. Never
-            shared, never sold, one click to leave.</p>
-        </details>
-        <details>
-          <summary>Is this a pitch for something expensive?</summary>
-          <p>There is a paid course coming later. It is not built yet and you will not be nagged about
-            it. If the free book is all you ever take from me, that is a fine outcome.</p>
-        </details>
+        {faqs.map(f => (
+          <details>
+            <summary>{f.q}<span class="plus" aria-hidden="true"></span></summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
       </div>
     </div>
   </section>
 
   <!-- CLOSE -->
-  <div class="strip">
-    <div class="wrap">
-      <h3>An hour from now you could stop wondering where you stand.</h3>
-      <div class="signup">
-        <form data-signup-form action="/api/subscribe" method="post">
-          <input type="hidden" name="source" value="footer">
-          <label for="e2" class="sr-only">Your email address</label>
-          <input id="e2" type="email" name="email" placeholder="Your best email" required autocomplete="email">
-          <button type="submit">Send me the book</button>
-        </form>
-        <p class="msg" role="status" aria-live="polite" hidden></p>
-        <p class="fine">Eleven chapters. Free. Leave any time with one click.</p>
+  <section class="band band-close">
+    <div class="wrap close-grid" data-reveal>
+      <div class="close-cover" aria-hidden="true">
+        <img src="/assets/signal-noise-cover-650.jpg" width="433" height="650" alt="" loading="lazy" />
+      </div>
+      <div class="close-copy">
+        <h3>An hour from now you could <span class="soft">stop wondering where you stand.</span></h3>
+        <Signup id="e2" source="footer" tone="dark" fine="Eleven chapters. Free. Leave any time with one click." />
       </div>
     </div>
-  </div>
+  </section>
 
   <script>
     const SUCCESS_MESSAGE = "You're in. Check your inbox — the book is on its way.";
@@ -336,11 +367,12 @@ import { HOME } from "@consts";
     document.querySelectorAll<HTMLFormElement>("form[data-signup-form]").forEach((form) => {
       const msg = form.parentElement?.querySelector<HTMLParagraphElement>(".msg");
       const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const label = button?.querySelector<HTMLSpanElement>(".label");
       const emailInput = form.querySelector<HTMLInputElement>('input[type="email"]');
       const sourceInput = form.querySelector<HTMLInputElement>('input[name="source"]');
-      if (!msg || !button || !emailInput) return;
+      if (!msg || !button || !label || !emailInput) return;
 
-      const idleLabel = button.textContent ?? "Send me the book";
+      const idleLabel = label.textContent ?? "Send me the book";
 
       const showMessage = (text: string, kind: "ok" | "err") => {
         msg.textContent = text;
@@ -352,7 +384,7 @@ import { HOME } from "@consts";
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
         button.disabled = true;
-        button.textContent = "Sending…";
+        label.textContent = "Sending…";
         msg.hidden = true;
 
         try {
@@ -378,7 +410,7 @@ import { HOME } from "@consts";
         } finally {
           if (!form.hidden) {
             button.disabled = false;
-            button.textContent = idleLabel;
+            label.textContent = idleLabel;
           }
         }
       });
@@ -387,200 +419,1018 @@ import { HOME } from "@consts";
 </PageLayout>
 
 <style>
-  .wrap { max-width: 71.25rem; margin: 0 auto; padding: 0 1.25rem; }
-  .measure { max-width: 46rem; margin-inline: auto; }
-  h2, h3.sub, .lede, .learn, .chs, .fit, .faq, .figs, .wall-note, .beats .measure {
-    max-width: 46rem;
-    margin-inline: auto;
+  .wrap {
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: 0 1.25rem;
   }
 
-  p, .learn li, .fit li, .faq details > p, .chs span.d, .card blockquote {
-    text-align: justify;
-    hyphens: auto;
-    -webkit-hyphens: auto;
+  @media (min-width: 640px) {
+    .wrap {
+      padding: 0 2rem;
+    }
   }
-  .creds p, .fine, .src, .cap, .lede.centre,
-  .beat p, .pull blockquote, .strip h3, .figs dd, .card .rl {
-    text-align: inherit;
-    hyphens: manual;
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 700;
+    color: var(--content);
+    letter-spacing: -0.035em;
   }
-  p.eyebrow { text-align: center; hyphens: manual; }
 
-  h1 { font-size: 2.2rem; font-weight: 700; line-height: 1.1; letter-spacing: -.1rem;
-    max-width: 30rem; margin: 0 auto; text-align: center; color: #212121; }
-  h1 em { font-style: normal; color: #2F6B18; }
-  h2 { font-size: 2.97rem; font-weight: 700; line-height: 1.1; letter-spacing: -.1rem; text-align: left; color: #212121; }
-  h2.centre { text-align: center; }
-  h3 { font-size: 2.2rem; font-weight: 700; line-height: 1.1; letter-spacing: -.075rem; color: #212121; }
-  p { font-size: 1.3rem; line-height: 1.6; margin-top: 0; color: #212121; }
-  p.mt { margin-top: 1rem; }
-  p.muted { color: #212121; }
-  b, strong { color: #212121; }
+  /* The cover lettering is reserved for the hero headline */
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+  }
 
-  /* ---------- eyebrow + credential strip ---------- */
-  .creds { display: flex; justify-content: center; align-items: baseline; gap: 3.5rem; flex-wrap: wrap;
-    margin-top: 2.5rem; padding-top: 2.25rem; border-top: 1px solid #E6E3DC; }
-  .creds div { text-align: center; }
-  .creds .mark { font-weight: 700; font-size: 1.35rem; letter-spacing: -.03em; }
-  .creds .cap { font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: #212121;
-    margin-top: .25rem; font-weight: 600; }
+  /* Secondary emphasis stays neutral: red is kept for buttons and links */
+  .soft {
+    color: var(--content-faint);
+  }
 
-  /* ---------- hero: quote | book | quote ---------- */
-  .hero { padding: 1.25rem 0 3rem; }
-  .hero-3 { display: grid; grid-template-columns: 1fr 1.1fr 1fr; gap: 2.5rem; align-items: center; }
-  .pull { text-align: center; padding: 0 .5rem; }
-  .pull .ch { font-weight: 700; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;
-    color: #2F6B18; margin-bottom: .85rem; }
-  .pull blockquote { font-size: 1.15rem; line-height: 1.5; }
-  .pull .src { margin-top: 1rem; font-size: .95rem; color: #212121; font-style: italic; }
-  .pull .rule { width: 2.2rem; height: 2px; background: #B9E3BE; margin: 1rem auto 0; }
+  .band .soft,
+  .mq .soft {
+    color: rgb(255 255 255 / 0.5);
+  }
 
-  .book-cell { display: flex; justify-content: center; }
-  .book-wrap { width: min(17.5rem, 92%); filter: drop-shadow(22px 20px 22px rgba(33,33,33,.24)); }
-  .book { position: relative; width: 100%; aspect-ratio: 650/975;
-    transform: perspective(1800px) rotateY(-18deg) rotateX(1.5deg) rotateZ(-.5deg);
-    transform-style: preserve-3d; }
-  .book .cover-art { width: 100%; height: 100%; display: block; object-fit: cover;
-    border-radius: 2px 5px 5px 2px; position: relative; z-index: 3; }
-  .book .pages { position: absolute; z-index: 1; top: 1.1%; height: 97.8%; right: -22px; width: 24px;
-    transform: rotateY(-68deg); transform-origin: left center; border-radius: 0 3px 3px 0;
-    background: linear-gradient(90deg, rgba(0,0,0,.04) 0%, rgba(0,0,0,.10) 30%, rgba(0,0,0,.38) 100%),
-      repeating-linear-gradient(90deg, #fbf7ea 0 1.5px, #cfc5ac 1.5px 3px);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.7), inset 0 -1px 0 rgba(0,0,0,.16); }
-  .book .top-edge { position: absolute; z-index: 2; top: -3px; right: -11px; width: 22px; height: 7px;
-    transform: rotateX(74deg) rotateY(-18deg); transform-origin: center bottom;
-    background: linear-gradient(90deg, #f6f2e6, #ded6c3); border-radius: 1px; }
-  .book .spine { position: absolute; z-index: 4; left: 0; top: 0; bottom: 0; width: 11%; border-radius: 2px 0 0 2px;
-    pointer-events: none; background: linear-gradient(90deg, rgba(14,34,8,.52) 0%, rgba(14,34,8,.30) 24%,
-      rgba(14,34,8,.06) 58%, rgba(255,255,255,.26) 86%, rgba(255,255,255,0) 100%); }
-  .book .sheen { position: absolute; z-index: 5; inset: 0; border-radius: 2px 5px 5px 2px; pointer-events: none;
-    background: linear-gradient(104deg, rgba(255,255,255,0) 52%, rgba(255,255,255,.16) 78%, rgba(255,255,255,0) 100%); }
+  h2 {
+    font-size: clamp(2rem, 3.6vw, 3rem);
+    line-height: 1.05;
+  }
 
-  /* ---------- the ask ---------- */
-  .ask { text-align: center; padding: 0 0 3.75rem; border-bottom: 1px solid #E6E3DC; }
-  .ask .sub { margin: 1.1rem auto 0; color: #212121; max-width: 36rem; }
-  .signup { margin: 1.9rem auto 0; max-width: 30rem; }
-  .signup form { display: flex; gap: .5rem; flex-wrap: wrap; }
-  .signup form[hidden] { display: none; }
-  .signup input { flex: 1 1 11rem; min-width: 0; font-family: inherit; font-size: 1.05rem;
-    padding: .75rem .9rem; border: 1px solid #C9C6BE; border-radius: 4px; background: #fff; color: #212121; }
-  .signup input:focus { border-color: #2F6B18; }
-  .signup button { font-family: inherit; font-weight: 600; font-size: 1.05rem; white-space: nowrap;
-    padding: .75rem 1.25rem; border: 0; border-radius: 4px; background: #2F6B18;
-    color: #fff; cursor: pointer; }
-  .signup button:hover { background: #245312; }
-  .signup button:disabled { opacity: .7; cursor: default; }
-  .signup .fine { margin-top: .85rem; font-size: .95rem; color: #212121; }
-  .signup .msg { margin-top: .85rem; font-size: .95rem; font-weight: 600; }
-  .signup .msg.ok { color: #2F6B18; }
-  .signup .msg.err { color: #B3261E; }
-  .strip .signup .msg.ok { color: #245312; }
+  p {
+    color: var(--content-muted);
+  }
 
-  /* ---------- rhythmic pull-quote rows ---------- */
-  .beats { padding: 3.25rem 0 1rem; }
-  .beat { border-bottom: 1px solid #E6E3DC; padding: 1.5rem 0; display: grid;
-    grid-template-columns: 5rem 1fr; gap: 1.75rem; align-items: baseline; }
-  .beat .ch { font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
-    color: #2F6B18; padding-top: .4rem; }
-  .beat p { font-weight: 600; font-size: 1.5rem; line-height: 1.3; letter-spacing: -.045rem; }
+  /* One body size everywhere; headings are always larger than this */
+  p,
+  li,
+  dd,
+  blockquote {
+    font-size: var(--text-size);
+    line-height: var(--text-leading);
+  }
 
-  /* ---------- sections ---------- */
-  section { padding: 4rem 0; }
-  section.border-t { border-top: 1px solid #E6E3DC; }
-  .lede { margin-top: 1rem; color: #212121; }
-  .lede.centre { text-align: center; }
-  p + p { margin-top: 1rem; }
+  .lede {
+    margin-top: 1.25rem;
+    font-size: var(--text-size);
+    line-height: 1.55;
+    max-width: 30rem;
+  }
 
-  .learn { margin-top: 2.25rem; display: grid; gap: 1rem; list-style: none; }
-  .learn li { display: grid; grid-template-columns: 1.6rem 1fr; gap: .85rem; align-items: start;
-    font-size: 1.15rem; line-height: 1.55; }
-  .learn li::before { content: ""; width: .95rem; height: .95rem; border-radius: 50%; background: #4FA92B;
-    margin-top: .5rem; box-shadow: 0 0 0 4px #EBF5E3; }
-  .learn .ref { color: #212121; font-weight: 600; white-space: nowrap; }
+  /* Sections are separated by space alone, no rules */
+  .sec {
+    padding: 6rem 0;
+  }
 
-  .chs { margin-top: 2.25rem; }
-  .chs .pt { display: inline-block; font-weight: 700; font-size: .8rem; letter-spacing: .08em;
-    text-transform: uppercase; background: #D5F2D8; color: #212121;
-    padding: .35rem .7rem; border-radius: 4px; margin: 1.85rem 0 .75rem; }
-  .chs .pt:first-child { margin-top: 0; }
-  .chs .row { display: grid; grid-template-columns: 2rem 1fr; gap: .85rem; padding: .85rem 0;
-    border-bottom: 1px solid #E6E3DC; }
-  .chs .num { font-weight: 700; color: #2F6B18; font-size: 1.15rem; }
-  .chs b { display: block; font-weight: 700; font-size: 1.15rem; }
-  .chs span.d { display: block; color: #212121; font-size: 1.05rem; margin-top: .15rem; }
+  .sec-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.4rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--content);
+  }
 
-  /* ---------- review wall ---------- */
-  .wall { margin-top: 2.5rem; columns: 3; column-gap: 1rem; max-width: none; }
-  .card { break-inside: avoid; margin-bottom: 1rem; border: 1px solid #E6E3DC; border-radius: 6px;
-    padding: 1.1rem 1.15rem; background: #fff; }
-  .card blockquote { margin-top: .6rem; font-size: 1.05rem; line-height: 1.5; }
-  .card.slot { border-style: dashed; background: #FCFCFA; }
-  .card.slot .ph { height: .55rem; border-radius: 3px; background: #EDEBE3; margin-bottom: .45rem; }
-  .card.slot .ph.s { width: 62%; }
-  .card.slot .lbl { font-weight: 700; font-size: .8rem; color: #A5A199; letter-spacing: .08em;
-    margin-bottom: .7rem; text-transform: uppercase; }
-  .wall-note { margin-top: 1.4rem; font-size: 1.05rem; color: #212121; }
+  .sec-label span {
+    display: inline-grid;
+    place-items: center;
+    min-width: 2.2rem;
+    height: 1.6rem;
+    padding: 0 0.4rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    background: var(--content);
+    border-radius: 2px;
+  }
+
+  /* Sticky heading column on the left, content on the right */
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .split-head {
+    position: sticky;
+    top: 7rem;
+  }
+
+  .chapters-head {
+    max-width: 50rem;
+    margin-bottom: 3.5rem;
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    padding: 2rem 0 0;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 3rem;
+    align-items: center;
+    min-height: min(calc(100svh - 9.5rem), 52rem);
+    padding-bottom: 3.5rem;
+  }
+
+  .hero-copy h1 {
+    margin-top: 1.5rem;
+    font-size: clamp(2.6rem, 4.6vw, 4.3rem);
+    line-height: 0.96;
+    max-width: 15ch;
+  }
+
+  /* Keep the small label small (the body-size rule above would enlarge it) */
+  .hero-copy .eyebrow {
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+
+  .hero-sub {
+    margin-top: 1.75rem;
+    max-width: 32rem;
+    font-size: var(--text-size);
+    line-height: 1.55;
+  }
+
+  .hero-signup {
+    margin-top: 2.25rem;
+  }
+
+  .hero-book {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: 3rem 0 4.5rem;
+  }
+
+  /* A quiet paper disc to seat the book */
+  .book-disc {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: min(30rem, 100%);
+    aspect-ratio: 1;
+    translate: -50% -52%;
+    border-radius: 50%;
+    background: var(--ink-2);
+    pointer-events: none;
+  }
+
+
+
+
+
+
+  /* ---------- quotes ---------- */
+  .quotes {
+    padding: 6rem 0;
+  }
+
+  .quotes-title,
+  .beats-title {
+    margin-bottom: 2.5rem;
+  }
+
+  .quotes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .quotes figcaption {
+    padding-bottom: 0.7rem;
+    border-bottom: 1px dashed var(--line-strong);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--content-faint);
+  }
+
+  .quotes blockquote {
+    position: relative;
+    margin-top: 1.1rem;
+    font-size: var(--text-size);
+    font-weight: 600;
+    line-height: var(--text-leading);
+    letter-spacing: -0.01em;
+    color: var(--content);
+  }
+
+  .quotes blockquote::before {
+    content: "\201C";
+    display: block;
+    height: 0.62em;
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--content);
+  }
+
+  .quotes figure p {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+
+  /* ---------- marquee ---------- */
+  .mq {
+    overflow: hidden;
+    padding: 1.4rem 0 1.1rem;
+    background: var(--content);
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--ink);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .mq-track {
+    display: inline-flex;
+    will-change: transform;
+  }
+
+  .mq-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28em;
+    padding-right: 0.28em;
+  }
+
+  .mq-item i {
+    display: inline-block;
+    width: 0.16em;
+    height: 0.16em;
+    margin-left: 0.2em;
+    border-radius: 50%;
+    background: var(--signal);
+  }
+
+  /* ---------- beats: torn paper slips ---------- */
+  /* Flex rather than grid so the last row of slips sits centred */
+  .beat-list {
+    --cols: 3;
+    --gap-x: 2rem;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2.75rem var(--gap-x);
+    padding-top: 0.5rem;
+  }
+
+  /* The shadow lives on the wrapper so it follows the torn edge of the slip */
+  .beat,
+  .paper {
+    --tilt: -1.2deg;
+    flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap-x)) / var(--cols));
+    filter:
+      drop-shadow(0 1px 1px rgb(20 18 14 / 0.1))
+      drop-shadow(0 12px 14px rgb(20 18 14 / 0.1));
+    transform: rotate(var(--tilt));
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  .beat:nth-child(2) { --tilt: 0.9deg; margin-top: 1.5rem; }
+  .beat:nth-child(3) { --tilt: -0.5deg; }
+  .beat:nth-child(4) { --tilt: 1.3deg; }
+  .beat:nth-child(5) { --tilt: -0.8deg; margin-top: 1rem; }
+
+  .paper:nth-child(1) { --tilt: -1deg; }
+  .paper:nth-child(2) { --tilt: 1.1deg; margin-top: 1.5rem; }
+
+  .beat:hover,
+  .paper:hover {
+    transform: rotate(0deg) translateY(-4px);
+  }
+
+  .slip {
+    --torn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='16' viewBox='0 0 240 16'%3E%3Cpath d='M0 0H240V6.0L237 5.8L230.2 11.2L225.6 10.9L219.6 10.1L211.8 5.0L205.6 2.7L198.4 4.9L189.9 9.7L186.8 12.5L179.3 3.6L170.3 8.4L161.6 9.1L158.5 13.7L154.8 2.4L151.4 3.3L146.1 10.4L137.7 9.3L129.5 13.8L124.0 5.2L120.9 2.2L112.2 8.1L104.0 7.4L100.0 2.6L96.2 8.5L91.1 9.3L86.4 8.9L79.0 5.8L70.9 3.1L65.9 6.4L60.4 9.8L56.7 5.4L50.5 9.9L46.0 8.9L40.5 11.5L33.2 10.9L29.1 10.5L24.4 1.7L17.9 13.7L14.1 11.1L8.5 4.1L4.9 9.4L0 6.0Z'/%3E%3C/svg%3E");
+    padding: 1.6rem 1.6rem 2.6rem;
+    /* Cream paper, a touch warmer toward the torn edge */
+    background: linear-gradient(180deg, #f8efdc, #f3e7cf);
+    -webkit-mask:
+      linear-gradient(#000, #000) top / 100% calc(100% - 15px) no-repeat,
+      var(--torn) bottom left / 240px 16px repeat-x;
+    mask:
+      linear-gradient(#000, #000) top / 100% calc(100% - 15px) no-repeat,
+      var(--torn) bottom left / 240px 16px repeat-x;
+  }
+
+  .beat:nth-child(2n) .slip,
+  .paper:nth-child(2) .slip {
+    -webkit-mask-position: top, bottom right 90px;
+    mask-position: top, bottom right 90px;
+  }
+
+  .beat-ch {
+    display: block;
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px dashed var(--line-strong);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--content-faint);
+  }
+
+  .beat p {
+    font-size: var(--text-size);
+    font-weight: 600;
+    line-height: var(--text-leading);
+    letter-spacing: -0.01em;
+    color: var(--content);
+  }
+
+  /* ---------- learn ---------- */
+  .learn {
+    list-style: none;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .learn li {
+    display: grid;
+    grid-template-columns: 2.6rem minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 1.3rem 1.4rem;
+    border: var(--card-border);
+    border-radius: var(--card-radius);
+    background: var(--surface);
+    box-shadow: var(--card-shadow);
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+  }
+
+  .learn li:hover,
+  .fit-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+  }
+
+  .learn .n {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--content-faint);
+  }
+
+  .learn p {
+    font-size: var(--text-size);
+    line-height: 1.5;
+    color: var(--content);
+  }
+
+  .learn .ref {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--content);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 0.3rem 0.65rem;
+  }
+
+  /* ---------- letter ---------- */
+  .letter-body {
+    max-width: 38rem;
+  }
+
+  .letter-body p {
+    font-size: var(--text-size);
+    line-height: var(--text-leading);
+  }
+
+  .letter-body p + p {
+    margin-top: 1.25rem;
+  }
+
+  .letter-lede {
+    font-size: var(--text-size) !important;
+    font-weight: 700;
+    line-height: var(--text-leading) !important;
+    
+    color: var(--content) !important;
+  }
+
+  .letter-body .letter-lede {
+    margin-bottom: 2rem;
+  }
+
+  .signature {
+    margin-top: 2.5rem !important;
+    font-weight: 700;
+    color: var(--content) !important;
+  }
+
+  .signature::before {
+    content: "\2014\00a0";
+  }
+
+  /* ---------- contents: a printed page ---------- */
+  .toc-stack {
+    position: relative;
+    max-width: 44rem;
+    margin: 0 auto;
+  }
+
+  /* Two sheets underneath, slightly askew, so it reads as paper */
+  .toc-stack::before,
+  .toc-stack::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    background: #f3f2ef;
+    box-shadow: 0 1px 2px rgb(20 18 14 / 0.12);
+  }
+
+  .toc-stack::before {
+    transform: rotate(-2.2deg) translate(-6px, 8px);
+  }
+
+  .toc-stack::after {
+    transform: rotate(1.4deg) translate(5px, 4px);
+    background: #f8f7f5;
+  }
+
+  .toc-page {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 60rem;
+    padding: 3rem 4rem 2.25rem;
+    border-radius: 2px;
+    background:
+      radial-gradient(120% 80% at 0% 0%, rgb(255 255 255 / 0.7), transparent 60%),
+      linear-gradient(180deg, #ffffff, #fdfdfc);
+    box-shadow:
+      0 1px 1px rgb(20 18 14 / 0.08),
+      0 2px 6px rgb(20 18 14 / 0.08),
+      0 30px 60px -30px rgb(20 18 14 / 0.45);
+    color: #1a1917;
+  }
+
+  .toc-running {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e9e6e0;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #99948b;
+  }
+
+  .toc-title {
+    margin-top: 3.25rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 2px solid var(--signal);
+    font-size: 2.6rem;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: #1a1917;
+  }
+
+  .toc {
+    list-style: none;
+    margin-top: 0.6rem;
+    flex: 1;
+  }
+
+  .toc-row {
+    display: flex;
+    align-items: baseline;
+    padding: 0.7rem 0;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .toc-n {
+    flex-shrink: 0;
+    width: 2.4rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: #99948b;
+  }
+
+  .toc-t {
+    color: #3d3a35;
+  }
+
+  /* Parts and front/back matter carry the weight, chapters sit under them */
+  .is-part .toc-t,
+  .is-front .toc-t,
+  .is-part .toc-pg,
+  .is-front .toc-pg {
+    font-weight: 700;
+    color: #1a1917;
+  }
+
+  .is-part {
+    margin-top: 1.1rem;
+  }
+
+  .is-front:last-child {
+    margin-top: 1.1rem;
+  }
+
+  .toc-kicker {
+    margin-right: 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    vertical-align: 0.08em;
+    color: #99948b;
+  }
+
+  /* Dotted leader from title to page number */
+  .toc-leader {
+    flex: 1;
+    min-width: 1.5rem;
+    margin: 0 0.6rem;
+    border-bottom: 2px dotted #d2cdc4;
+    transform: translateY(-0.28em);
+  }
+
+  .toc-pg {
+    flex-shrink: 0;
+    min-width: 1.6rem;
+    text-align: right;
+    font-size: 0.92rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: #1a1917;
+  }
+
+
+  .toc-folio {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #99948b;
+  }
+
+  /* ---------- bands ---------- */
+  .band {
+    position: relative;
+    background: var(--content);
+    color: var(--ink);
+    padding: 7rem 0;
+    overflow: hidden;
+  }
+
+  .band h3 {
+    position: relative;
+    color: var(--ink);
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
+    line-height: 1.08;
+  }
+
+  .band-red {
+    background: var(--accent);
+  }
+
+  /* Centered call to action on the red band */
+  .band-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .band-kicker {
+    margin-bottom: 1.25rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 0.8);
+  }
+
+  .band-center h3 {
+    max-width: 22ch;
+  }
+
+  .band-center :global(.band-signup) {
+    margin-top: 2.25rem;
+  }
+
+  .band-center :global(.band-signup .fine) {
+    text-align: center;
+  }
+
+  .close-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .close-cover img {
+    display: block;
+    width: min(100%, 18rem);
+    height: auto;
+    margin-left: auto;
+    border-radius: 2px 5px 5px 2px;
+    transform: rotate(-3deg);
+    box-shadow:
+      0 2px 4px rgb(0 0 0 / 0.3),
+      0 30px 60px -18px rgb(0 0 0 / 0.75);
+  }
+
+  .close-copy h3 {
+    max-width: 14ch;
+    margin-bottom: 2.5rem;
+  }
 
   /* ---------- proof ---------- */
-  .proof { background: #F7F6F2; border-top: 1px solid #E6E3DC; border-bottom: 1px solid #E6E3DC; }
-  .figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 2.25rem;
-    margin-top: 2.5rem; max-width: none; }
-  .figs > div { border-top: 3px solid #2F6B18; padding-top: 1rem; }
-  .figs dt { font-weight: 700; font-size: 2.6rem; letter-spacing: -.075rem; line-height: 1; color: #2F6B18; }
-  .figs dd { margin-top: .65rem; color: #212121; font-size: 1.05rem; line-height: 1.5; }
+  .figs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3rem;
+  }
 
-  /* ---------- mint band ---------- */
-  .strip { background: #D5F2D8; border-top: 1px solid #B9E3BE; border-bottom: 1px solid #B9E3BE;
-    padding: 2.75rem 0; text-align: center; }
-  .strip h3 { max-width: 34ch; margin: 0 auto; }
-  .strip .signup { margin-top: 1.5rem; }
-  .strip .signup input { border-color: #A9CFAE; }
+  .figs > div {
+    border-top: 2px solid var(--content);
+  }
+
+  .figs dt {
+    padding-top: 1.4rem;
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: var(--content);
+  }
+
+  .figs dt .small {
+    font-size: 0.5em;
+    letter-spacing: -0.02em;
+  }
+
+  .figs dd {
+    margin-top: 1.1rem;
+    font-size: var(--text-size);
+    line-height: var(--text-leading);
+    color: var(--content-muted);
+  }
 
   /* ---------- fit ---------- */
-  .fit { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2.25rem; }
-  .fit h3 { font-size: 1.2rem; letter-spacing: -.02em; padding-bottom: .55rem;
-    border-bottom: 2px solid #212121; margin-bottom: 1rem; }
-  .fit ul { list-style: none; display: grid; gap: .85rem; }
-  .fit li { display: grid; grid-template-columns: 1.2rem 1fr; gap: .6rem; color: #212121;
-    font-size: 1.1rem; line-height: 1.5; }
-  .fit li i { font-style: normal; font-weight: 700; }
-  .fit .y i { color: #2F6B18; }
-  .fit .n i { color: #B3261E; }
+  .fit {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .fit-card {
+    padding: 2.25rem;
+    border: var(--card-border);
+    border-radius: var(--card-radius);
+    background: var(--surface);
+    box-shadow: var(--card-shadow);
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+  }
+
+
+
+  .fit-card h3 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .fit-card.no h3 {
+    color: var(--content-faint);
+  }
+
+  .fit-card ul {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .fit-card li {
+    display: grid;
+    grid-template-columns: 1.6rem minmax(0, 1fr);
+    gap: 0.85rem;
+    font-size: var(--text-size);
+    line-height: var(--text-leading);
+    color: var(--content);
+  }
+
+  .fit-card li i {
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-top: -0.05rem;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .fit-card.yes li i {
+    background: var(--signal);
+    color: var(--ink);
+  }
+
+  .fit-card.no li i {
+    background: var(--content);
+    color: var(--ink);
+  }
+
+  .fit-card.no li span {
+    color: var(--content-muted);
+  }
+
+  /* ---------- about ---------- */
+  .about {
+    max-width: 38rem;
+  }
+
+  .about-id {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .about-id img {
+    width: 5.5rem;
+    height: 5.5rem;
+    flex-shrink: 0;
+    border-radius: 3px;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.1);
+    box-shadow: 0 12px 24px -12px rgb(13 12 10 / 0.5);
+  }
+
+  .about > p {
+    font-size: var(--text-size);
+    line-height: var(--text-leading);
+  }
+
+  .about > p + p {
+    margin-top: 1.25rem;
+  }
 
   /* ---------- faq ---------- */
-  .faq { margin-top: 2rem; border-top: 1px solid #E6E3DC; }
-  .faq details { border-bottom: 1px solid #E6E3DC; }
-  .faq summary { font-weight: 700; font-size: 1.2rem; padding: 1.15rem 0; cursor: pointer; list-style: none;
-    display: flex; justify-content: space-between; gap: 1.5rem; letter-spacing: -.01em; }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after { content: "+"; color: #2F6B18; font-weight: 700; }
-  .faq details[open] summary::after { content: "\2212"; }
-  .faq details > p { padding-bottom: 1.2rem; color: #212121; font-size: 1.1rem; line-height: 1.55; }
-
-  .sr-only { position: absolute; left: -9999px; }
-
-  @media (max-width: 940px) {
-    h2 { font-size: 2.4rem; }
-    .hero-3 { grid-template-columns: 1fr; gap: 2rem; }
-    .pull { max-width: 30rem; margin: 0 auto; }
-    .book-cell { order: -1; }
-    .wall { columns: 2; }
+  .faq {
+    display: grid;
+    gap: 0.9rem;
+    interpolate-size: allow-keywords;
   }
+
+  /* Each question is its own card, matching the rest of the site */
+  .faq details {
+    border: var(--card-border);
+    border-radius: var(--card-radius);
+    background: var(--surface);
+    box-shadow: var(--card-shadow);
+    transition: box-shadow 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+  }
+
+  .faq details:hover,
+  .faq details[open] {
+    box-shadow: var(--card-shadow-hover);
+  }
+
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem 1.4rem;
+    cursor: pointer;
+    list-style: none;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--content);
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .plus {
+    position: relative;
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.5s var(--ease-out);
+  }
+
+  .plus::before,
+  .plus::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.7rem;
+    height: 2px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+  }
+
+  .plus::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .faq details[open] .plus {
+    transform: rotate(45deg);
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  .faq details::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 0.5s var(--ease-out),
+      content-visibility 0.5s allow-discrete;
+  }
+
+  .faq details[open]::details-content {
+    block-size: auto;
+  }
+
+  .faq details > p {
+    max-width: 36rem;
+    padding: 0 1.4rem 1.4rem;
+    font-size: var(--text-size);
+    line-height: var(--text-leading);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1024px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .split-head {
+      position: static;
+    }
+
+  }
+
+  @media (max-width: 900px) {
+    .beat-list {
+      --cols: 2;
+    }
+
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 0;
+      gap: 1rem;
+    }
+
+    .hero-book {
+      order: -1;
+      padding: 2.5rem 0 3.5rem;
+    }
+
+    .book-disc {
+      width: 20rem;
+    }
+
+    .quotes-grid,
+    .close-grid,
+    .figs {
+      grid-template-columns: 1fr;
+    }
+
+    .quotes-grid {
+      gap: 3rem;
+    }
+
+    .close-grid {
+      gap: 3rem;
+    }
+
+    .close-cover img {
+      margin: 0;
+      width: 11rem;
+    }
+  }
+
   @media (max-width: 640px) {
-    h1 { font-size: 1.85rem; letter-spacing: -.06rem; }
-    h2 { font-size: 2rem; letter-spacing: -.06rem; }
-    h3 { font-size: 1.7rem; }
-    p { font-size: 1.125rem; }
-    section { padding: 3rem 0; }
-    .wall { columns: 1; }
-    .fit { grid-template-columns: 1fr; gap: 1.85rem; }
-    .book-wrap { width: min(13rem, 60%); }
-    .book .pages { right: -16px; width: 18px; }
-    .book .top-edge { right: -8px; width: 16px; height: 6px; }
-    .beat { grid-template-columns: 1fr; gap: .4rem; }
-    .beat p { font-size: 1.3rem; }
-    .creds { gap: 1.75rem; }
-    .learn li, .fit li { font-size: 1.05rem; }
-    p, .learn li, .fit li, .faq details > p, .chs span.d, .card blockquote { text-align: left; }
+    .sec {
+      padding: 4.5rem 0;
+    }
+
+    .band {
+      padding: 4.5rem 0;
+    }
+
+
+    .hero-copy .eyebrow {
+      letter-spacing: 0.14em;
+    }
+
+
+
+
+    .beat-list {
+      --cols: 1;
+      gap: 1.75rem;
+    }
+
+    .beat:nth-child(n) {
+      margin-top: 0;
+    }
+
+    .learn li {
+      grid-template-columns: 2rem minmax(0, 1fr);
+      row-gap: 0.7rem;
+      padding: 1.1rem 1.1rem;
+    }
+
+    .learn .ref {
+      grid-column: 2;
+      justify-self: start;
+    }
+
+
+    .toc-page {
+      min-height: 0;
+      padding: 1.75rem 1.4rem 1.5rem;
+    }
+
+    .toc-title {
+      margin-top: 2rem;
+      font-size: 2rem;
+    }
+
+    .toc-row {
+      font-size: 0.95rem;
+      padding: 0.6rem 0;
+    }
+
+    .toc-n {
+      width: 2rem;
+    }
+
+    .toc-kicker {
+      margin-right: 0.45rem;
+    }
+
+    .toc-stack::before {
+      transform: rotate(-1.4deg) translate(-3px, 6px);
+    }
+
+    .toc-stack::after {
+      transform: rotate(1deg) translate(3px, 3px);
+    }
+
+
+    .fit {
+      grid-template-columns: 1fr;
+    }
+
+    .fit-card {
+      padding: 1.6rem;
+    }
+
+
+    .faq summary {
+      font-size: 1.15rem;
+    }
+
+    .faq summary {
+      padding: 1.1rem 1.1rem;
+    }
+
+    .faq details > p {
+      padding: 0 1.1rem 1.1rem;
+    }
   }
 </style>

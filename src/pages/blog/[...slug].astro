@@ -57,28 +57,28 @@ if (post.data.faq && post.data.faq.length > 0) {
   progress
 >
   <!-- Article header -->
-  <section class="border-b border-line">
+  <section>
     <Container size="narrow">
-      <div class="py-10 sm:py-14">
-        <div class="animate">
+      <div class="py-10 sm:py-14" data-reveal>
+        <div>
           <BackToPrev href="/blog">All articles</BackToPrev>
         </div>
 
         {tags.length > 0 && (
-          <ul class="animate mt-8 flex flex-wrap gap-2">
+          <ul class="mt-8 flex flex-wrap gap-2">
             {tags.slice(0, 4).map((tag: string) => (
               <li class="pill">{tag}</li>
             ))}
           </ul>
         )}
 
-        <h1 class="animate mt-5 text-title text-content">{post.data.title}</h1>
+        <h1 class="mt-5 text-title text-content">{post.data.title}</h1>
 
-        <p class="animate mt-6 font-serif text-lg leading-relaxed text-content-muted sm:text-xl">
+        <p class="mt-6 font-serif text-lg leading-relaxed text-content-muted">
           {post.data.description}
         </p>
 
-        <div class="animate mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-content-faint">
+        <div class="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-content-faint">
           <FormattedDate date={post.data.date} />
           <span class="size-1 rounded-full bg-line-strong"></span>
           <span>{readingTime(post.body)}</span>
@@ -88,7 +88,7 @@ if (post.data.faq && post.data.faq.length > 0) {
   </section>
 
   <Container size="narrow">
-    <div class="animate mt-10 overflow-hidden rounded-card border border-line">
+    <div class="card-soft animate mt-10 overflow-hidden">
       <Cover seed={post.slug} class="aspect-[16/7] w-full" />
     </div>
 
@@ -99,12 +99,12 @@ if (post.data.faq && post.data.faq.length > 0) {
     {post.data.faq && post.data.faq.length > 0 && (
       <section class="animate mt-20">
         <h2 class="text-heading text-content">Frequently asked questions</h2>
-        <div class="mt-7 divide-y divide-line overflow-hidden rounded-card border border-line bg-surface">
+        <div class="mt-7 grid gap-3.5">
           {post.data.faq.map((item: { q: string; a: string }) => (
-            <details class="group">
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-base font-semibold text-content transition-colors hover:text-brand">
+            <details class="card-soft group transition-shadow hover:shadow-[var(--card-shadow-hover)] open:shadow-[var(--card-shadow-hover)]">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-base font-semibold text-content ">
                 {item.q}
-                <svg viewBox="0 0 24 24" class="size-5 shrink-0 fill-none stroke-brand stroke-2 transition-transform duration-300 group-open:rotate-45">
+                <svg viewBox="0 0 24 24" class="size-5 shrink-0 fill-none stroke-content stroke-2 transition-transform duration-300 group-open:rotate-45">
                   <line x1="12" y1="5" x2="12" y2="19" />
                   <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
@@ -118,9 +118,9 @@ if (post.data.faq && post.data.faq.length > 0) {
   </Container>
 
   {related.length > 0 && (
-    <section class="mt-24 border-t border-line pt-14 sm:pt-20">
+    <section class="mt-24 pt-14 sm:pt-20">
       <Container>
-        <h2 class="animate text-heading text-content">Keep reading</h2>
+        <h2 class="text-heading text-content">Keep reading</h2>
         <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {related.map(entry => (
             <div class="animate">
