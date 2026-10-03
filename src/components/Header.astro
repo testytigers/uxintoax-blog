@@ -1,14 +1,14 @@
 ---
 import Container from "@components/Container.astro";
+import { BOOK_PATH } from "@consts";
 
 const path = Astro.url.pathname;
 const nav = [
-  { href: "/#chapters", label: "Book" },
-  { href: "/#why", label: "Why" },
   { href: "/blog", label: "Articles" },
-  { href: "/#about", label: "About" },
+  { href: BOOK_PATH, label: "The book" },
+  { href: "/#subscribe", label: "Subscribe" },
 ];
-const isActive = (href: string) => href.startsWith("/blog") && path.startsWith("/blog");
+const isActive = (href: string) => !href.includes("#") && path.startsWith(href);
 ---
 
 <!-- A black band, like the strip across the top of the book cover -->
@@ -42,7 +42,7 @@ const isActive = (href: string) => href.startsWith("/blog") && path.startsWith("
           </a>
         ))}
         <a
-          href="/#get"
+          href={`${BOOK_PATH}#get`}
           data-magnetic
           class="ml-2 inline-flex items-center gap-2 whitespace-nowrap rounded-[3px] bg-accent px-4 py-2.5 text-xs font-bold uppercase tracking-[0.12em] text-ink transition-colors duration-300 hover:bg-accent-deep sm:text-[0.78rem]"
         >

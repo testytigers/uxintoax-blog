@@ -1,0 +1,100 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { readingTime } from "@lib/utils";
+
+type Props = { entries: CollectionEntry<"blog">[] };
+const { entries } = Astro.props;
+
+const short = (d: Date) => d.toLocaleDateString("en-us", { month: "short", day: "numeric" });
+---
+
+<!-- Borderless list: date column, title, read time. Spacing does the separating. -->
+<ul class="post-list">
+  {entries.map(entry => (
+    <li>
+      <a href={`/blog/${entry.slug}`}>
+        <time datetime={entry.data.date.toISOString()}>{short(entry.data.date)}</time>
+        <span class="body">
+          <span class="title">{entry.data.title}</span>
+          <span class="read">{readingTime(entry.body)}</span>
+        </span>
+        <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .post-list {
+    list-style: none;
+    margin: 0 -1rem;
+  }
+
+  .post-list a {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr) 1.25rem;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 1.1rem 1rem;
+    border-radius: 12px;
+    transition: background-color 0.25s ease;
+  }
+
+  .post-list a:hover {
+    background: var(--ink-2);
+  }
+
+  time {
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--content-faint);
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.015em;
+    color: var(--content);
+  }
+
+  .read {
+    font-size: 0.875rem;
+    color: var(--content-faint);
+  }
+
+  .arrow {
+    align-self: center;
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.25s ease, transform 0.35s var(--ease-out);
+  }
+
+  .post-list a:hover .arrow {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 640px) {
+    .post-list a {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.3rem;
+      padding: 1rem;
+    }
+
+    .arrow {
+      display: none;
+    }
+  }
+</style>

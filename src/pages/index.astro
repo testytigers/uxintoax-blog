@@ -1,422 +1,106 @@
 ---
+import { getCollection } from "astro:content";
 import PageLayout from "@layouts/PageLayout.astro";
-import Book3D from "@components/Book3D.astro";
 import Signup from "@components/Signup.astro";
-import Reviews from "@components/Reviews.astro";
-import { HOME } from "@consts";
+import { HOME, BOOK_PATH } from "@consts";
 
-// Verbatim from the "Remember" box that closes each chapter of the PDF.
-const beats = [
-  { ch: "Ch. 1", text: "The model is not answering your question; it is generating text shaped like an answer to your question." },
-  { ch: "Ch. 3", text: "The model can only work with what is currently in front of it. Deciding what goes into that window is your actual craft." },
-  { ch: "Ch. 4", text: "The model is only as effective as the data placed before it. Most of your impact is decided before you even open the tool." },
-  { ch: "Ch. 6", text: "Treat AI like an intern with a photographic memory and zero personal stake in the outcome. Brief it accordingly." },
-  { ch: "Ch. 9", text: "Jeff had tools; Steve had a process. Build the strategy before you buy the gear." },
+const posts = (await getCollection("blog"))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// A reading path for newcomers, in order. Slugs, so titles stay in sync.
+const START_HERE = [
+  "the-apple-test",
+  "ai-just-predicts-the-next-word",
+  "why-ai-makes-things-up",
+  "what-ai-can-actually-see",
+  "garbage-in-garbage-out",
 ];
 
-const learn = [
-  { text: "Understand the single thing a model is doing every time it answers you, and watch every strange result you have ever seen suddenly make sense.", ref: "Ch. 1" },
-  { text: "Spot the confident invention, and learn the one habit that catches it every time.", ref: "Ch. 2" },
-  { text: "Know why what you paste in matters far more than how you word the request.", ref: "Ch. 3" },
-  { text: "Climb the data food chain that quietly decides how senior your work looks, before you ever open Figma.", ref: "Ch. 4" },
-  { text: "Turn a pile nobody has read into a roadmap. Tickets, reviews, cancellation reasons, thousands of them, in days.", ref: "Ch. 4" },
-  { text: "Reach the one level of listening to a user that AI cannot get to.", ref: "Ch. 5" },
-  { text: "Avoid the four places AI quietly ruins design work: generated screens, critique, microcopy and accessibility.", ref: "Ch. 7" },
-  { text: "Build the verification habit that came out of the night my own agent told me it had finished 113 files. It had finished 53.", ref: "Ch. 8" },
-  { text: "Say out loud which parts of your job are safe, and why.", ref: "Ch. 6 & 9" },
-  { text: "Run a model on your own machine when the data cannot leave the building.", ref: "Ch. 10 & 11" },
-];
-
-// Mirrors the Contents page of the PDF, with its real page numbers.
-type TocEntry =
-  | { kind: "front"; t: string; page: number }
-  | { kind: "part"; n: number; t: string; page: number }
-  | { kind: "chapter"; n: number; t: string; page: number };
-
-const toc: TocEntry[] = [
-  { kind: "front", t: "Before we start", page: 3 },
-  { kind: "part", n: 1, t: "How it thinks", page: 7 },
-  { kind: "chapter", n: 1, t: "It just predicts the next word", page: 8 },
-  { kind: "chapter", n: 2, t: "Why it lies to your face", page: 11 },
-  { kind: "chapter", n: 3, t: "What it can actually see", page: 13 },
-  { kind: "part", n: 2, t: "How you work with it", page: 16 },
-  { kind: "chapter", n: 4, t: "Garbage in, garbage out", page: 17 },
-  { kind: "chapter", n: 5, t: "Listening is a skill (and AI doesn’t have it)", page: 19 },
-  { kind: "chapter", n: 6, t: "What it’s great at, what it’s terrible at", page: 21 },
-  { kind: "chapter", n: 7, t: "Pointing AI at the design itself", page: 23 },
-  { kind: "part", n: 3, t: "Why it fails and how you plan around it", page: 25 },
-  { kind: "chapter", n: 8, t: "The agent that lied to me", page: 26 },
-  { kind: "chapter", n: 9, t: "Two architects in the desert", page: 29 },
-  { kind: "part", n: 4, t: "Going independent", page: 32 },
-  { kind: "chapter", n: 10, t: "Why you would want your own setup", page: 33 },
-  { kind: "chapter", n: 11, t: "Running local AI: the practical guide", page: 35 },
-  { kind: "front", t: "Conclusion: where this leaves you", page: 37 },
-];
-
-const faqs = [
-  { q: "Is it really free?", a: "Yes. No card, no shipping fee, no trial, nothing hidden three pages in. You give an email address and the book arrives as a PDF." },
-  { q: "Do I need to know how to code?", a: "No. If you can read a Figma file you can read this. The single technical chapter sits at the very end on purpose, and you can skip it entirely." },
-  { q: "I use ChatGPT every day. Will this be too basic?", a: "The first three chapters will be partly familiar. Chapters four to eight are where daily users tend to find the gaps, particularly around what to feed it and how to check what comes back." },
-  { q: "How long does it take to read?", a: "About an hour end to end. Chapter four takes ten minutes on its own and is the one that changes how you work." },
-  { q: "What happens to my email address?", a: "You get the book, then roughly one email a week about using AI in real design work. Never shared, never sold, one click to leave." },
-  { q: "Is this a pitch for something expensive?", a: "There is a paid course coming later. It is not built yet and you will not be nagged about it. If the free book is all you ever take from me, that is a fine outcome." },
-];
-
-const pad = (n: number) => String(n).padStart(2, "0");
-const marqueeWords = Array.from({ length: 6 });
+const startHere = START_HERE.map(slug => posts.find(p => p.slug === slug)).filter(p => p !== undefined);
+const latest = posts.filter(p => !START_HERE.includes(p.slug)).slice(0, 5);
 ---
 
-<PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION} image={HOME.IMAGE}>
-  <!-- HERO -->
-  <section class="hero" data-book-zone>
-    <div class="wrap hero-grid">
-      <div class="hero-copy" data-reveal>
-        <p class="eyebrow eyebrow-dot">AI guide for UX &amp; product designers</p>
-        <h1>
-          Everyone is handing you rotten AI advice. <span class="soft">This is the one worth taking.</span>
-        </h1>
-        <p class="hero-sub">
-          Eleven short chapters on what AI is really doing under the hood, written by a designer who
-          ships with it. About an hour to read.
-        </p>
-        <div id="get" class="hero-signup">
-          <Signup id="e1" source="hero" fine="Free, no card, no shipping. Arrives in about a minute." />
+<PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
+  <!-- NEWSLETTER HERO -->
+  <section id="subscribe" class="hero">
+    <div class="wrap hero-inner" data-reveal>
+      <h1>
+        <span class="soft">The UXINTOAX</span>
+        Newsletter
+      </h1>
+      <p class="hero-sub">
+        One practical idea a week for UX and product designers: what AI is really doing, where it
+        breaks, and the habits that make it useful in real work.
+      </p>
+      <Signup id="hero-email" source="home-hero" list="blog" class="hero-form" fine="No hype. No prompt tricks. One click to leave." />
+    </div>
+  </section>
+
+  <!-- INTRO + READING PATHS -->
+  <section class="panel-sec">
+    <div class="wrap">
+      <div class="panel card-soft" data-reveal>
+        <div class="panel-intro">
+          <p class="intro-lede">
+            Hi, I am Oussama Bougnouch. Product and UX designer for fifteen years, with teams at
+            CHANEL, AT&amp;T, HelloFresh and Fnac.
+          </p>
+          <p>
+            These days I build AI systems for design work: local models, agents, and the instruction
+            files that keep them honest.
+          </p>
+          <p>
+            This site is what I learn doing it, including what breaks. Read a few posts, then try one
+            thing on your next project.
+          </p>
+
+          <a href={BOOK_PATH} class="book-card">
+            <img src="/assets/signal-noise-cover-650.jpg" width="433" height="650" alt="" loading="lazy" />
+            <span>
+              <b>Signal vs Noise, the free AI book for UX designers.</b>
+              <span class="book-link">Get the free book</span>
+            </span>
+          </a>
         </div>
-      </div>
 
-      <div class="hero-book">
-        <div class="book-disc" aria-hidden="true"></div>
-        <Book3D />
-      </div>
-    </div>
-  </section>
-
-  <!-- TWO PULL QUOTES -->
-  <section class="quotes">
-    <div class="wrap" data-reveal>
-      <h2 class="quotes-title">From the book</h2>
-      <div class="quotes-grid">
-      <figure class="paper">
-        <div class="slip">
-          <figcaption>From chapter 2</figcaption>
-          <blockquote>The model does not know when it does not know. Confidence tells you nothing about correctness.</blockquote>
-          <p>on why AI invents sources in the tone it uses for facts</p>
-        </div>
-      </figure>
-      <figure class="paper">
-        <div class="slip">
-          <figcaption>From chapter 5</figcaption>
-          <blockquote>AI analyzes the problem you hand it. It will never ask whether that problem should exist in the first place.</blockquote>
-          <p>on the one level of listening a machine cannot reach</p>
-        </div>
-      </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- SCROLL MARQUEE -->
-  <div class="mq" aria-hidden="true">
-    <div class="mq-track" data-marquee="-1">
-      {marqueeWords.map(() => (
-        <span class="mq-item">Signal <span class="soft">vs</span> Noise <i></i></span>
-      ))}
-    </div>
-  </div>
-
-  <!-- BEATS -->
-  <section class="sec beats">
-    <div class="wrap" data-reveal>
-      <p class="sec-label"><span>01</span>Highlights</p>
-      <h2 class="beats-title">Five lines from the book</h2>
-      <ol class="beat-list">
-        {beats.map(b => (
-          <li class="beat">
-            <div class="slip">
-              <span class="beat-ch">{b.ch}</span>
-              <p>{b.text}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <!-- WHAT YOU LEARN -->
-  <section id="why" class="sec">
-    <div class="wrap split" data-reveal>
-      <div class="split-head">
-        <p class="sec-label"><span>02</span>Outcomes</p>
-        <h2>What you will be able to do by the end</h2>
-        <p class="lede">Not theory. Things you can use on your next project, this week.</p>
-      </div>
-      <ol class="learn">
-        {learn.map((item, i) => (
-          <li>
-            <span class="n">{pad(i + 1)}</span>
-            <p>{item.text}</p>
-            <span class="ref">{item.ref}</span>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <!-- LETTER -->
-  <section class="sec letter">
-    <div class="wrap split" data-reveal>
-      <div class="split-head">
-        <p class="sec-label"><span>03</span>The letter</p>
-        <h2>Why I wrote it</h2>
-      </div>
-      <div class="letter-body">
-        <p class="letter-lede">I spent fifteen years getting good at something, then watched everyone
-          announce it was over.</p>
-        <p>You know the posts. Designers are finished. Learn to prompt or get
-          replaced. Usually attached to a course.</p>
-        <p>I did not want to argue with it or ignore it. I wanted to know if it was true, so I did what
-          we do with any unfamiliar system: I opened it up and looked at how it works.</p>
-        <p>What I found was not what either camp is selling. Machines really did get fast at the
-          surface: the layout, the first draft, the tidy summary. But they did not get good at the part
-          underneath. They cannot tell which of fifteen findings matters. They cannot know your users
-          are pharmacists working under time pressure with gloves on. They cannot sit in a room and say
-          the feature should not be built at all.</p>
-        <p>That part is what you have been quietly building for years. You have just never had to name
-          it, because nothing was competing with you at the surface.</p>
-        <p>This book helps you name it. Plain language, real mechanics, and my own failures included,
-          because the failures are where the useful rules come from.</p>
-        <p class="signature">Oussama</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CHAPTERS -->
-  <section id="chapters" class="sec">
-    <div class="wrap" data-reveal>
-      <div class="chapters-head">
-        <p class="sec-label"><span>04</span>Contents</p>
-        <h2>The eleven chapters</h2>
-        <p class="lede">Four parts. Read them in order the first time through.</p>
-      </div>
-
-
-      <!-- A page from the book, sitting on a small stack of sheets -->
-      <div class="toc-stack">
-        <article class="toc-page" aria-label="Table of contents">
-          <header class="toc-running">
-            <span>Signal vs Noise</span>
-            <span>Oussama Bougnouch</span>
-          </header>
-
-          <h3 class="toc-title">Contents</h3>
-
-          <ol class="toc">
-            {toc.map(e => (
-              <li class={`toc-row is-${e.kind}`}>
-                {e.kind === "chapter" && <span class="toc-n">{pad(e.n)}</span>}
-                <span class="toc-t">
-                  {e.kind === "part" && <span class="toc-kicker">Part {e.n}</span>}
-                  {e.t}
-                </span>
-                <span class="toc-leader" aria-hidden="true"></span>
-                <span class="toc-pg"><span class="sr-only">page </span>{e.page}</span>
-              </li>
+        <div class="panel-lists">
+          <h2>Start here (in order):</h2>
+          <ol class="links numbered">
+            {startHere.map(p => (
+              <li><a href={`/blog/${p.slug}`}>{p.data.title}</a></li>
             ))}
           </ol>
 
-          <footer class="toc-folio" aria-hidden="true">6</footer>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- RED BAND WITH CAPTURE: the cover's burst, in miniature -->
-  <section class="band band-red">
-    <div class="wrap band-center" data-reveal>
-      <p class="band-kicker">Free PDF &middot; 11 chapters &middot; About an hour</p>
-      <h3>Read it in an hour. Keep the parts that change how you work.</h3>
-      <Signup id="e3" source="strip" tone="red" class="band-signup" fine="No card, no spam. One click to leave." />
-    </div>
-  </section>
-
-  <!-- REVIEW WALL -->
-  <section class="sec">
-    <div class="wrap" data-reveal>
-      <div class="chapters-head">
-        <p class="sec-label"><span>05</span>Readers</p>
-        <h2>What readers say</h2>
-        <p class="lede">Real quotes only, from people who have read it.</p>
-      </div>
-      <Reviews />
-    </div>
-  </section>
-
-  <!-- PROOF -->
-  <section class="sec proof">
-    <div class="wrap" data-reveal>
-      <div class="chapters-head">
-        <p class="sec-label"><span>06</span>Proof</p>
-        <h2>Why listen to me</h2>
-        <p class="lede">Three things I can point at, rather than three things I can claim.</p>
-      </div>
-      <dl class="figs">
-        <div>
-          <dt>10,800</dt>
-          <dd>Support tickets analysed with AI on one project, then validated in a workshop with more
-            than twenty real users before a single screen was redesigned.</dd>
-        </div>
-        <div>
-          <dt>113 <span class="soft">vs</span> 53</dt>
-          <dd>My own agent reported 113 files created. There were 53. The full story is in the book,
-            because it produced the rule I now apply to everything.</dd>
-        </div>
-        <div>
-          <dt>15 <span class="small">years</span></dt>
-          <dd>Product and UX design, including work with teams at CHANEL, AT&amp;T, HelloFresh
-            and Fnac.</dd>
-        </div>
-      </dl>
-    </div>
-  </section>
-
-  <!-- FIT -->
-  <section class="sec">
-    <div class="wrap" data-reveal>
-      <div class="chapters-head">
-        <p class="sec-label"><span>07</span>Fit</p>
-        <h2>Who it is for</h2>
-      </div>
-      <div class="fit">
-        <div class="fit-card yes">
-          <h3>Read it if</h3>
-          <ul>
-            <li><i aria-hidden="true">&#10003;</i><span>You design products and the AI conversation has started to feel personal.</span></li>
-            <li><i aria-hidden="true">&#10003;</i><span>You have used the tools and got answers that looked right and were not.</span></li>
-            <li><i aria-hidden="true">&#10003;</i><span>You would rather understand the machine than memorise tricks for it.</span></li>
-            <li><i aria-hidden="true">&#10003;</i><span>You want one honest hour instead of forty hours of hype.</span></li>
+          <h2>Latest:</h2>
+          <ul class="links">
+            {latest.map(p => (
+              <li><a href={`/blog/${p.slug}`}>{p.data.title}</a></li>
+            ))}
           </ul>
-        </div>
-        <div class="fit-card no">
-          <h3>Skip it if</h3>
-          <ul>
-            <li><i aria-hidden="true">&#10005;</i><span>You want prompt templates to copy and paste. There are none in here.</span></li>
-            <li><i aria-hidden="true">&#10005;</i><span>You are an ML engineer. You already know the first three chapters.</span></li>
-            <li><i aria-hidden="true">&#10005;</i><span>You want to be told everything is fine. Some of it is not, and I say so.</span></li>
-          </ul>
+
+          <a href="/blog" class="all-link">All {posts.length} articles &rarr;</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- AUTHOR -->
-  <section id="about" class="sec">
-    <div class="wrap split" data-reveal>
-      <div class="split-head">
-        <p class="sec-label"><span>08</span>Author</p>
-        <h2>Who wrote it</h2>
+  <!-- NEWSLETTER, AGAIN -->
+  <section class="closing">
+    <div class="wrap closing-grid" data-reveal>
+      <div>
+        <h2 class="closing-title">
+          <span class="soft">The UXINTOAX</span>
+          Newsletter
+        </h2>
+        <p>
+          One idea from real design work, one habit you can try this week. Sent when there is
+          something worth sending.
+        </p>
       </div>
-      <div class="about">
-        <div class="about-id">
-          <img src="/assets/author.jpg" width="200" height="200" alt="Oussama Bougnouch" loading="lazy" />
-          <p class="letter-lede">Oussama Bougnouch, product and UX designer, fifteen years.</p>
-        </div>
-        <p>I have built design systems, research
-          operations and production interfaces for teams at CHANEL, AT&amp;T, HelloFresh and Fnac.
-          These days I build AI systems for design work: local models, agents, and the instruction
-          files that keep them honest.</p>
-        <p>I publish what breaks alongside what works. I wrote this book
-          because the advice designers were getting was either panic or cheerleading, and neither one
-          tells you what to do on Monday morning.</p>
-      </div>
+      <Signup id="closing-email" source="home-closing" list="blog" fine="No spam. Leave any time with one click." />
     </div>
   </section>
-
-  <!-- FAQ -->
-  <section class="sec">
-    <div class="wrap split" data-reveal>
-      <div class="split-head">
-        <p class="sec-label"><span>09</span>FAQ</p>
-        <h2>Questions people ask first</h2>
-      </div>
-      <div class="faq">
-        {faqs.map(f => (
-          <details>
-            <summary>{f.q}<span class="plus" aria-hidden="true"></span></summary>
-            <p>{f.a}</p>
-          </details>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- CLOSE -->
-  <section class="band band-close">
-    <div class="wrap close-grid" data-reveal>
-      <div class="close-cover" aria-hidden="true">
-        <img src="/assets/signal-noise-cover-650.jpg" width="433" height="650" alt="" loading="lazy" />
-      </div>
-      <div class="close-copy">
-        <h3>An hour from now you could <span class="soft">stop wondering where you stand.</span></h3>
-        <Signup id="e2" source="footer" tone="dark" fine="Eleven chapters. Free. Leave any time with one click." />
-      </div>
-    </div>
-  </section>
-
-  <script>
-    const SUCCESS_MESSAGE = "You're in. Check your inbox — the book is on its way.";
-    const GENERIC_ERROR = "Something went wrong. Please try again.";
-
-    document.querySelectorAll<HTMLFormElement>("form[data-signup-form]").forEach((form) => {
-      const msg = form.parentElement?.querySelector<HTMLParagraphElement>(".msg");
-      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-      const label = button?.querySelector<HTMLSpanElement>(".label");
-      const emailInput = form.querySelector<HTMLInputElement>('input[type="email"]');
-      const sourceInput = form.querySelector<HTMLInputElement>('input[name="source"]');
-      if (!msg || !button || !label || !emailInput) return;
-
-      const idleLabel = label.textContent ?? "Send me the book";
-
-      const showMessage = (text: string, kind: "ok" | "err") => {
-        msg.textContent = text;
-        msg.hidden = false;
-        msg.classList.remove("ok", "err");
-        msg.classList.add(kind);
-      };
-
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        button.disabled = true;
-        label.textContent = "Sending…";
-        msg.hidden = true;
-
-        try {
-          const response = await fetch("/api/subscribe", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email: emailInput.value,
-              source: sourceInput?.value ?? "unknown",
-            }),
-          });
-          const data = await response.json().catch(() => ({}) as { ok?: boolean; error?: string });
-
-          if (response.ok && data.ok) {
-            form.hidden = true;
-            showMessage(SUCCESS_MESSAGE, "ok");
-            return;
-          }
-
-          showMessage(data.error || GENERIC_ERROR, "err");
-        } catch {
-          showMessage(GENERIC_ERROR, "err");
-        } finally {
-          if (!form.hidden) {
-            button.disabled = false;
-            label.textContent = idleLabel;
-          }
-        }
-      });
-    });
-  </script>
 </PageLayout>
 
 <style>
@@ -432,347 +116,84 @@ const marqueeWords = Array.from({ length: 6 });
     }
   }
 
-  h1,
-  h2,
-  h3 {
-    font-weight: 700;
-    color: var(--content);
-    letter-spacing: -0.035em;
-  }
-
-  /* The cover lettering is reserved for the hero headline */
-  h1 {
-    font-family: var(--font-display);
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.005em;
-  }
-
-  /* Secondary emphasis stays neutral: red is kept for buttons and links */
-  .soft {
-    color: var(--content-faint);
-  }
-
-  .band .soft,
-  .mq .soft {
-    color: rgb(255 255 255 / 0.5);
-  }
-
-  h2 {
-    font-size: clamp(2rem, 3.6vw, 3rem);
-    line-height: 1.05;
-  }
-
   p {
+    font-size: var(--text-size);
+    line-height: var(--text-leading);
     color: var(--content-muted);
   }
 
-  /* One body size everywhere; headings are always larger than this */
-  p,
-  li,
-  dd,
-  blockquote {
-    font-size: var(--text-size);
-    line-height: var(--text-leading);
-  }
-
-  .lede {
-    margin-top: 1.25rem;
-    font-size: var(--text-size);
-    line-height: 1.55;
-    max-width: 30rem;
-  }
-
-  /* Sections are separated by space alone, no rules */
-  .sec {
-    padding: 6rem 0;
-  }
-
-  .sec-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.4rem;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--content);
-  }
-
-  .sec-label span {
-    display: inline-grid;
-    place-items: center;
-    min-width: 2.2rem;
-    height: 1.6rem;
-    padding: 0 0.4rem;
-    font-family: var(--font-display);
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
-    color: var(--ink);
-    background: var(--content);
-    border-radius: 2px;
-  }
-
-  /* Sticky heading column on the left, content on the right */
-  .split {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: 4rem;
-    align-items: start;
-  }
-
-  .split-head {
-    position: sticky;
-    top: 7rem;
-  }
-
-  .chapters-head {
-    max-width: 50rem;
-    margin-bottom: 3.5rem;
+  .soft {
+    display: block;
+    color: var(--content-faint);
   }
 
   /* ---------- hero ---------- */
   .hero {
-    padding: 2rem 0 0;
-    overflow: hidden;
+    padding: 6.5rem 0 5rem;
   }
 
-  .hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    gap: 3rem;
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    min-height: min(calc(100svh - 9.5rem), 52rem);
-    padding-bottom: 3.5rem;
+    text-align: center;
   }
 
-  .hero-copy h1 {
-    margin-top: 1.5rem;
-    font-size: clamp(2.6rem, 4.6vw, 4.3rem);
-    line-height: 0.96;
-    max-width: 15ch;
-  }
-
-  /* Keep the small label small (the body-size rule above would enlarge it) */
-  .hero-copy .eyebrow {
-    font-size: 0.72rem;
-    line-height: 1.4;
+  .hero h1 {
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    color: var(--content);
   }
 
   .hero-sub {
-    margin-top: 1.75rem;
-    max-width: 32rem;
-    font-size: var(--text-size);
-    line-height: 1.55;
+    max-width: 34rem;
+    margin-top: 1.5rem;
   }
 
-  .hero-signup {
-    margin-top: 2.25rem;
+  .hero :global(.hero-form) {
+    margin-top: 2rem;
   }
 
-  .hero-book {
-    position: relative;
-    display: grid;
-    place-items: center;
-    padding: 3rem 0 4.5rem;
+  .hero :global(.hero-form .fine) {
+    text-align: center;
   }
 
-  /* A quiet paper disc to seat the book */
-  .book-disc {
-    position: absolute;
-    inset: 50% auto auto 50%;
-    width: min(30rem, 100%);
-    aspect-ratio: 1;
-    translate: -50% -52%;
-    border-radius: 50%;
-    background: var(--ink-2);
-    pointer-events: none;
+  /* ---------- panel ---------- */
+  .panel-sec {
+    padding-bottom: 5rem;
   }
 
-
-
-
-
-
-  /* ---------- quotes ---------- */
-  .quotes {
-    padding: 6rem 0;
-  }
-
-  .quotes-title,
-  .beats-title {
-    margin-bottom: 2.5rem;
-  }
-
-  .quotes-grid {
+  .panel {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
-  }
-
-  .quotes figcaption {
-    padding-bottom: 0.7rem;
-    border-bottom: 1px dashed var(--line-strong);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--content-faint);
-  }
-
-  .quotes blockquote {
-    position: relative;
-    margin-top: 1.1rem;
-    font-size: var(--text-size);
-    font-weight: 600;
-    line-height: var(--text-leading);
-    letter-spacing: -0.01em;
-    color: var(--content);
-  }
-
-  .quotes blockquote::before {
-    content: "\201C";
-    display: block;
-    height: 0.62em;
-    font-family: var(--font-display);
-    font-size: 3.5rem;
-    line-height: 1;
-    color: var(--content);
-  }
-
-  .quotes figure p {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-  }
-
-  /* ---------- marquee ---------- */
-  .mq {
     overflow: hidden;
-    padding: 1.4rem 0 1.1rem;
-    background: var(--content);
-    font-family: var(--font-display);
-    font-size: clamp(2.6rem, 6vw, 5rem);
-    line-height: 1;
-    text-transform: uppercase;
-    color: var(--ink);
-    white-space: nowrap;
-    user-select: none;
   }
 
-  .mq-track {
-    display: inline-flex;
-    will-change: transform;
+  .panel-intro {
+    padding: 3rem;
+    background: var(--ink-2);
+    border-right: var(--card-border);
   }
 
-  .mq-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.28em;
-    padding-right: 0.28em;
+  .panel-intro p + p {
+    margin-top: 1rem;
   }
 
-  .mq-item i {
-    display: inline-block;
-    width: 0.16em;
-    height: 0.16em;
-    margin-left: 0.2em;
-    border-radius: 50%;
-    background: var(--signal);
+  .intro-lede {
+    font-size: 1.3rem !important;
+    line-height: 1.5 !important;
+    color: var(--content) !important;
+    margin-bottom: 1.5rem;
   }
 
-  /* ---------- beats: torn paper slips ---------- */
-  /* Flex rather than grid so the last row of slips sits centred */
-  .beat-list {
-    --cols: 3;
-    --gap-x: 2rem;
-    list-style: none;
+  .book-card {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 2.75rem var(--gap-x);
-    padding-top: 0.5rem;
-  }
-
-  /* The shadow lives on the wrapper so it follows the torn edge of the slip */
-  .beat,
-  .paper {
-    --tilt: -1.2deg;
-    flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap-x)) / var(--cols));
-    filter:
-      drop-shadow(0 1px 1px rgb(20 18 14 / 0.1))
-      drop-shadow(0 12px 14px rgb(20 18 14 / 0.1));
-    transform: rotate(var(--tilt));
-    transition: transform 0.6s var(--ease-out);
-  }
-
-  .beat:nth-child(2) { --tilt: 0.9deg; margin-top: 1.5rem; }
-  .beat:nth-child(3) { --tilt: -0.5deg; }
-  .beat:nth-child(4) { --tilt: 1.3deg; }
-  .beat:nth-child(5) { --tilt: -0.8deg; margin-top: 1rem; }
-
-  .paper:nth-child(1) { --tilt: -1deg; }
-  .paper:nth-child(2) { --tilt: 1.1deg; margin-top: 1.5rem; }
-
-  .beat:hover,
-  .paper:hover {
-    transform: rotate(0deg) translateY(-4px);
-  }
-
-  .slip {
-    --torn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='16' viewBox='0 0 240 16'%3E%3Cpath d='M0 0H240V6.0L237 5.8L230.2 11.2L225.6 10.9L219.6 10.1L211.8 5.0L205.6 2.7L198.4 4.9L189.9 9.7L186.8 12.5L179.3 3.6L170.3 8.4L161.6 9.1L158.5 13.7L154.8 2.4L151.4 3.3L146.1 10.4L137.7 9.3L129.5 13.8L124.0 5.2L120.9 2.2L112.2 8.1L104.0 7.4L100.0 2.6L96.2 8.5L91.1 9.3L86.4 8.9L79.0 5.8L70.9 3.1L65.9 6.4L60.4 9.8L56.7 5.4L50.5 9.9L46.0 8.9L40.5 11.5L33.2 10.9L29.1 10.5L24.4 1.7L17.9 13.7L14.1 11.1L8.5 4.1L4.9 9.4L0 6.0Z'/%3E%3C/svg%3E");
-    padding: 1.6rem 1.6rem 2.6rem;
-    /* Cream paper, a touch warmer toward the torn edge */
-    background: linear-gradient(180deg, #f8efdc, #f3e7cf);
-    -webkit-mask:
-      linear-gradient(#000, #000) top / 100% calc(100% - 15px) no-repeat,
-      var(--torn) bottom left / 240px 16px repeat-x;
-    mask:
-      linear-gradient(#000, #000) top / 100% calc(100% - 15px) no-repeat,
-      var(--torn) bottom left / 240px 16px repeat-x;
-  }
-
-  .beat:nth-child(2n) .slip,
-  .paper:nth-child(2) .slip {
-    -webkit-mask-position: top, bottom right 90px;
-    mask-position: top, bottom right 90px;
-  }
-
-  .beat-ch {
-    display: block;
-    margin-bottom: 0.9rem;
-    padding-bottom: 0.7rem;
-    border-bottom: 1px dashed var(--line-strong);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--content-faint);
-  }
-
-  .beat p {
-    font-size: var(--text-size);
-    font-weight: 600;
-    line-height: var(--text-leading);
-    letter-spacing: -0.01em;
-    color: var(--content);
-  }
-
-  /* ---------- learn ---------- */
-  .learn {
-    list-style: none;
-    display: grid;
-    gap: 0.9rem;
-  }
-
-  .learn li {
-    display: grid;
-    grid-template-columns: 2.6rem minmax(0, 1fr) auto;
-    gap: 1rem;
-    align-items: baseline;
-    padding: 1.3rem 1.4rem;
+    align-items: center;
+    gap: 1.1rem;
+    margin-top: 2rem;
+    padding: 1rem;
     border: var(--card-border);
     border-radius: var(--card-radius);
     background: var(--surface);
@@ -780,658 +201,151 @@ const marqueeWords = Array.from({ length: 6 });
     transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
   }
 
-  .learn li:hover,
-  .fit-card:hover {
+  .book-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--card-shadow-hover);
   }
 
-  .learn .n {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--content-faint);
-  }
-
-  .learn p {
-    font-size: var(--text-size);
-    line-height: 1.5;
-    color: var(--content);
-  }
-
-  .learn .ref {
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    color: var(--content);
-    border: 1px solid var(--line-strong);
-    border-radius: 999px;
-    padding: 0.3rem 0.65rem;
-  }
-
-  /* ---------- letter ---------- */
-  .letter-body {
-    max-width: 38rem;
-  }
-
-  .letter-body p {
-    font-size: var(--text-size);
-    line-height: var(--text-leading);
-  }
-
-  .letter-body p + p {
-    margin-top: 1.25rem;
-  }
-
-  .letter-lede {
-    font-size: var(--text-size) !important;
-    font-weight: 700;
-    line-height: var(--text-leading) !important;
-    
-    color: var(--content) !important;
-  }
-
-  .letter-body .letter-lede {
-    margin-bottom: 2rem;
-  }
-
-  .signature {
-    margin-top: 2.5rem !important;
-    font-weight: 700;
-    color: var(--content) !important;
-  }
-
-  .signature::before {
-    content: "\2014\00a0";
-  }
-
-  /* ---------- contents: a printed page ---------- */
-  .toc-stack {
-    position: relative;
-    max-width: 44rem;
-    margin: 0 auto;
-  }
-
-  /* Two sheets underneath, slightly askew, so it reads as paper */
-  .toc-stack::before,
-  .toc-stack::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 2px;
-    background: #f3f2ef;
-    box-shadow: 0 1px 2px rgb(20 18 14 / 0.12);
-  }
-
-  .toc-stack::before {
-    transform: rotate(-2.2deg) translate(-6px, 8px);
-  }
-
-  .toc-stack::after {
-    transform: rotate(1.4deg) translate(5px, 4px);
-    background: #f8f7f5;
-  }
-
-  .toc-page {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 60rem;
-    padding: 3rem 4rem 2.25rem;
-    border-radius: 2px;
-    background:
-      radial-gradient(120% 80% at 0% 0%, rgb(255 255 255 / 0.7), transparent 60%),
-      linear-gradient(180deg, #ffffff, #fdfdfc);
-    box-shadow:
-      0 1px 1px rgb(20 18 14 / 0.08),
-      0 2px 6px rgb(20 18 14 / 0.08),
-      0 30px 60px -30px rgb(20 18 14 / 0.45);
-    color: #1a1917;
-  }
-
-  .toc-running {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid #e9e6e0;
-    font-size: 0.66rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #99948b;
-  }
-
-  .toc-title {
-    margin-top: 3.25rem;
-    padding-bottom: 1.1rem;
-    border-bottom: 2px solid var(--signal);
-    font-size: 2.6rem;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    color: #1a1917;
-  }
-
-  .toc {
-    list-style: none;
-    margin-top: 0.6rem;
-    flex: 1;
-  }
-
-  .toc-row {
-    display: flex;
-    align-items: baseline;
-    padding: 0.7rem 0;
-    font-size: 1rem;
-    line-height: 1.35;
-  }
-
-  .toc-n {
-    flex-shrink: 0;
-    width: 2.4rem;
-    font-size: 0.82rem;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    color: #99948b;
-  }
-
-  .toc-t {
-    color: #3d3a35;
-  }
-
-  /* Parts and front/back matter carry the weight, chapters sit under them */
-  .is-part .toc-t,
-  .is-front .toc-t,
-  .is-part .toc-pg,
-  .is-front .toc-pg {
-    font-weight: 700;
-    color: #1a1917;
-  }
-
-  .is-part {
-    margin-top: 1.1rem;
-  }
-
-  .is-front:last-child {
-    margin-top: 1.1rem;
-  }
-
-  .toc-kicker {
-    margin-right: 0.6rem;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    vertical-align: 0.08em;
-    color: #99948b;
-  }
-
-  /* Dotted leader from title to page number */
-  .toc-leader {
-    flex: 1;
-    min-width: 1.5rem;
-    margin: 0 0.6rem;
-    border-bottom: 2px dotted #d2cdc4;
-    transform: translateY(-0.28em);
-  }
-
-  .toc-pg {
-    flex-shrink: 0;
-    min-width: 1.6rem;
-    text-align: right;
-    font-size: 0.92rem;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    color: #1a1917;
-  }
-
-
-  .toc-folio {
-    margin-top: 2rem;
-    text-align: center;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #99948b;
-  }
-
-  /* ---------- bands ---------- */
-  .band {
-    position: relative;
-    background: var(--content);
-    color: var(--ink);
-    padding: 7rem 0;
-    overflow: hidden;
-  }
-
-  .band h3 {
-    position: relative;
-    color: var(--ink);
-    font-size: clamp(2rem, 3.8vw, 3.2rem);
-    line-height: 1.08;
-  }
-
-  .band-red {
-    background: var(--accent);
-  }
-
-  /* Centered call to action on the red band */
-  .band-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .band-kicker {
-    margin-bottom: 1.25rem;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgb(255 255 255 / 0.8);
-  }
-
-  .band-center h3 {
-    max-width: 22ch;
-  }
-
-  .band-center :global(.band-signup) {
-    margin-top: 2.25rem;
-  }
-
-  .band-center :global(.band-signup .fine) {
-    text-align: center;
-  }
-
-  .close-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
-    gap: 5rem;
-    align-items: center;
-  }
-
-  .close-cover img {
-    display: block;
-    width: min(100%, 18rem);
+  .book-card img {
+    width: 4rem;
     height: auto;
-    margin-left: auto;
-    border-radius: 2px 5px 5px 2px;
-    transform: rotate(-3deg);
-    box-shadow:
-      0 2px 4px rgb(0 0 0 / 0.3),
-      0 30px 60px -18px rgb(0 0 0 / 0.75);
-  }
-
-  .close-copy h3 {
-    max-width: 14ch;
-    margin-bottom: 2.5rem;
-  }
-
-  /* ---------- proof ---------- */
-  .figs {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 3rem;
-  }
-
-  .figs > div {
-    border-top: 2px solid var(--content);
-  }
-
-  .figs dt {
-    padding-top: 1.4rem;
-    font-size: clamp(2rem, 3vw, 2.5rem);
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.05em;
-    color: var(--content);
-  }
-
-  .figs dt .small {
-    font-size: 0.5em;
-    letter-spacing: -0.02em;
-  }
-
-  .figs dd {
-    margin-top: 1.1rem;
-    font-size: var(--text-size);
-    line-height: var(--text-leading);
-    color: var(--content-muted);
-  }
-
-  /* ---------- fit ---------- */
-  .fit {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-
-  .fit-card {
-    padding: 2.25rem;
-    border: var(--card-border);
-    border-radius: var(--card-radius);
-    background: var(--surface);
-    box-shadow: var(--card-shadow);
-    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
-  }
-
-
-
-  .fit-card h3 {
-    font-size: 1.6rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .fit-card.no h3 {
-    color: var(--content-faint);
-  }
-
-  .fit-card ul {
-    list-style: none;
-    display: grid;
-    gap: 1rem;
-  }
-
-  .fit-card li {
-    display: grid;
-    grid-template-columns: 1.6rem minmax(0, 1fr);
-    gap: 0.85rem;
-    font-size: var(--text-size);
-    line-height: var(--text-leading);
-    color: var(--content);
-  }
-
-  .fit-card li i {
-    display: grid;
-    place-items: center;
-    width: 1.6rem;
-    height: 1.6rem;
-    margin-top: -0.05rem;
-    border-radius: 50%;
-    font-size: 0.75rem;
-    font-style: normal;
-    font-weight: 700;
-  }
-
-  .fit-card.yes li i {
-    background: var(--signal);
-    color: var(--ink);
-  }
-
-  .fit-card.no li i {
-    background: var(--content);
-    color: var(--ink);
-  }
-
-  .fit-card.no li span {
-    color: var(--content-muted);
-  }
-
-  /* ---------- about ---------- */
-  .about {
-    max-width: 38rem;
-  }
-
-  .about-id {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .about-id img {
-    width: 5.5rem;
-    height: 5.5rem;
     flex-shrink: 0;
-    border-radius: 3px;
-    object-fit: cover;
-    filter: grayscale(1) contrast(1.1);
-    box-shadow: 0 12px 24px -12px rgb(13 12 10 / 0.5);
+    border-radius: 2px 4px 4px 2px;
+    box-shadow: 0 6px 14px -6px rgb(13 12 10 / 0.5);
   }
 
-  .about > p {
-    font-size: var(--text-size);
-    line-height: var(--text-leading);
+  .book-card b {
+    display: block;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: var(--content);
   }
 
-  .about > p + p {
-    margin-top: 1.25rem;
+  .book-link {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
 
-  /* ---------- faq ---------- */
-  .faq {
-    display: grid;
-    gap: 0.9rem;
-    interpolate-size: allow-keywords;
+  .panel-lists {
+    padding: 3rem;
   }
 
-  /* Each question is its own card, matching the rest of the site */
-  .faq details {
-    border: var(--card-border);
-    border-radius: var(--card-radius);
-    background: var(--surface);
-    box-shadow: var(--card-shadow);
-    transition: box-shadow 0.4s var(--ease-out), transform 0.4s var(--ease-out);
-  }
-
-  .faq details:hover,
-  .faq details[open] {
-    box-shadow: var(--card-shadow-hover);
-  }
-
-  .faq summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 1.25rem 1.4rem;
-    cursor: pointer;
-    list-style: none;
-    font-size: 1.25rem;
+  .panel-lists h2 {
+    font-size: 1rem;
     font-weight: 700;
     letter-spacing: -0.01em;
     color: var(--content);
   }
 
-  .faq summary::-webkit-details-marker {
-    display: none;
+  .panel-lists h2 + .links {
+    margin-top: 1rem;
   }
 
-  .plus {
-    position: relative;
-    flex-shrink: 0;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    border: 1px solid var(--line-strong);
-    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.5s var(--ease-out);
+  .links + h2 {
+    margin-top: 2.25rem;
   }
 
-  .plus::before,
-  .plus::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 0.7rem;
-    height: 2px;
-    background: currentColor;
-    transform: translate(-50%, -50%);
+  .links {
+    display: grid;
+    gap: 0.85rem;
+    list-style: none;
   }
 
-  .plus::after {
-    transform: translate(-50%, -50%) rotate(90deg);
+  .links.numbered {
+    list-style: decimal;
+    padding-left: 1.25rem;
   }
 
-  .faq details[open] .plus {
-    transform: rotate(45deg);
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--ink);
+  .links li {
+    font-size: 1rem;
+    line-height: 1.45;
+    color: var(--content);
   }
 
-  .faq details::details-content {
-    block-size: 0;
-    overflow: hidden;
-    transition:
-      block-size 0.5s var(--ease-out),
-      content-visibility 0.5s allow-discrete;
+  .links li::marker {
+    color: var(--content-faint);
   }
 
-  .faq details[open]::details-content {
-    block-size: auto;
+  /* Plain text with a red underline: red is for links only */
+  .links a {
+    color: var(--content);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+    transition: color 0.2s ease;
   }
 
-  .faq details > p {
-    max-width: 36rem;
-    padding: 0 1.4rem 1.4rem;
-    font-size: var(--text-size);
-    line-height: var(--text-leading);
+  .links a:hover {
+    color: var(--accent);
+  }
+
+  .all-link {
+    display: inline-block;
+    margin-top: 2rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .all-link:hover {
+    color: var(--accent-deep);
+  }
+
+  /* ---------- closing ---------- */
+  .closing {
+    padding: 4.5rem 0 6rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .closing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .closing-title {
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 3.6vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    color: var(--content);
+  }
+
+  .closing-grid p {
+    max-width: 28rem;
   }
 
   /* ---------- responsive ---------- */
-  @media (max-width: 1024px) {
-    .split {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
-
-    .split-head {
-      position: static;
-    }
-
-  }
-
-  @media (max-width: 900px) {
-    .beat-list {
-      --cols: 2;
-    }
-
-    .hero-grid {
+  @media (max-width: 860px) {
+    .panel,
+    .closing-grid {
       grid-template-columns: minmax(0, 1fr);
-      min-height: 0;
-      gap: 1rem;
     }
 
-    .hero-book {
-      order: -1;
-      padding: 2.5rem 0 3.5rem;
-    }
-
-    .book-disc {
-      width: 20rem;
-    }
-
-    .quotes-grid,
-    .close-grid,
-    .figs {
-      grid-template-columns: 1fr;
-    }
-
-    .quotes-grid {
-      gap: 3rem;
-    }
-
-    .close-grid {
-      gap: 3rem;
-    }
-
-    .close-cover img {
-      margin: 0;
-      width: 11rem;
+    .panel-intro {
+      border-right: 0;
+      border-bottom: var(--card-border);
     }
   }
 
   @media (max-width: 640px) {
-    .sec {
-      padding: 4.5rem 0;
+    .hero {
+      padding: 4rem 0 3.5rem;
     }
 
-    .band {
-      padding: 4.5rem 0;
+    .panel-intro,
+    .panel-lists {
+      padding: 1.75rem 1.4rem;
     }
 
-
-    .hero-copy .eyebrow {
-      letter-spacing: 0.14em;
-    }
-
-
-
-
-    .beat-list {
-      --cols: 1;
-      gap: 1.75rem;
-    }
-
-    .beat:nth-child(n) {
-      margin-top: 0;
-    }
-
-    .learn li {
-      grid-template-columns: 2rem minmax(0, 1fr);
-      row-gap: 0.7rem;
-      padding: 1.1rem 1.1rem;
-    }
-
-    .learn .ref {
-      grid-column: 2;
-      justify-self: start;
-    }
-
-
-    .toc-page {
-      min-height: 0;
-      padding: 1.75rem 1.4rem 1.5rem;
-    }
-
-    .toc-title {
-      margin-top: 2rem;
-      font-size: 2rem;
-    }
-
-    .toc-row {
-      font-size: 0.95rem;
-      padding: 0.6rem 0;
-    }
-
-    .toc-n {
-      width: 2rem;
-    }
-
-    .toc-kicker {
-      margin-right: 0.45rem;
-    }
-
-    .toc-stack::before {
-      transform: rotate(-1.4deg) translate(-3px, 6px);
-    }
-
-    .toc-stack::after {
-      transform: rotate(1deg) translate(3px, 3px);
-    }
-
-
-    .fit {
-      grid-template-columns: 1fr;
-    }
-
-    .fit-card {
-      padding: 1.6rem;
-    }
-
-
-    .faq summary {
-      font-size: 1.15rem;
-    }
-
-    .faq summary {
-      padding: 1.1rem 1.1rem;
-    }
-
-    .faq details > p {
-      padding: 0 1.1rem 1.1rem;
+    .intro-lede {
+      font-size: 1.15rem !important;
     }
   }
 </style>

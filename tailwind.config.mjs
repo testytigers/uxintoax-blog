@@ -36,8 +36,8 @@ export default {
         wash: "#F7F6F3",
         gold: "#CFCAC0",
         accent: {
-          DEFAULT: "#D42A10",
-          deep: "#B01E08",
+          DEFAULT: "var(--accent)",
+          deep: "var(--accent-deep)",
         },
         signal: "#4F9A2F",
       },
@@ -56,15 +56,6 @@ export default {
       },
       borderRadius: {
         card: "1.25rem",
-      },
-      keyframes: {
-        marquee: {
-          "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(-50%)" },
-        },
-      },
-      animation: {
-        marquee: "marquee 34s linear infinite",
       },
     },
   },

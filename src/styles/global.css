@@ -20,8 +20,18 @@
   --mint: #f4f3f0;
   --mint-line: #e7e4de;
   --wash: #f7f6f3;
-  --accent: #d42a10;
-  --accent-deep: #b01e08;
+  /* Site brand: the green apple. The book pages switch back to the cover red. */
+  --accent: #2f7d1f;
+  --accent-deep: #235f17;
+  /* Footer wordmark satin: pine, royal green, emerald and soft highlights */
+  --satin-1: #04230f;
+  --satin-2: #0b4a1e;
+  --satin-3: #157a2c;
+  --satin-4: #4cae5a;
+  --satin-5: #157a2c;
+  --satin-6: #0a3f1a;
+  --satin-7: #1d6b2a;
+  --satin-8: #04230f;
   --signal: #4f9a2f;
 
   --font-display: "Anton", Impact, "Arial Narrow", sans-serif;
@@ -44,6 +54,19 @@
   :root {
     --text-size: 1.0625rem;
   }
+}
+
+html.theme-book {
+  --accent: #d42a10;
+  --accent-deep: #b01e08;
+  --satin-1: #2e0601;
+  --satin-2: #6e1204;
+  --satin-3: #b8240c;
+  --satin-4: #ec6a42;
+  --satin-5: #b8240c;
+  --satin-6: #5c0d03;
+  --satin-7: #93200a;
+  --satin-8: #2e0601;
 }
 
 html {
@@ -375,23 +398,6 @@ article.prose table {
 
 article.prose thead th {
   @apply font-sans text-content;
-}
-
-/* ---------- Marquee strip ---------- */
-
-.marquee {
-  @apply relative flex overflow-hidden py-3;
-  --mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  -webkit-mask-image: var(--mask);
-  mask-image: var(--mask);
-}
-
-.marquee__track {
-  @apply flex w-max shrink-0 animate-marquee items-center gap-6 pr-6;
-}
-
-.marquee:hover .marquee__track {
-  animation-play-state: paused;
 }
 
 /* ---------- Reading progress ---------- */

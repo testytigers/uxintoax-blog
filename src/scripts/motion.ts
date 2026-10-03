@@ -170,6 +170,22 @@ function marquees() {
   });
 }
 
+/** Footer wordmark: the liquid rises from empty to full as the footer scrolls into view. */
+function liquidWordmark() {
+  const level = document.querySelector<SVGGElement>("[data-liquid-level]");
+  const wrap = document.querySelector<HTMLElement>("[data-liquid]");
+  if (!level || !wrap) return;
+  gsap.fromTo(
+    level,
+    { y: 330 },
+    {
+      y: 20,
+      ease: "none",
+      scrollTrigger: { trigger: wrap, start: "top bottom", end: "bottom bottom", scrub: 1.2 },
+    }
+  );
+}
+
 function parallax() {
   gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((el) => {
     const amount = Number(el.dataset.parallax) || 10;
@@ -217,6 +233,7 @@ function init() {
   smoothScroll();
   reveals();
   marquees();
+  liquidWordmark();
   parallax();
   magnetic();
   if (book) initBook(book, { motion: true, finePointer });

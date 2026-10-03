@@ -2,27 +2,96 @@
 type Props = {
   id: string;
   source: string;
+  /** Which SendFox list: the book (sends the PDF) or the blog newsletter. */
+  list?: "book" | "blog";
+  label?: string;
+  success?: string;
   fine?: string;
   tone?: "light" | "dark" | "red";
   class?: string;
 };
 
-const { id, source, fine, tone = "light", class: className = "" } = Astro.props;
+const {
+  id,
+  source,
+  list = "book",
+  label = list === "blog" ? "Subscribe" : "Send me the book",
+  success = list === "blog"
+    ? "You're in. Check your inbox to confirm your subscription."
+    : "You're in. Check your inbox — the book is on its way.",
+  fine,
+  tone = "light",
+  class: className = "",
+} = Astro.props;
 ---
 
 <div class={`signup signup--${tone} ${className}`}>
-  <form data-signup-form action="/api/subscribe" method="post">
+  <form data-signup-form data-success={success} action="/api/subscribe" method="post">
     <input type="hidden" name="source" value={source} />
+    <input type="hidden" name="list" value={list} />
     <label for={id} class="sr-only">Your email address</label>
     <input id={id} type="email" name="email" placeholder="Your best email" required autocomplete="email" />
     <button type="submit">
-      <span class="label">Send me the book</span>
+      <span class="label">{label}</span>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
     </button>
   </form>
   <p class="msg" role="status" aria-live="polite" hidden></p>
   {fine && <p class="fine">{fine}</p>}
 </div>
+
+<script>
+  const GENERIC_ERROR = "Something went wrong. Please try again.";
+
+  document.querySelectorAll<HTMLFormElement>("form[data-signup-form]").forEach((form) => {
+    const msg = form.parentElement?.querySelector<HTMLParagraphElement>(".msg");
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const label = button?.querySelector<HTMLSpanElement>(".label");
+    const emailInput = form.querySelector<HTMLInputElement>('input[type="email"]');
+    if (!msg || !button || !label || !emailInput) return;
+
+    const idleLabel = label.textContent ?? "";
+
+    const showMessage = (text: string, kind: "ok" | "err") => {
+      msg.textContent = text;
+      msg.hidden = false;
+      msg.classList.remove("ok", "err");
+      msg.classList.add(kind);
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      label.textContent = "Sending…";
+      msg.hidden = true;
+
+      try {
+        const data = Object.fromEntries(new FormData(form));
+        const response = await fetch("/api/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: emailInput.value, source: data.source, list: data.list }),
+        });
+        const json = await response.json().catch(() => ({}) as { ok?: boolean; error?: string });
+
+        if (response.ok && json.ok) {
+          form.hidden = true;
+          showMessage(form.dataset.success ?? "You're in.", "ok");
+          return;
+        }
+
+        showMessage(json.error || GENERIC_ERROR, "err");
+      } catch {
+        showMessage(GENERIC_ERROR, "err");
+      } finally {
+        if (!form.hidden) {
+          button.disabled = false;
+          label.textContent = idleLabel;
+        }
+      }
+    });
+  });
+</script>
 
 <style>
   .signup {

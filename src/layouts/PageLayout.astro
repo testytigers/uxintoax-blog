@@ -12,13 +12,15 @@ type Props = {
   articleDate?: string;
   progress?: boolean;
   noindex?: boolean;
+  /** "book" keeps the cover red on the book pages; everything else uses the green brand. */
+  theme?: "site" | "book";
 };
 
-const { title, description, image, type, articleDate, progress = false, noindex = false } = Astro.props;
+const { title, description, image, type, articleDate, progress = false, noindex = false, theme = "site" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class={theme === "book" ? "theme-book" : undefined}>
   <head>
     <Head
       title={`${title} | ${SITE.NAME}`}

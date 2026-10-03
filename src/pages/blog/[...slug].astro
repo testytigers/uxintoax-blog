@@ -3,8 +3,7 @@ import { type CollectionEntry, getCollection } from "astro:content";
 import PageLayout from "@layouts/PageLayout.astro";
 import Container from "@components/Container.astro";
 import FormattedDate from "@components/FormattedDate.astro";
-import Cover from "@components/Cover.astro";
-import PostCard from "@components/PostCard.astro";
+import PostList from "@components/PostList.astro";
 import BackToPrev from "@components/BackToPrev.astro";
 import { readingTime } from "@lib/utils";
 
@@ -34,19 +33,6 @@ const related = [
   .filter((p, i, arr) => arr.findIndex(x => x.slug === p.slug) === i)
   .slice(0, 3);
 
-// JSON-LD FAQ schema for AEO
-let faqJsonLd: string | null = null;
-if (post.data.faq && post.data.faq.length > 0) {
-  faqJsonLd = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: post.data.faq.map((item: { q: string; a: string }) => ({
-      "@type": "Question",
-      name: item.q,
-      acceptedAnswer: { "@type": "Answer", text: item.a },
-    })),
-  });
-}
 ---
 
 <PageLayout
@@ -88,49 +74,21 @@ if (post.data.faq && post.data.faq.length > 0) {
   </section>
 
   <Container size="narrow">
-    <div class="card-soft animate mt-10 overflow-hidden">
-      <Cover seed={post.slug} class="aspect-[16/7] w-full" />
-    </div>
-
-    <article class="prose animate mt-12">
+    <article class="prose animate mt-4">
       <Content />
     </article>
 
-    {post.data.faq && post.data.faq.length > 0 && (
-      <section class="animate mt-20">
-        <h2 class="text-heading text-content">Frequently asked questions</h2>
-        <div class="mt-7 grid gap-3.5">
-          {post.data.faq.map((item: { q: string; a: string }) => (
-            <details class="card-soft group transition-shadow hover:shadow-[var(--card-shadow-hover)] open:shadow-[var(--card-shadow-hover)]">
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-base font-semibold text-content ">
-                {item.q}
-                <svg viewBox="0 0 24 24" class="size-5 shrink-0 fill-none stroke-content stroke-2 transition-transform duration-300 group-open:rotate-45">
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
-              </summary>
-              <p class="px-6 pb-6 font-serif leading-relaxed text-content-muted">{item.a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-    )}
   </Container>
 
   {related.length > 0 && (
-    <section class="mt-24 pt-14 sm:pt-20">
-      <Container>
+    <section class="mt-24 pb-20 pt-14 sm:pb-28 sm:pt-20">
+      <Container size="narrow">
         <h2 class="text-heading text-content">Keep reading</h2>
-        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {related.map(entry => (
-            <div class="animate">
-              <PostCard entry={entry} />
-            </div>
-          ))}
+        <div class="mt-8">
+          <PostList entries={related} />
         </div>
       </Container>
     </section>
   )}
 
-  {faqJsonLd && <script type="application/ld+json" set:html={faqJsonLd} />}
 </PageLayout>

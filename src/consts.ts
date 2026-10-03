@@ -1,7 +1,7 @@
 import type { Site, Metadata, Socials } from "@types";
 
 export const SITE: Site = {
-  NAME: "UXintoax",
+  NAME: "UXINTOAX",
   EMAIL: "hello@uxintoax.com",
   NUM_POSTS_ON_HOMEPAGE: 6,
   NUM_WORKS_ON_HOMEPAGE: 3,
@@ -9,10 +9,18 @@ export const SITE: Site = {
 };
 
 export const HOME: Metadata = {
+  TITLE: "UX & AI, without the noise",
+  DESCRIPTION: "Practical writing on designing with AI: what it is really doing, where it breaks, and the habits that make it useful in real UX work.",
+};
+
+export const BOOK: Metadata = {
   TITLE: "Signal vs Noise — the free AI book for UX designers",
   DESCRIPTION: "A free 11-chapter book for UX and product designers. Understand what AI is actually doing, so you stop guessing where you stand.",
   IMAGE: "/assets/signal-noise-cover.jpg",
 };
+
+/** Where the book lives on the site. */
+export const BOOK_PATH = "/noise-vs-signal-ai-book";
 
 export const BLOG: Metadata = {
   TITLE: "Blog — UX Design & AI Integration Strategies",
