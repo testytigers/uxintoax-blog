@@ -56,6 +56,8 @@ const tips = [
         </div>
 
         <p class="dl-meta">PDF &middot; 38 pages &middot; 4.8 MB</p>
+        <p class="dl-note"><strong>All ideas in this book are my own and 100% original.</strong>
+          AI was used only for formatting and grammar correction.</p>
       </div>
 
       <div class="dl-book">
@@ -220,6 +222,24 @@ const tips = [
     margin-top: 1rem;
     font-size: 0.85rem;
     color: var(--content-faint);
+  }
+
+  .dl-note {
+    margin-top: 1.5rem;
+    max-width: 30rem;
+    padding: 1rem 1.2rem;
+    border: var(--card-border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--card-radius);
+    background: var(--surface);
+    box-shadow: var(--card-shadow);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--content);
+  }
+
+  .dl-note strong {
+    font-weight: 800;
   }
 
   .dl-book {

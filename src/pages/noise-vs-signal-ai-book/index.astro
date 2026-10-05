@@ -184,6 +184,13 @@ const marqueeWords = Array.from({ length: 6 });
         <p>This book helps you name it. Plain language, real mechanics, and my own failures included,
           because the failures are where the useful rules come from.</p>
         <p class="signature">Oussama</p>
+
+        <aside class="made-note" aria-label="How this book was made">
+          <h3>Every idea in this book is mine.</h3>
+          <p><strong>All the ideas, stories and frameworks in Signal vs Noise are my own and 100%
+            original.</strong> They come from fifteen years of real product design work.</p>
+          <p>I used AI only to format the book and correct the grammar. The thinking stays mine.</p>
+        </aside>
       </div>
     </div>
   </section>
@@ -787,6 +794,34 @@ const marqueeWords = Array.from({ length: 6 });
 
   .signature::before {
     content: "\2014\00a0";
+  }
+
+  /* How the book was made: the author's originality note */
+  .letter-body .made-note {
+    margin-top: 3rem;
+    padding: 1.6rem 1.75rem;
+    border: var(--card-border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--card-radius);
+    background: var(--surface);
+    box-shadow: var(--card-shadow);
+  }
+
+  .made-note h3 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--content);
+  }
+
+  .letter-body .made-note p {
+    margin-top: 0.75rem;
+    color: var(--content);
+  }
+
+  .made-note strong {
+    font-weight: 800;
   }
 
   /* ---------- contents: a printed page ---------- */
